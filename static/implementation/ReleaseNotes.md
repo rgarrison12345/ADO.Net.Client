@@ -1,6 +1,12 @@
 Version History
 ===============
 
+### 1.1.7
+
+* [SqlExecutor](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/SqlExecutor.cs) new constructor for ease of use of class
+* Updating to ADO.Net.Client.Core 1.1.8
+* Removing ExecuteTransactedNonQuery sync/async versions
+
 ### 1.1.6.1
 
 * [SqlExecutor](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/SqlExecutor.cs) GetMultiResultReaderAsync now utilizes the passed in CancellationToken
