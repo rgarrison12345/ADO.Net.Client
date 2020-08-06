@@ -32,5 +32,6 @@ namespace ADO.Net.Client.Tests.Common.Models
     /// </summary>
     public class BasicModel
     {
+        public int Int32 { get; set; }
     }
 }

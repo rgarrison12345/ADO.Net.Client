@@ -23,7 +23,9 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Tests.Common.Models;
+using Bogus;
 using NUnit.Framework;
+using System;
 using System.Data;
 using System.Reflection;
 #endregion
@@ -37,15 +39,27 @@ namespace ADO.Net.Client.Core.Tests
     public class DbParameterFormatterTests
     {
         #region Fields/Properties
-        private readonly DbParameterFormatter _formatter;
+        private DbParameterFormatter _formatter;
+        private readonly Faker _faker;
         #endregion
-        #region Constructors
+        #region Constructors        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DbParameterFormatterTests"/> class.
+        /// </summary>
         public DbParameterFormatterTests()
         {
-            _formatter = new DbParameterFormatter();
+            _faker = new Faker();
         }
         #endregion
-        #region Setup/Teardown
+        #region Setup/Teardown        
+        /// <summary>
+        /// Setups this instance.
+        /// </summary>
+        [SetUp]
+        public void Setup()
+        {
+            _formatter = new DbParameterFormatter(_faker.Random.Bool(), _faker.Random.AlphaNumeric(1));
+        }
         #endregion
         #region Tests
         /// <summary>
@@ -264,7 +278,9 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsNonNativeGuidCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Guid))) == DbType.String);
+            DbParameterFormatter formatter = new DbParameterFormatter(false);
+
+            Assert.That(formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Guid))) == DbType.String);
         }
         /// <summary>
         /// Getses the return value direction.
@@ -317,6 +333,20 @@ namespace ADO.Net.Client.Core.Tests
             PropertyInfo info = typeof(DirectionModel).GetProperty(nameof(DirectionModel.NoDirection));
 
             Assert.That(_formatter.MapParameterDirection(info) == ParameterDirection.InputOutput);
+        }
+        [Test]
+        [Category("MapValue")]
+        public void GetsDbNull()
+        {
+            Assert.AreEqual(_formatter.MapParameterValue(null, null), DBNull.Value);
+        }
+        [Test]
+        [Category("MapValue")]
+        public void GetsNormalValue()
+        {
+            BasicModel model = new BasicModel() { Int32 = _faker.Random.Int() };
+
+            Assert.AreEqual(_formatter.MapParameterValue(model.Int32, model.GetType().GetProperty(nameof(model.Int32))), model.Int32);
         }
         #endregion
     }
