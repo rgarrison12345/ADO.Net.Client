@@ -1,6 +1,12 @@
 Version History
 ===============
 
+### 1.1.7
+
+* [DbClient](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client/DbClient.cs) now has two more constructors for ease of use of class
+* Removing ExecuteTransactedNonQueryAsync function from [DbClient](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client/DbClient.cs)
+* Updating to ADO.Net.Client.Implementation 1.1.7
+
 ### 1.1.6.1
 
 * Updating to ADO.Net.Client.Implementation 1.1.6.1
