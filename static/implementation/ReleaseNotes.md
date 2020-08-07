@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.1.8
+
+* Updating to ADO.Net.Client.Core 1.1.9
+
 ### 1.1.7
 
 * [SqlExecutor](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/SqlExecutor.cs) new constructor for ease of use of class

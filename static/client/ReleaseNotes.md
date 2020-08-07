@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.1.8
+
+* Updating to ADO.Net.Client.Implementation 1.1.8
+
 ### 1.1.7
 
 * [DbClient](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client/DbClient.cs) now has two more constructors for ease of use of class
