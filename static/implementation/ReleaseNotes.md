@@ -14,6 +14,7 @@ Version History
 ### 1.1.6
 
 * Updating to ADO.Net.Client.Core 1.1.7
+* [MultiResultReader](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/MultiResultReader.cs) has a new constructor for ease of use of the class
 
 ### 1.1.5.3
 
