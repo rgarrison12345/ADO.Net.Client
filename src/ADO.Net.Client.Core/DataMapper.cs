@@ -130,7 +130,7 @@ namespace ADO.Net.Client.Core
             T returnType = Activator.CreateInstance<T>();
             IEnumerable<PropertyInfo> writeableProperties = returnType.GetType().GetProperties().Where(x => x.CanWrite == true).Where(x => Attribute.IsDefined(x, typeof(DbFieldIgnore), false) == false);
 
-            //Loop through all records in this record
+            //Loop through all fields in this record
             for (int i = 0; i < record.FieldCount; i++)
             {
                 string name = record.GetName(i);
