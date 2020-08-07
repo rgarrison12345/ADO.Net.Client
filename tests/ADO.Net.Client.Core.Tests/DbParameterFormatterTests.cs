@@ -348,6 +348,18 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.AreEqual(_formatter.MapParameterValue(model.Int32, model.GetType().GetProperty(nameof(model.Int32))), model.Int32);
         }
+        [Test]
+        [Category("MapValue")]
+        public void GetGuidString()
+        {
+            DbParameterFormatter formatter = new DbParameterFormatter(false);
+            BasicModel model = new BasicModel()
+            {
+                GuidValue = Guid.NewGuid()
+            };
+
+            Assert.AreEqual(formatter.MapParameterValue(model.GuidValue, model.GetType().GetProperty(nameof(model.GuidValue))), model.GuidValue.ToString());
+        }
         #endregion
     }
 }

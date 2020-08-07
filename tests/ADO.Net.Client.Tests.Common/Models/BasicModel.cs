@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using System;
 #endregion
-
 
 namespace ADO.Net.Client.Tests.Common.Models
 {
@@ -33,5 +33,6 @@ namespace ADO.Net.Client.Tests.Common.Models
     public class BasicModel
     {
         public int Int32 { get; set; }
+        public Guid GuidValue { get; set; }
     }
 }
