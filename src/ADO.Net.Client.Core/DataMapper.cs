@@ -137,13 +137,11 @@ namespace ADO.Net.Client.Core
                 object value = record.GetValue(i);
                 PropertyInfo info = writeableProperties.GetProperty(name) ?? GetPropertyInfoByDbField(name, writeableProperties);
 
-                //Check if a property by the name could be found
+                //Check if a property could be found by name
                 if(info == null)
                 {
                     continue;
                 }
-
-                object[] customAttributes = info.GetCustomAttributes(false);
 
                 //Check if this is the databae representation of null
                 if (value == DBNull.Value)
@@ -152,7 +150,7 @@ namespace ADO.Net.Client.Core
                 }
 
                 //Might need to change the value
-                if (customAttributes.Where(x => x.GetType() == typeof(DbField)).SingleOrDefault() is DbField field && value == null)
+                if (info.GetCustomAttributes(false).Where(x => x.GetType() == typeof(DbField)).SingleOrDefault() is DbField field && value == null)
                 {
                     //Set new value
                     value = field.DefaultValueIfNull;
