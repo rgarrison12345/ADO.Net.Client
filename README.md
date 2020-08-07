@@ -48,7 +48,7 @@ leave almost everything out of your hands.  This library does provide some defau
 implementations if you're not really interested in doing the hard work yourself.
 
 * Smaller - These libraries are even smaller than other Micro-ORMs because they take the assumption
-that you can write SQL and you know enough about ADO.Net that you could possibly if needed write some code yourself.
+that you can write SQL and you know enough about ADO.Net that you could possibly if needed write some SQL yourself.
 
 ### Async Support
 
