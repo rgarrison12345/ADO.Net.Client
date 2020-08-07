@@ -122,13 +122,13 @@ namespace ADO.Net.Client.Core
         /// Maps the passed in <paramref name="record"/> to an instance of the <typeparamref name="T"/>
         /// </summary>
         /// <typeparam name="T">The <see cref="Type"/> the caller wants created from the passed in <paramref name="record"/></typeparam>
-        /// <param name="record">A record from a result set of data</param>
+        /// <param name="record">An instance of <see cref="IDataRecord"/> to read data from</param>
         /// <returns>Returns the instance of <typeparamref name="T"/> created from the passed in <paramref name="record"/></returns>
         public T MapRecord<T>(IDataRecord record) where T : class
         {
             //Get an instance of the object passed in
             T returnType = Activator.CreateInstance<T>();
-            IEnumerable<PropertyInfo> writeableProperties = returnType.GetType().GetProperties().Where(x => x.CanWrite == true).Where(x => x.CustomAttributes.Any(x => x.AttributeType == typeof(DbFieldIgnore) == false));
+            IEnumerable<PropertyInfo> writeableProperties = returnType.GetType().GetProperties().Where(x => x.CanWrite == true).Where(x => Attribute.IsDefined(x, typeof(DbFieldIgnore), false) == false);
 
             //Loop through all records in this record
             for (int i = 0; i < record.FieldCount; i++)
@@ -136,8 +136,14 @@ namespace ADO.Net.Client.Core
                 string name = record.GetName(i);
                 object value = record.GetValue(i);
                 PropertyInfo info = writeableProperties.GetProperty(name) ?? GetPropertyInfoByDbField(name, writeableProperties);
+
+                //Check if a property by the name could be found
+                if(info == null)
+                {
+                    continue;
+                }
+
                 object[] customAttributes = info.GetCustomAttributes(false);
-                DbField field = customAttributes.Where(x => x.GetType() == typeof(DbField)).SingleOrDefault() as DbField;
 
                 //Check if this is the databae representation of null
                 if (value == DBNull.Value)
@@ -146,7 +152,7 @@ namespace ADO.Net.Client.Core
                 }
 
                 //Might need to change the value
-                if (field != null && value == null)
+                if (customAttributes.Where(x => x.GetType() == typeof(DbField)).SingleOrDefault() is DbField field && value == null)
                 {
                     //Set new value
                     value = field.DefaultValueIfNull;

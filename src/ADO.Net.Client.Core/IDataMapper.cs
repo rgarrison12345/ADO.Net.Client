@@ -74,7 +74,7 @@ namespace ADO.Net.Client.Core
         /// Maps the passed in <paramref name="record"/> to an instance of the <typeparamref name="T"/>
         /// </summary>
         /// <typeparam name="T">The <see cref="Type"/> the caller wants created from the passed in <paramref name="record"/></typeparam>
-        /// <param name="record">A record from a result set of data</param>
+        /// <param name="record">An instance of <see cref="IDataRecord"/> to read data from</param>
         /// <returns>Returns the instance of <typeparamref name="T"/> created from the passed in <paramref name="record"/></returns>
         T MapRecord<T>(IDataRecord record) where T : class;
         #endregion
