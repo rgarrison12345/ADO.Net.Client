@@ -146,7 +146,8 @@ namespace ADO.Net.Client.Implementation
         /// <param name="parmaeterValue">The parmaeter value.</param>
         public void Append(string sql, string paramerterName, object parmaeterValue)
         {
-            throw new NotImplementedException();
+            Append(sql);
+            AddParameter(_factory.GetDbParameter(paramerterName, parmaeterValue));
         }
         /// <summary>
         /// Appends the specified SQL to the existing SQL statement being built.

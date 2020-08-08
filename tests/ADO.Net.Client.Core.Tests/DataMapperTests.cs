@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
-using NUnit;
+using ADO.Net.Client.Tests.Common.Models;
 using NUnit.Framework;
 #endregion
 
@@ -32,13 +32,26 @@ namespace ADO.Net.Client.Core.Tests
     /// 
     /// </summary>
     [TestFixture]
+    [Category("Mapper Tests")]
     public class DataMapperTests
     {
         #region Constructors
         #endregion
         #region Setup/Teardown
         #endregion
-        #region Tests
+        #region Tests        
+        /// <summary>
+        /// Maps the record create instance.
+        /// </summary>
+        [Test]
+        public void MapRecordCreateInstance()
+        {
+            DataMapper mapper = new DataMapper();
+
+            BasicModel model = mapper.MapRecord<BasicModel>(null);
+
+            Assert.IsNotNull(model);
+        }
         #endregion
     }
 }

@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using ADO.Net.Client.Annotations;
 using System;
 #endregion
 
@@ -34,5 +35,8 @@ namespace ADO.Net.Client.Tests.Common.Models
     {
         public int Int32 { get; set; }
         public Guid GuidValue { get; set; }
+        [DbFieldIgnore]
+        public decimal IgnoreField { get; set; }
+        public decimal ReadOnlyField { get; }
     }
 }

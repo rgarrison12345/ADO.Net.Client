@@ -64,7 +64,7 @@ namespace ADO.Net.Client.Core.Tests
         #region Tests
         [Test]
         [Category("Constructors")]
-        public void MapsNativeGuidParamSymbol()
+        public void MapsNativeGuidParamPrefix()
         {
             bool nativeGuid = _faker.Random.Bool();
             string prefix = _faker.Random.AlphaNumeric(1);
