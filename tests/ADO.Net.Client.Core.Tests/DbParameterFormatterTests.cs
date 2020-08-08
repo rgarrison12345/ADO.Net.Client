@@ -62,6 +62,18 @@ namespace ADO.Net.Client.Core.Tests
         }
         #endregion
         #region Tests
+        [Test]
+        [Category("Constructors")]
+        public void MapsNativeGuidParamSymbol()
+        {
+            bool nativeGuid = _faker.Random.Bool();
+            string prefix = _faker.Random.AlphaNumeric(1);
+
+            DbParameterFormatter formatter = new DbParameterFormatter(nativeGuid, prefix);
+
+            Assert.IsTrue(formatter.HasNativeGuidSupport == nativeGuid);
+            Assert.IsTrue(formatter.ParameterNamePrefix == prefix);
+        }
         /// <summary>
         /// 
         /// </summary>
