@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.1.9
+
+* Bug Fix in [DataMapper](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DataMapper.cs) don't attempt to map a property that wasn't in the [IDataRecord](https://docs.microsoft.com/en-us/dotnet/api/system.data.idatarecord?view=netcore-3.1) parameter
+
 ### 1.1.8
 
 * [IConnectionManager](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IConnectionManager.cs) now has a read only property called Transaction of [DbTransaction](https://docs.microsoft.com/en-us/dotnet/api/system.data.common.dbtransaction?view=netcore-3.1)
