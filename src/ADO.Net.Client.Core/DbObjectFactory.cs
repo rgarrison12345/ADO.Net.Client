@@ -402,7 +402,7 @@ namespace ADO.Net.Client.Core
             DbParameter parameter = GetDbParameter();
 
             parameter.Value = parameterValue ?? DBNull.Value;
-            parameter.ParameterName = parameterName;
+            parameter.ParameterName = parameterName.StartsWith(_dbParameterFormatter.ParameterNamePrefix) == true ? parameterName : string.Concat(_dbParameterFormatter.ParameterNamePrefix, parameterName);
 
             //Return this back to the caller
             return parameter;

@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Tests.Common;
+using Bogus;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,7 @@ namespace ADO.Net.Client.Core.Tests
     public abstract class BaseTests
     {
         #region Fields/Properties
+        private readonly Faker _faker = new Faker();
         private readonly string _connectionString = "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;";
         protected IDbObjectFactory _factory;
         #endregion
@@ -255,16 +257,33 @@ namespace ADO.Net.Client.Core.Tests
         /// </summary>
         [Test]
         [Category("DbParameterTests")]
-        public void CanCreateDbParameterNameValue()
+        public void CanCreateDbParameterNameValueWithPrefix()
         {
-            string name = "@ParameterName";
-            int value = 200;
+            string name = $"@{_faker.Random.AlphaNumeric(30)}";
+            int value = _faker.Random.Int();
 
             DbParameter parameter = _factory.GetDbParameter(name, value);
 
             Assert.IsNotNull(parameter);
             Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
             Assert.AreEqual(name, parameter.ParameterName);
+            Assert.AreEqual(value, parameter.Value);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbParameterTests")]
+        public void CanCreateDbParameterNameValueNoPrefix()
+        {
+            string name = _faker.Random.AlphaNumeric(30);
+            int value = _faker.Random.Int();
+
+            DbParameter parameter = _factory.GetDbParameter(name, value);
+
+            Assert.IsNotNull(parameter);
+            Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
+            Assert.AreEqual(string.Concat("@", name), parameter.ParameterName);
             Assert.AreEqual(value, parameter.Value);
         }
         /// <summary>
