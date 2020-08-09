@@ -164,7 +164,7 @@ namespace ADO.Net.Client.Core.Tests
             string queryText = "Select * From Users";
             CustomDbConnection connection = new CustomDbConnection() { ConnectionString = _connectionString };
             CustomDbTransaction transaction = connection.BeginTransaction() as CustomDbTransaction;
-            CommandType type = CommandType.Text;
+            CommandType type = _faker.PickRandom<CommandType>();
             DbCommand command = _factory.GetDbCommand(type, queryText, null, connection, commandTimeout, transaction);
 
             Assert.IsNotNull(command);
@@ -200,7 +200,7 @@ namespace ADO.Net.Client.Core.Tests
             string queryText = "Select * From Users";
             CustomDbConnection connection = new CustomDbConnection() { ConnectionString = _connectionString };
             CustomDbTransaction transaction = connection.BeginTransaction() as CustomDbTransaction;
-            CommandType type = CommandType.Text;
+            CommandType type = _faker.PickRandom<CommandType>();
             DbCommand command = _factory.GetDbCommand(type, queryText, parameters, connection, commandTimeout, transaction);
 
             Assert.IsNotNull(command);
@@ -308,16 +308,13 @@ namespace ADO.Net.Client.Core.Tests
         /// </summary>
         /// <param name="direction"></param>
         [Test]
-        [TestCase(ParameterDirection.Input)]
-        [TestCase(ParameterDirection.Output)]
-        [TestCase(ParameterDirection.InputOutput)]
-        [TestCase(ParameterDirection.ReturnValue)]
         [Category("DbParameterTests")]
-        public void CanCreateParameterByDbType(ParameterDirection direction)
+        public void CanCreateParameterByDbTypeDirection()
         {
             string name = "@ParameterName";
-            int value = 200;
-            DbType dbType = DbType.Int32;
+            int value = _faker.Random.Int();
+            DbType dbType = _faker.PickRandom<DbType>();
+            ParameterDirection direction = _faker.PickRandom<ParameterDirection>();
 
             DbParameter parameter = _factory.GetDbParameter(name, value, dbType, direction);
 
@@ -332,22 +329,16 @@ namespace ADO.Net.Client.Core.Tests
         /// 
         /// </summary>
         /// <param name="size"></param>
-        /// <param name="direction"></param>
         [Test]
         [Category("DbParameterTests")]
-        [TestCase(10, ParameterDirection.Input)]
-        [TestCase(10, ParameterDirection.Output)]
-        [TestCase(10, ParameterDirection.InputOutput)]
-        [TestCase(10, ParameterDirection.ReturnValue)]
-        [TestCase(null, ParameterDirection.Input)]
-        [TestCase(null, ParameterDirection.Output)]
-        [TestCase(null, ParameterDirection.InputOutput)]
-        [TestCase(null, ParameterDirection.ReturnValue)]
-        public void CanCreateVariableSizeParameter(int? size, ParameterDirection direction)
+        [TestCase(10)]
+        [TestCase(null)]
+        public void CanCreateVariableSizeParameter(int? size)
         {
             string name = "@ParameterName";
-            string value = "ParameterValue";
+            string value = _faker.Random.AlphaNumeric(40);
             DbType dbType = DbType.AnsiString;
+            ParameterDirection direction = _faker.PickRandom<ParameterDirection>();
 
             DbParameter parameter = _factory.GetVariableSizeDbParameter(name, value, dbType, size, direction);
 
@@ -365,25 +356,15 @@ namespace ADO.Net.Client.Core.Tests
         /// </summary>
         /// <param name="scale"></param>
         /// <param name="precision"></param>
-        /// <param name="direction"></param>
         [Test]
         [Category("DbParameterTests")]
-        [TestCase(null, 10, ParameterDirection.Input)]
-        [TestCase(null, 10, ParameterDirection.Output)]
-        [TestCase(null, 10, ParameterDirection.InputOutput)]
-        [TestCase(null, 10, ParameterDirection.ReturnValue)]
-        [TestCase(10, null, ParameterDirection.Input)]
-        [TestCase(10, null, ParameterDirection.Output)]
-        [TestCase(10, null, ParameterDirection.InputOutput)]
-        [TestCase(10, null, ParameterDirection.ReturnValue)]
-        [TestCase(10, 10, ParameterDirection.Input)]
-        [TestCase(10, 10, ParameterDirection.Output)]
-        [TestCase(10, 10, ParameterDirection.InputOutput)]
-        [TestCase(10, 10, ParameterDirection.ReturnValue)]
-        public void CanCreateFixedSizeParameter(byte? scale, byte? precision, ParameterDirection direction)
+        [TestCase(null, 10)]
+        [TestCase(10, null)]
+        public void CanCreateFixedSizeParameter(byte? scale, byte? precision)
         {
+            ParameterDirection direction = _faker.PickRandom<ParameterDirection>();
             string name = "@ParameterName";
-            int value = 200;
+            int value = _faker.Random.Int();
             DbType dbType = DbType.Int32;
 
             DbParameter parameter = _factory.GetFixedSizeDbParameter(name, value, dbType, scale, precision, direction);
