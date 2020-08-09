@@ -7,6 +7,8 @@ Version History
 
 ### 1.1.8
 
+* [DbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterFormatter.cs) MapDbParameter now takes in an instance of DbParameter instead of IDbDataParameter
+* [IDbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbParameterFormatter.cs) MapDbParameter now takes in an instance of DbParameter instead of IDbDataParameter
 * [IConnectionManager](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IConnectionManager.cs) now has a read only property called Transaction of [DbTransaction](https://docs.microsoft.com/en-us/dotnet/api/system.data.common.dbtransaction?view=netcore-3.1)
 * [DbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbObjectFactory.cs) removing GetDbTransaction syc/async functions
 * [IDbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbObjectFactory.cs) removing GetDbTransaction syc/async functions
