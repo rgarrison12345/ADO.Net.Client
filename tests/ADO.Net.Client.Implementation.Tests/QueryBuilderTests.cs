@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Core;
+using Bogus;
 using MySqlConnector;
 using NUnit.Framework;
 using System;
@@ -42,6 +43,7 @@ namespace ADO.Net.Client.Implementation.Tests
     {
         #region Fields/Properties
         private readonly IDbObjectFactory _factory;
+        private readonly Faker _faker = new Faker();
         private IQueryBuilder _builder;
         #endregion
         #region Constructors
@@ -59,11 +61,14 @@ namespace ADO.Net.Client.Implementation.Tests
         #endregion
         #region Tests    
         [Test]
-        [TestCase(CommandType.StoredProcedure, 60, false, true)]
-        [TestCase(CommandType.Text, 10, true, false)]
-        public void CanBuildSQLQuery(CommandType commandType, int commandTimeout, bool shouldBePrepared, bool shouldClearContents)
+        [Category("Build")]
+        public void CanBuildSQLQuery()
         {
-            string queryString = "Query Text to check";
+            string queryString = _faker.Random.AlphaNumeric(30);
+            int commandTimeout = _faker.Random.Int();
+            bool clearContents = _faker.Random.Bool();
+            bool prepareQuery = _faker.Random.Bool();
+            CommandType commandType = _faker.PickRandom<CommandType>();
             List<DbParameter> parameters = new List<DbParameter>()
             {
                 new MySqlParameter() { ParameterName = "@Param3" },
@@ -74,20 +79,21 @@ namespace ADO.Net.Client.Implementation.Tests
             _builder.Append(queryString);
             _builder.AddParameterRange(parameters);
 
-            ISqlQuery query = _builder.CreateSQLQuery(commandType, commandTimeout, shouldBePrepared, shouldClearContents);
+            ISqlQuery query = _builder.CreateSQLQuery(commandType, commandTimeout, prepareQuery, clearContents);
 
             Assert.IsNotNull(query);
             Assert.AreEqual(commandTimeout, query.CommandTimeout);
             Assert.AreEqual(queryString, query.QueryText);
-            Assert.AreEqual(shouldBePrepared, query.ShouldBePrepared);
+            Assert.AreEqual(prepareQuery, query.ShouldBePrepared);
             Assert.AreEqual(commandType, query.QueryType);
-            Assert.IsTrue(_builder.Parameters.Count() == ((shouldClearContents == false) ? parameters.Count : 0));
-            Assert.IsTrue(_builder.QueryText == ((shouldClearContents == false) ? queryString : string.Empty));
+            Assert.IsTrue(_builder.Parameters.Count() == ((clearContents == false) ? parameters.Count : 0));
+            Assert.IsTrue(_builder.QueryText == ((clearContents == false) ? queryString : string.Empty));
         }
         /// <summary>
         /// Containtses the parameter false.
         /// </summary>
         [Test]
+        [Category("Parameters")]
         public void ContainsParameterFalse()
         {
             MySqlParameter param = new MySqlParameter() { ParameterName = "Param", Value = 12321, DbType = DbType.Int32 };
@@ -100,6 +106,7 @@ namespace ADO.Net.Client.Implementation.Tests
         /// Determines whether [contains parameter true].
         /// </summary>
         [Test]
+        [Category("Parameters")]
         public void ContainsParameterTrue()
         {
             MySqlParameter param = new MySqlParameter() { ParameterName = "Param", Value = 12321, DbType = DbType.Int32 };
@@ -112,6 +119,7 @@ namespace ADO.Net.Client.Implementation.Tests
         /// Determines whether [contains parameter name false].
         /// </summary>
         [Test]
+        [Category("Parameters")]
         public void ContainsParameterNameFalse()
         {
             List<DbParameter> parameters = new List<DbParameter>()
@@ -126,6 +134,7 @@ namespace ADO.Net.Client.Implementation.Tests
             Assert.That(_builder.Contains("@Param4") == false);
         }
         [Test]
+        [Category("Parameters")]
         public void ContainsParameterNameTrue()
         {
             List<DbParameter> parameters = new List<DbParameter>()
@@ -142,6 +151,7 @@ namespace ADO.Net.Client.Implementation.Tests
             Assert.That(_builder.Contains("@Param2"));
         }
         [Test]
+        [Category("Parameters")]
         public void RejectsDuplicateParameterName()
         {
             MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1" };
@@ -151,6 +161,7 @@ namespace ADO.Net.Client.Implementation.Tests
             Assert.Throws<ArgumentException>(() => _builder.AddParameter(new MySqlParameter() { ParameterName = "@Param1" }));
         }
         [Test]
+        [Category("Parameters")]
         public void RejectsDuplicateParameterNamesInEnumerable()
         {
             List<DbParameter> parameters = new List<DbParameter>()
@@ -163,6 +174,7 @@ namespace ADO.Net.Client.Implementation.Tests
             Assert.Throws<ArgumentException>(() => _builder.AddParameterRange(parameters));
         }
         [Test]
+        [Category("Parameters")]
         public void RejectsDuplicateParameterNames()
         {
             MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1" };
@@ -181,6 +193,7 @@ namespace ADO.Net.Client.Implementation.Tests
         /// Determines whether this instance [can append string].
         /// </summary>
         [Test]
+        [Category("SQL")]
         public void CanAppendString()
         {
             string valueToAppend = "Value To Append";
@@ -231,6 +244,7 @@ namespace ADO.Net.Client.Implementation.Tests
         /// 
         /// </summary>
         [Test]
+        [Category("Parameters")]
         public void CanClearParameters()
         {
             List<DbParameter> parameters = new List<DbParameter>()
@@ -254,6 +268,7 @@ namespace ADO.Net.Client.Implementation.Tests
         /// Determines whether this instance [can clear SQL string].
         /// </summary>
         [Test]
+        [Category("SQL")]
         public void CanClearSqlString()
         {
             _builder.Append("A value to append \n");
@@ -268,6 +283,7 @@ namespace ADO.Net.Client.Implementation.Tests
         /// 
         /// </summary>
         [Test]
+        [Category("Parameters")]
         public void CanFindParameterByName()
         {
             MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1", Value = 1};
@@ -286,6 +302,7 @@ namespace ADO.Net.Client.Implementation.Tests
         /// 
         /// </summary>
         [Test]
+        [Category("Parameters")]
         public void CanRemoveParameterByName()
         {
             MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1", Value = 1 };
@@ -302,6 +319,7 @@ namespace ADO.Net.Client.Implementation.Tests
         /// 
         /// </summary>
         [Test]
+        [Category("Parameters")]
         public void CanReplaceParameterByName()
         {
             MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1", Value = 1 };
@@ -321,6 +339,7 @@ namespace ADO.Net.Client.Implementation.Tests
         /// 
         /// </summary>
         [Test]
+        [Category("Parameters")]
         public void CanSetParameterValueByName()
         {
             MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1", Value = 1 };
