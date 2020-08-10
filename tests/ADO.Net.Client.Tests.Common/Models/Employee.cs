@@ -37,9 +37,12 @@ namespace ADO.Net.Client.Tests.Common.Models
         [DbFieldIgnore]
         public decimal IgnoreField { get; set; }
         public int Int32 { get; set; }
-        public decimal Salary { get; }
+        [DbField("Earnings")]
+        public decimal Salary { get; set; }
         public EmployeeType Type { get; set; }
         public string PhoneNumber { get; set; }
+        [DbField("EmployeeTitle", "SoftwareDeveloper")]
+        public string Title { get; set; }
         public Guid? ManagerID { get; set; }
         public PhoneType? PhoneType { get; set; }
     }

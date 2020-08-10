@@ -156,6 +156,32 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsNull(model.ManagerID);
         }
         [Test]
+        public void MapDbFieldNull()
+        {
+            List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("EmployeeTitle", DBNull.Value)
+            };
+            CustomDataRecord record = new CustomDataRecord(kvp);
+            Employee model = _mapper.MapRecord<Employee>(record);
+
+            Assert.IsTrue(model.Title == "SoftwareDeveloper");
+        }
+        [Test]
+        public void MapDbField()
+        {
+            decimal earnings = _faker.Random.Decimal();
+
+            List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("Earnings", earnings)
+            };
+            CustomDataRecord record = new CustomDataRecord(kvp);
+            Employee model = _mapper.MapRecord<Employee>(record);
+
+            Assert.IsTrue(model.Salary == earnings);
+        }
+        [Test]
         public void MapNonExistentProperty()
         {
             decimal wage = _faker.Random.Decimal();
