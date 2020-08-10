@@ -115,6 +115,21 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.AreEqual(type, model.Type);
         }
+        /// <summary>
+        /// Maps the normal property.
+        /// </summary>
+        [Test]
+        public void MapEnumNullProperty()
+        {
+            List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("PhoneType", DBNull.Value)
+            };
+            CustomDataRecord record = new CustomDataRecord(kvp);
+            Employee model = _mapper.MapRecord<Employee>(record);
+
+            Assert.IsNull(model.PhoneType);
+        }
         [Test]
         public void MapNullableWithValue()
         {
@@ -139,6 +154,20 @@ namespace ADO.Net.Client.Core.Tests
             Employee model = _mapper.MapRecord<Employee>(record);
 
             Assert.IsNull(model.ManagerID);
+        }
+        [Test]
+        public void MapNonExistentProperty()
+        {
+            decimal wage = _faker.Random.Decimal();
+
+            List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("Wage", wage)
+            };
+            CustomDataRecord record = new CustomDataRecord(kvp);
+            Employee model = _mapper.MapRecord<Employee>(record);
+
+            Assert.IsTrue(model.Salary == 0);
         }
         #endregion
     }

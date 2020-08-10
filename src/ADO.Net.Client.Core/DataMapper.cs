@@ -149,23 +149,29 @@ namespace ADO.Net.Client.Core
                     value = null;
                 }
 
+                bool nullable = info.PropertyType.IsNullableGenericType();
+                bool isEnum = (nullable == false) ? info.PropertyType.IsEnum : (Nullable.GetUnderlyingType(info.PropertyType)?.IsEnum == true);
+
                 //Might need to change the value
                 if (info.GetCustomAttributes(false).Where(x => x.GetType() == typeof(DbField)).SingleOrDefault() is DbField field && value == null)
                 {
                     //Set new value
                     value = field.DefaultValueIfNull;
                 }
-                if (info.PropertyType.IsNullableGenericType() == true)
+                if (nullable == true && isEnum == false)
                 {
                     if (value != null)
                     {
                         info.SetValue(returnType, Convert.ChangeType(value, Nullable.GetUnderlyingType(info.PropertyType)), null);
                     }
                 }
-                else if (info.PropertyType.GetTypeInfo().IsEnum == true && value != null)
+                else if (isEnum == true)
                 {
-                    //Property is an enum
-                    info.SetValue(returnType, Enum.Parse(info.PropertyType, value.ToString()), null);
+                    if (value != null)
+                    {
+                        //Property is an enum
+                        info.SetValue(returnType, Enum.Parse(info.PropertyType, value.ToString()), null);
+                    }
                 }
                 else
                 {

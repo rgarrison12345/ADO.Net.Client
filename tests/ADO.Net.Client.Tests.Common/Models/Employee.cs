@@ -41,6 +41,13 @@ namespace ADO.Net.Client.Tests.Common.Models
         public EmployeeType Type { get; set; }
         public string PhoneNumber { get; set; }
         public Guid? ManagerID { get; set; }
+        public PhoneType? PhoneType { get; set; }
+    }
+    public enum PhoneType
+    {
+        Home = 1,
+        Business = 2,
+        Mobile = 3
     }
     public enum EmployeeType
     {
