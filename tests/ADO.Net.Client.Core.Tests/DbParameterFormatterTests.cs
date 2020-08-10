@@ -356,7 +356,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("MapValue")]
         public void GetsNormalValue()
         {
-            BasicModel model = new BasicModel() { Int32 = _faker.Random.Int() };
+            Employee model = new Employee() { Int32 = _faker.Random.Int() };
 
             Assert.AreEqual(_formatter.MapParameterValue(model.Int32, model.GetType().GetProperty(nameof(model.Int32))), model.Int32);
         }
@@ -365,12 +365,12 @@ namespace ADO.Net.Client.Core.Tests
         public void GetGuidString()
         {
             DbParameterFormatter formatter = new DbParameterFormatter(false);
-            BasicModel model = new BasicModel()
+            Employee model = new Employee()
             {
-                GuidValue = Guid.NewGuid()
+                EmployeeID= Guid.NewGuid()
             };
 
-            Assert.AreEqual(formatter.MapParameterValue(model.GuidValue, model.GetType().GetProperty(nameof(model.GuidValue))), model.GuidValue.ToString());
+            Assert.AreEqual(formatter.MapParameterValue(model.EmployeeID, model.GetType().GetProperty(nameof(model.EmployeeID))), model.EmployeeID.ToString());
         }
         #endregion
     }

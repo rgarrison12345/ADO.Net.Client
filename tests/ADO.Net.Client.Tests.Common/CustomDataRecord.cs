@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using System;
+using System.Collections.Generic;
 using System.Data;
 #endregion
 
@@ -35,11 +36,22 @@ namespace ADO.Net.Client.Tests.Common
     public class CustomDataRecord : IDataRecord
     {
         #region Fields/Properties
-        public object this[int i] => throw new NotImplementedException();
+        private readonly List<KeyValuePair<string, object>> _kvp;
+        public object this[int i] => GetValue(i);
 
-        public object this[string name] => throw new NotImplementedException();
+        public object this[string name] => GetOrdinal(name);
 
-        public int FieldCount => throw new NotImplementedException();
+        public int FieldCount => _kvp.Count;
+        #endregion
+        #region Constructors        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomDataRecord"/> class.
+        /// </summary>
+        /// <param name="kvp">The KVP.</param>
+        public CustomDataRecord(List<KeyValuePair<string, object>> kvp)
+        {
+            _kvp = kvp;
+        }
         #endregion
         #region Utility Methods
         public bool GetBoolean(int i)
@@ -124,7 +136,7 @@ namespace ADO.Net.Client.Tests.Common
 
         public virtual string GetName(int i)
         {
-            throw new NotImplementedException();
+            return _kvp[i].Key;
         }
 
         public int GetOrdinal(string name)
@@ -139,7 +151,7 @@ namespace ADO.Net.Client.Tests.Common
 
         public virtual object GetValue(int i)
         {
-            throw new NotImplementedException();
+            return _kvp[i].Value;
         }
 
         public int GetValues(object[] values)

@@ -31,12 +31,19 @@ namespace ADO.Net.Client.Tests.Common.Models
     /// <summary>
     /// 
     /// </summary>
-    public class BasicModel
+    public class Employee
     {
-        public int Int32 { get; set; }
-        public Guid GuidValue { get; set; }
+        public Guid EmployeeID { get; set; }
         [DbFieldIgnore]
         public decimal IgnoreField { get; set; }
-        public decimal ReadOnlyField { get; }
+        public int Int32 { get; set; }
+        public decimal Salary { get; }
+        public EmployeeType Type { get; set; }
+        public string PhoneNumber { get; set; }
+    }
+    public enum EmployeeType
+    {
+        Employee = 1,
+        Manager = 2
     }
 }

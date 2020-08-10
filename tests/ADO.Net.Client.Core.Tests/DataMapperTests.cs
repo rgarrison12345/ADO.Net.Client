@@ -22,8 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using ADO.Net.Client.Tests.Common;
 using ADO.Net.Client.Tests.Common.Models;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 #endregion
 
 namespace ADO.Net.Client.Core.Tests
@@ -47,10 +50,47 @@ namespace ADO.Net.Client.Core.Tests
         public void MapRecordCreateInstance()
         {
             DataMapper mapper = new DataMapper();
+            List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
+            {
 
-            BasicModel model = mapper.MapRecord<BasicModel>(null);
+            };
+            CustomDataRecord record = new CustomDataRecord(kvp);
+            Employee model = mapper.MapRecord<Employee>(record);
 
             Assert.IsNotNull(model);
+        }
+        /// <summary>
+        /// Maps the normal property database null.
+        /// </summary>
+        [Test]
+        public void MapNormalPropertyDBNull()
+        {
+            DataMapper mapper = new DataMapper();
+            List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("PhoneNumber", DBNull.Value)
+            };
+            CustomDataRecord record = new CustomDataRecord(kvp);
+            Employee model = mapper.MapRecord<Employee>(record);
+
+            Assert.IsNull(model.PhoneNumber);
+        }
+        /// <summary>
+        /// Maps the normal property.
+        /// </summary>
+        [Test]
+        public void MapNormalProperty()
+        {
+            DataMapper mapper = new DataMapper();
+            Guid employeedID = Guid.NewGuid();
+            List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("EmployeeID", employeedID)
+            };
+            CustomDataRecord record = new CustomDataRecord(kvp);
+            Employee model = mapper.MapRecord<Employee>(record);
+
+            Assert.AreEqual(employeedID, model.EmployeeID);
         }
         #endregion
     }
