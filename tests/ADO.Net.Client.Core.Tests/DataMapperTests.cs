@@ -24,6 +24,7 @@ SOFTWARE.*/
 #region Using Statements
 using ADO.Net.Client.Tests.Common;
 using ADO.Net.Client.Tests.Common.Models;
+using Bogus;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -38,9 +39,18 @@ namespace ADO.Net.Client.Core.Tests
     [Category("Mapper Tests")]
     public class DataMapperTests
     {
+        #region Fields/Properties
+        private readonly Faker _faker = new Faker();
+        private DataMapper _mapper;
+        #endregion
         #region Constructors
         #endregion
         #region Setup/Teardown
+        [SetUp]
+        public void Setup()
+        {
+            _mapper = new DataMapper();
+        }
         #endregion
         #region Tests        
         /// <summary>
@@ -49,13 +59,12 @@ namespace ADO.Net.Client.Core.Tests
         [Test]
         public void MapRecordCreateInstance()
         {
-            DataMapper mapper = new DataMapper();
             List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
             {
 
             };
             CustomDataRecord record = new CustomDataRecord(kvp);
-            Employee model = mapper.MapRecord<Employee>(record);
+            Employee model = _mapper.MapRecord<Employee>(record);
 
             Assert.IsNotNull(model);
         }
@@ -65,13 +74,12 @@ namespace ADO.Net.Client.Core.Tests
         [Test]
         public void MapNormalPropertyDBNull()
         {
-            DataMapper mapper = new DataMapper();
             List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
             {
                 new KeyValuePair<string, object>("PhoneNumber", DBNull.Value)
             };
             CustomDataRecord record = new CustomDataRecord(kvp);
-            Employee model = mapper.MapRecord<Employee>(record);
+            Employee model = _mapper.MapRecord<Employee>(record);
 
             Assert.IsNull(model.PhoneNumber);
         }
@@ -81,16 +89,56 @@ namespace ADO.Net.Client.Core.Tests
         [Test]
         public void MapNormalProperty()
         {
-            DataMapper mapper = new DataMapper();
             Guid employeedID = Guid.NewGuid();
             List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
             {
                 new KeyValuePair<string, object>("EmployeeID", employeedID)
             };
             CustomDataRecord record = new CustomDataRecord(kvp);
-            Employee model = mapper.MapRecord<Employee>(record);
+            Employee model = _mapper.MapRecord<Employee>(record);
 
             Assert.AreEqual(employeedID, model.EmployeeID);
+        }
+        /// <summary>
+        /// Maps the normal property.
+        /// </summary>
+        [Test]
+        public void MapEnumProperty()
+        {
+            EmployeeType type = _faker.PickRandom<EmployeeType>();
+            List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("Type", type)
+            };
+            CustomDataRecord record = new CustomDataRecord(kvp);
+            Employee model = _mapper.MapRecord<Employee>(record);
+
+            Assert.AreEqual(type, model.Type);
+        }
+        [Test]
+        public void MapNullableWithValue()
+        {
+            Guid managerID = Guid.NewGuid();
+            List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("ManagerID", managerID)
+            };
+            CustomDataRecord record = new CustomDataRecord(kvp);
+            Employee model = _mapper.MapRecord<Employee>(record);
+
+            Assert.AreEqual(managerID, model.ManagerID);
+        }
+        [Test]
+        public void MapNullableWithNullValue()
+        { 
+            List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("ManagerID", DBNull.Value)
+            };
+            CustomDataRecord record = new CustomDataRecord(kvp);
+            Employee model = _mapper.MapRecord<Employee>(record);
+
+            Assert.IsNull(model.ManagerID);
         }
         #endregion
     }

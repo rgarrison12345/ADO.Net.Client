@@ -40,6 +40,7 @@ namespace ADO.Net.Client.Tests.Common.Models
         public decimal Salary { get; }
         public EmployeeType Type { get; set; }
         public string PhoneNumber { get; set; }
+        public Guid? ManagerID { get; set; }
     }
     public enum EmployeeType
     {

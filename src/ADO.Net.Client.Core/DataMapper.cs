@@ -157,11 +157,7 @@ namespace ADO.Net.Client.Core
                 }
                 if (info.PropertyType.IsNullableGenericType() == true)
                 {
-                    if (value == null)
-                    {
-                        info.SetValue(returnType, null, null);
-                    }
-                    else
+                    if (value != null)
                     {
                         info.SetValue(returnType, Convert.ChangeType(value, Nullable.GetUnderlyingType(info.PropertyType)), null);
                     }
