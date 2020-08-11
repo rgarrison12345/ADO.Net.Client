@@ -143,7 +143,7 @@ namespace ADO.Net.Client.Core
                     continue;
                 }
 
-                //Check if this is the databae representation of null
+                //Check if this is the database representation of null
                 if (value == DBNull.Value)
                 {
                     value = null;
