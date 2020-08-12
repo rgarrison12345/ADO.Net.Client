@@ -6,7 +6,7 @@
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <Version>1.1.9.1</Version>
-    <PackageTags>ORM ADO.NET ADO SQL .NET Database RDBMS Generic DAL ANSI</PackageTags>
+    <PackageTags>micro-orm orm sql ado.net</PackageTags>
     <Authors>Robert Garrison</Authors>
     <Company>Robert Garrison</Company>
     <Product>ADO.Net.Client.Core</Product>
