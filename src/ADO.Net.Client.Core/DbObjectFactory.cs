@@ -370,19 +370,16 @@ namespace ADO.Net.Client.Core
             return parameter;
         }
         /// <summary>
-        /// Gets an initialized instance of a <see cref="DbParameter"/> object based on the specified provider
+        /// Gets an initialized instance of a <see cref="DbParameter"/>
         /// </summary>
-        /// <param name="paramDirection"></param>
-        /// <param name="parameterValue">The value of the parameter</param>
-        /// <param name="info">The information.</param>
+        /// <param name="parameterValue">The value t0 assign to the <see cref="DbParameter"/></param>
+        /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
         /// <returns></returns>
-        public DbParameter GetDbParameter(object parameterValue, PropertyInfo info, ParameterDirection paramDirection = ParameterDirection.Input)
+        public DbParameter GetDbParameter(object parameterValue, PropertyInfo info)
         {
             DbParameter parameter = GetDbParameter();
 
             _dbParameterFormatter.MapDbParameter(parameter, parameterValue, info);
-
-            parameter.Direction = paramDirection;
 
             return parameter;
         }
@@ -444,11 +441,7 @@ namespace ADO.Net.Client.Core
                     //Loop through each property
                     foreach (PropertyInfo prop in readableProps)
                     {
-                        DbParameter param = GetDbParameter();
-
-                        _dbParameterFormatter.MapDbParameter(param, prop.GetValue(value, null), prop);
-
-                        result.Add(param);
+                        result.Add(GetDbParameter(prop.GetValue(value, null), prop));
                     }
                 }
             }
