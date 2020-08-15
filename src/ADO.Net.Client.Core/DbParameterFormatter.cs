@@ -235,10 +235,10 @@ namespace ADO.Net.Client.Core
             }
         }
         /// <summary>
-        /// 
+        /// Maps the name of the parameter.
         /// </summary>
-        /// <param name="parameterName"></param>
-        /// <returns></returns>
+        /// <param name="parameterName">Name of the parameter.</param>
+        /// <returns>Returns the name of a parameter</returns>
         public string MapParameterName(string parameterName)
         {
             return parameterName.StartsWith(ParameterNamePrefix) == true ? parameterName : string.Concat(ParameterNamePrefix, parameterName);
@@ -251,7 +251,7 @@ namespace ADO.Net.Client.Core
         /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
         public void MapDbParameter(DbParameter parameter, object parameterValue, PropertyInfo info)
         {
-            parameter.ParameterName = string.Concat(ParameterNamePrefix, info.Name);
+            parameter.ParameterName = MapParameterName(info.Name);
             parameter.Value = MapParameterValue(parameterValue, info);
             parameter.DbType = MapDbType(info);
             parameter.Direction = MapParameterDirection(info);

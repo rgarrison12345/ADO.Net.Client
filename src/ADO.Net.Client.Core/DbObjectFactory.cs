@@ -370,10 +370,10 @@ namespace ADO.Net.Client.Core
             return parameter;
         }
         /// <summary>
-        /// Gets an initialized instance of a <see cref="DbParameter"/> object based on the specified provider
+        /// Gets an initialized instance of a <see cref="DbParameter"/>
         /// </summary>
-        /// <param name="parameterValue">The value of the parameter</param>
-        /// <param name="info">The information.</param>
+        /// <param name="parameterValue">The value t0 assign to the <see cref="DbParameter"/></param>
+        /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
         /// <returns></returns>
         public DbParameter GetDbParameter(object parameterValue, PropertyInfo info)
         {
