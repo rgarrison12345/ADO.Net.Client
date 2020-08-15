@@ -52,6 +52,12 @@ namespace ADO.Net.Client.Core
         #endregion
         #region Utility Methods  
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameterName"></param>
+        /// <returns></returns>
+        string MapParameterName(string parameterName);
+        /// <summary>
         /// Maps an instance of a <see cref="DbParameter"/> using the passed in <paramref name="info"/> <paramref name="parameterValue"/>
         /// </summary>
         /// <param name="parameter">An instance of <see cref="DbParameter"/></param>

@@ -235,6 +235,15 @@ namespace ADO.Net.Client.Core
             }
         }
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameterName"></param>
+        /// <returns></returns>
+        public string MapParameterName(string parameterName)
+        {
+            return parameterName.StartsWith(ParameterNamePrefix) == true ? parameterName : string.Concat(ParameterNamePrefix, parameterName);
+        }
+        /// <summary>
         /// Maps an instance of a <see cref="IDbDataParameter"/> using the passed in <paramref name="info"/> <paramref name="parameterValue"/>
         /// </summary>
         /// <param name="parameter">An instance of <see cref="IDbDataParameter"/></param>

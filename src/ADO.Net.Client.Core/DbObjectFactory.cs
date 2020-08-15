@@ -372,17 +372,14 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Gets an initialized instance of a <see cref="DbParameter"/> object based on the specified provider
         /// </summary>
-        /// <param name="paramDirection"></param>
         /// <param name="parameterValue">The value of the parameter</param>
         /// <param name="info">The information.</param>
         /// <returns></returns>
-        public DbParameter GetDbParameter(object parameterValue, PropertyInfo info, ParameterDirection paramDirection = ParameterDirection.Input)
+        public DbParameter GetDbParameter(object parameterValue, PropertyInfo info)
         {
             DbParameter parameter = GetDbParameter();
 
             _dbParameterFormatter.MapDbParameter(parameter, parameterValue, info);
-
-            parameter.Direction = paramDirection;
 
             return parameter;
         }
@@ -398,7 +395,7 @@ namespace ADO.Net.Client.Core
             DbParameter parameter = GetDbParameter();
 
             parameter.Value = parameterValue ?? DBNull.Value;
-            parameter.ParameterName = parameterName.StartsWith(_dbParameterFormatter.ParameterNamePrefix) == true ? parameterName : string.Concat(_dbParameterFormatter.ParameterNamePrefix, parameterName);
+            parameter.ParameterName = _dbParameterFormatter.MapParameterName(parameterName);
 
             //Return this back to the caller
             return parameter;
@@ -444,11 +441,7 @@ namespace ADO.Net.Client.Core
                     //Loop through each property
                     foreach (PropertyInfo prop in readableProps)
                     {
-                        DbParameter param = GetDbParameter();
-
-                        _dbParameterFormatter.MapDbParameter(param, prop.GetValue(value, null), prop);
-
-                        result.Add(param);
+                        result.Add(GetDbParameter(prop.GetValue(value, null), prop));
                     }
                 }
             }
