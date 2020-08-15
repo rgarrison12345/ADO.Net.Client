@@ -52,7 +52,11 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Gets an instance of <typeparamref name="T"/></returns>
         public async Task<T> ReadObjectAsync<T>(CancellationToken token = default) where T : class
         {
-            await _reader.ReadAsync(token).ConfigureAwait(false);
+            //Move to the next record if possible
+            if (await _reader.ReadAsync(token).ConfigureAwait(false) == false)
+            {
+                return default;
+            }
 
             return _mapper.MapRecord<T>(_reader);
         }

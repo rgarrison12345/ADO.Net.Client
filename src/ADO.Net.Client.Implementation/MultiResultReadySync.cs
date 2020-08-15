@@ -63,8 +63,11 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Gets an instance of <typeparamref name="T"/></returns>
         public T ReadObject<T>() where T : class
         {
-            //Move to the next record
-            _reader.Read();
+            //Move to the next record if possible
+            if(_reader.Read() == false)
+            {
+                return default;
+            }
 
             return _mapper.MapRecord<T>(_reader);
         }

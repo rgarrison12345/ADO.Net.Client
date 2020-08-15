@@ -75,7 +75,7 @@ namespace ADO.Net.Client.Implementation.Tests
         /// </summary>
         [Test]
         [Category("MultiResultReader Async Tests")]
-        public async Task WhenReadObject_IsCalled_ShouldCall_ReaderReadAsync()
+        public async Task WhenReadObject_IsCalled_ShouldCall_ReaderReadAsyncTrue()
         {
             int delay = _faker.Random.Int(0, 1000);
 
@@ -92,6 +92,7 @@ namespace ADO.Net.Client.Implementation.Tests
                     DateOfBirth = dateBirth
                 };
                 _mockMapper.Setup(x => x.MapRecord<PersonModel>(_mockReader.Object)).Returns(expectedModel);
+                _mockReader.Setup(x => x.ReadAsync(source.Token)).ReturnsAsync(true);
 
                 MultiResultReader multiReader = new MultiResultReader(_mockReader.Object, _mockMapper.Object);
                 PersonModel returnedModel = await multiReader.ReadObjectAsync<PersonModel>(source.Token);
@@ -103,6 +104,40 @@ namespace ADO.Net.Client.Implementation.Tests
 
                 //Verify the readers read method was called
                 _mockMapper.Verify(x => x.MapRecord<PersonModel>(_mockReader.Object), Times.Once);
+                _mockReader.Verify(x => x.ReadAsync(source.Token), Times.Once);
+            }
+        }
+        /// <summary>
+        /// Whens the read object is called should call reader read asynchronous.
+        /// </summary>
+        [Test]
+        [Category("MultiResultReader Async Tests")]
+        public async Task WhenReadObject_IsCalled_ShouldCall_ReaderReadAsyncfalse()
+        {
+            int delay = _faker.Random.Int(0, 1000);
+
+            //Wrap in a using statement to dispose of resources automatically
+            using (CancellationTokenSource source = new CancellationTokenSource(delay))
+            {
+                DateTime dateBirth = _faker.Person.DateOfBirth;
+                string firstName = _faker.Person.FirstName;
+                string lastName = _faker.Person.LastName;
+                PersonModel expectedModel = new PersonModel()
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    DateOfBirth = dateBirth
+                };
+                _mockMapper.Setup(x => x.MapRecord<PersonModel>(_mockReader.Object)).Returns(expectedModel);
+                _mockReader.Setup(x => x.ReadAsync(source.Token)).ReturnsAsync(false);
+
+                MultiResultReader multiReader = new MultiResultReader(_mockReader.Object, _mockMapper.Object);
+                PersonModel returnedModel = await multiReader.ReadObjectAsync<PersonModel>(source.Token);
+
+                Assert.AreEqual(returnedModel, default(PersonModel));
+
+                //Verify the readers read method was called
+                _mockMapper.Verify(x => x.MapRecord<PersonModel>(_mockReader.Object), Times.Never);
                 _mockReader.Verify(x => x.ReadAsync(source.Token), Times.Once);
             }
         }

@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.1.9.2
+
+* Updating to ADO.Net.Client.Implementation 1.1.8.2
+
 ### 1.1.9.1
 
 * Nullable enum set value fix in MapRecord

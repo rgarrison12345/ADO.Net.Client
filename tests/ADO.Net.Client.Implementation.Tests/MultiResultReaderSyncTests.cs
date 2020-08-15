@@ -22,10 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using ADO.Net.Client.Tests.Common;
 using ADO.Net.Client.Tests.Common.Models;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 #endregion
 
 namespace ADO.Net.Client.Implementation.Tests
@@ -84,18 +87,45 @@ namespace ADO.Net.Client.Implementation.Tests
         /// </summary>
         [Test]
         [Category("MultiResultReader Sync Tests")]
-        public void WhenReadObject_IsCalled_ShouldCall_ReaderRead()
+        public void WhenReadObject_IsCalled_ShouldCall_ReaderReadFalse()
         {
             DateTime dateBirth = _faker.Person.DateOfBirth;
             string firstName = _faker.Person.FirstName;
             string lastName = _faker.Person.LastName;
-            int delay = _faker.Random.Int(0, 1000);
             PersonModel expectedModel = new PersonModel()
             {
                 FirstName = firstName,
                 LastName = lastName,
                 DateOfBirth = dateBirth
             };
+            _mockReader.Setup(x => x.Read()).Returns(false);
+            _mockMapper.Setup(x => x.MapRecord<PersonModel>(_mockReader.Object)).Returns(expectedModel);
+
+            MultiResultReader reader = new MultiResultReader(_mockReader.Object, _mockMapper.Object);
+            PersonModel returnedModel = reader.ReadObject<PersonModel>();
+
+            Assert.AreEqual(returnedModel, default(PersonModel));
+
+            _mockReader.Verify(x => x.Read(), Times.Once);
+            _mockMapper.Verify(x => x.MapRecord<PersonModel>(_mockReader.Object), Times.Never);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("MultiResultReader Sync Tests")]
+        public void WhenReadObject_IsCalled_ShouldCall_ReaderReadTrue()
+        {
+            DateTime dateBirth = _faker.Person.DateOfBirth;
+            string firstName = _faker.Person.FirstName;
+            string lastName = _faker.Person.LastName;
+            PersonModel expectedModel = new PersonModel()
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                DateOfBirth = dateBirth
+            };
+            _mockReader.Setup(x => x.Read()).Returns(true);
             _mockMapper.Setup(x => x.MapRecord<PersonModel>(_mockReader.Object)).Returns(expectedModel);
 
             MultiResultReader reader = new MultiResultReader(_mockReader.Object, _mockMapper.Object);
