@@ -25,6 +25,7 @@ SOFTWARE.*/
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Reflection;
 #endregion
 
 namespace ADO.Net.Client.Core
@@ -124,6 +125,13 @@ namespace ADO.Net.Client.Core
         /// <param name="parameterValue">The value of the parameter</param>
         /// <returns>Returns an instance of <see cref="DbParameter"/> type with information passed into procedure</returns>
         DbParameter GetDbParameter(string parameterName, object parameterValue);
+        /// <summary>
+        /// Gets an initialized instance of a <see cref="DbParameter"/>
+        /// </summary>
+        /// <param name="parameterValue">The value t0 assign to the <see cref="DbParameter"/></param>
+        /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
+        /// <returns></returns>
+        DbParameter GetDbParameter(object parameterValue, PropertyInfo info);
         /// <summary>
         /// Gets an initialized instance of a <see cref="DbParameter"/> object based on the specified provider
         /// </summary>
