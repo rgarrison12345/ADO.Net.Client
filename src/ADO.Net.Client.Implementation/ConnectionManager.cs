@@ -118,7 +118,7 @@ namespace ADO.Net.Client.Implementation
             Transaction = Connection.BeginTransaction(level);
         }
         /// <summary>
-        /// Clears the current <see cref="Transaction"/>
+        /// Clears the current <see cref="DbTransaction"/>
         /// </summary>
         public void ClearTransaction()
         {

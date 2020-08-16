@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Tests.Common;
+using Moq;
 using NUnit.Framework;
 #endregion
 
@@ -37,10 +38,11 @@ namespace ADO.Net.Client.Core.Tests
     public class DbProviderFactoryTests : BaseTests
     {
         #region Setup/Teardown
-        [OneTimeSetUp]
-        public override void OneTimeSetup()
+        [SetUp]
+        public override void Setup()
         {
-            _factory = new DbObjectFactory(CustomDbProviderFactory.Instance);
+            _formatter = new Mock<IDbParameterFormatter>();
+            _factory = new DbObjectFactory(CustomDbProviderFactory.Instance, _formatter.Object);
         }
         #endregion
     }

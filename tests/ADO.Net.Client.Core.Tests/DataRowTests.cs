@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Tests.Common;
+using Moq;
 using NUnit.Framework;
 using System.Data;
 using System.Data.Common;
@@ -43,9 +44,10 @@ namespace ADO.Net.Client.Core.Tests
         /// <summary>
         /// Called when [time setup].
         /// </summary>
-        [OneTimeSetUp]
-        public override void OneTimeSetup()
+        [SetUp]
+        public override void Setup()
         {
+            _formatter = new Mock<IDbParameterFormatter>();
             DbProviderFactories.RegisterFactory("ADO.Net.Client.Tests.Common", CustomDbProviderFactory.Instance);
 
             //For regular .NET framework the driver must be installed in the Global Assembly Cache
@@ -53,7 +55,7 @@ namespace ADO.Net.Client.Core.Tests
             DataRow row = (from a in table.Rows.Cast<DataRow>()
                            where a.ItemArray[2].ToString() == "ADO.Net.Client.Tests.Common"
                            select a).FirstOrDefault();
-            _factory = new DbObjectFactory(row);
+            _factory = new DbObjectFactory(row, _formatter.Object);
         }
         #endregion
     }

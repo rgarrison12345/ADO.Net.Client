@@ -186,6 +186,15 @@ namespace ADO.Net.Client.Core
             }
         }
         /// <summary>
+        /// Maps the parameter value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public object MapParameterValue(object value)
+        {
+            return value ?? DBNull.Value;
+        }
+        /// <summary>
         /// Maps the value for <see cref="DbParameter.Value"/> from a <paramref name="value"/> and an instance of <paramref name="info"/>
         /// </summary>
         /// <param name="value">The value for the parameter</param>

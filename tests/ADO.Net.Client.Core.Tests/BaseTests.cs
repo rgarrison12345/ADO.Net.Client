@@ -24,6 +24,7 @@ SOFTWARE.*/
 #region Using Statements
 using ADO.Net.Client.Tests.Common;
 using Bogus;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -44,12 +45,13 @@ namespace ADO.Net.Client.Core.Tests
         private readonly Faker _faker = new Faker();
         private readonly string _connectionString = "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;";
         protected IDbObjectFactory _factory;
+        protected Mock<IDbParameterFormatter> _formatter = new Mock<IDbParameterFormatter>();
         #endregion
-        #region Setup/Teardown        
+        #region Setup/Teardown                
         /// <summary>
-        /// Called when [time setup].
+        /// Setups this instance.
         /// </summary>
-        public abstract void OneTimeSetup();
+        public abstract void Setup();
         #endregion
         #region Basic Tests
         /// <summary>
@@ -117,6 +119,7 @@ namespace ADO.Net.Client.Core.Tests
             DbCommand command = _factory.GetDbCommand();
 
             Assert.IsNotNull(command);
+           
             Assert.IsInstanceOf(typeof(CustomDbCommand), command);
         }
         /// <summary>
@@ -257,34 +260,19 @@ namespace ADO.Net.Client.Core.Tests
         /// </summary>
         [Test]
         [Category("DbParameterTests")]
-        public void CanCreateDbParameterNameValueWithPrefix()
+        public void CanCreateDbParameterNameValue()
         {
             string name = $"@{_faker.Random.AlphaNumeric(30)}";
             int value = _faker.Random.Int();
 
+            _formatter.Setup(x => x.MapParameterValue(value)).Returns(value).Verifiable();
+            _formatter.Setup(x => x.MapParameterName(name)).Returns(name).Verifiable();
             DbParameter parameter = _factory.GetDbParameter(name, value);
 
             Assert.IsNotNull(parameter);
             Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
-            Assert.AreEqual(name, parameter.ParameterName);
-            Assert.AreEqual(value, parameter.Value);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        [Test]
-        [Category("DbParameterTests")]
-        public void CanCreateDbParameterNameValueNoPrefix()
-        {
-            string name = _faker.Random.AlphaNumeric(30);
-            int value = _faker.Random.Int();
-
-            DbParameter parameter = _factory.GetDbParameter(name, value);
-
-            Assert.IsNotNull(parameter);
-            Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
-            Assert.AreEqual(string.Concat("@", name), parameter.ParameterName);
-            Assert.AreEqual(value, parameter.Value);
+            _formatter.Verify(x => x.MapParameterName(name), Times.Once);
+            _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
         }
         /// <summary>
         /// 
@@ -293,15 +281,17 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbParameterTests")]
         public void CanCreateDbParameterNameNullValue()
         {
-            string name = "@ParameterName";
+            string name = $"@{_faker.Random.AlphaNumeric(30)}";
             object value = null;
 
+            _formatter.Setup(x => x.MapParameterValue(value)).Returns(value).Verifiable();
+            _formatter.Setup(x => x.MapParameterName(name)).Returns(name).Verifiable();
             DbParameter parameter = _factory.GetDbParameter(name, value);
 
             Assert.IsNotNull(parameter);
             Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
-            Assert.AreEqual(name, parameter.ParameterName);
-            Assert.AreEqual(DBNull.Value, parameter.Value);
+            _formatter.Verify(x => x.MapParameterName(name), Times.Once);
+            _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
         }
         /// <summary>
         /// 
@@ -311,11 +301,13 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbParameterTests")]
         public void CanCreateParameterByDbTypeDirection()
         {
-            string name = "@ParameterName";
+            string name = $"@{_faker.Random.AlphaNumeric(30)}";
             int value = _faker.Random.Int();
             DbType dbType = _faker.PickRandom<DbType>();
             ParameterDirection direction = _faker.PickRandom<ParameterDirection>();
 
+            _formatter.Setup(x => x.MapParameterValue(value)).Returns(value).Verifiable();
+            _formatter.Setup(x => x.MapParameterName(name)).Returns(name).Verifiable();
             DbParameter parameter = _factory.GetDbParameter(name, value, dbType, direction);
 
             Assert.IsNotNull(parameter);
@@ -324,6 +316,8 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(dbType, parameter.DbType);
             Assert.AreEqual(name, parameter.ParameterName);
             Assert.AreEqual(value, parameter.Value);
+            _formatter.Verify(x => x.MapParameterName(name), Times.Once);
+            _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
         }
         /// <summary>
         /// 
@@ -335,11 +329,13 @@ namespace ADO.Net.Client.Core.Tests
         [TestCase(null)]
         public void CanCreateVariableSizeParameter(int? size)
         {
-            string name = "@ParameterName";
+            string name = $"@{_faker.Random.AlphaNumeric(30)}";
             string value = _faker.Random.AlphaNumeric(40);
-            DbType dbType = DbType.AnsiString;
+            DbType dbType = _faker.PickRandom<DbType>();
             ParameterDirection direction = _faker.PickRandom<ParameterDirection>();
 
+            _formatter.Setup(x => x.MapParameterValue(value)).Returns(value).Verifiable();
+            _formatter.Setup(x => x.MapParameterName(name)).Returns(name).Verifiable();
             DbParameter parameter = _factory.GetVariableSizeDbParameter(name, value, dbType, size, direction);
 
             Assert.IsNotNull(parameter);
@@ -349,6 +345,8 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(dbType, parameter.DbType);
             Assert.AreEqual(name, parameter.ParameterName);
             Assert.AreEqual(value, parameter.Value);
+            _formatter.Verify(x => x.MapParameterName(name), Times.Once);
+            _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
         }
 #if !NET45
         /// <summary>
@@ -362,11 +360,13 @@ namespace ADO.Net.Client.Core.Tests
         [TestCase(10, null)]
         public void CanCreateFixedSizeParameter(byte? scale, byte? precision)
         {
-            ParameterDirection direction = _faker.PickRandom<ParameterDirection>();
-            string name = "@ParameterName";
+            string name = $"@{_faker.Random.AlphaNumeric(30)}";
             int value = _faker.Random.Int();
-            DbType dbType = DbType.Int32;
+            DbType dbType = _faker.PickRandom<DbType>();
+            ParameterDirection direction = _faker.PickRandom<ParameterDirection>();
 
+            _formatter.Setup(x => x.MapParameterValue(value)).Returns(value).Verifiable();
+            _formatter.Setup(x => x.MapParameterName(name)).Returns(name).Verifiable();
             DbParameter parameter = _factory.GetFixedSizeDbParameter(name, value, dbType, scale, precision, direction);
 
             Assert.IsNotNull(parameter);
@@ -375,8 +375,8 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(precision ?? 0, parameter.Precision);
             Assert.AreEqual(direction, parameter.Direction);
             Assert.AreEqual(dbType, parameter.DbType);
-            Assert.AreEqual(name, parameter.ParameterName);
-            Assert.AreEqual(value, parameter.Value);
+            _formatter.Verify(x => x.MapParameterName(name), Times.Once);
+            _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
         }
 #endif
         #endregion

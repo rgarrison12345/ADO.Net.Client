@@ -62,6 +62,10 @@ namespace ADO.Net.Client.Core
         /// </summary>
         void StartTransaction();
         /// <summary>
+        /// Clears the current <see cref="DbTransaction"/>
+        /// </summary>
+        void ClearTransaction();
+        /// <summary>
         /// Starts a database transaction with the specified <paramref name="level"/>
         /// </summary>
         /// <param name="level">Specifies the transaction locking behavior for the <see cref="Connection"/></param>

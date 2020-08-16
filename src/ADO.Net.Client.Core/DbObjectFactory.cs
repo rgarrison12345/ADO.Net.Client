@@ -394,7 +394,7 @@ namespace ADO.Net.Client.Core
             //Get the DbParameter object
             DbParameter parameter = GetDbParameter();
 
-            parameter.Value = parameterValue ?? DBNull.Value;
+            parameter.Value = _dbParameterFormatter.MapParameterValue(parameterValue);
             parameter.ParameterName = _dbParameterFormatter.MapParameterName(parameterName);
 
             //Return this back to the caller
