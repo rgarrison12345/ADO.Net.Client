@@ -119,7 +119,6 @@ namespace ADO.Net.Client.Core.Tests
             DbCommand command = _factory.GetDbCommand();
 
             Assert.IsNotNull(command);
-           
             Assert.IsInstanceOf(typeof(CustomDbCommand), command);
         }
         /// <summary>
@@ -271,6 +270,8 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsNotNull(parameter);
             Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
+            Assert.AreEqual(name, parameter.ParameterName);
+            Assert.AreEqual(value, parameter.Value);
             _formatter.Verify(x => x.MapParameterName(name), Times.Once);
             _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
         }
@@ -284,12 +285,14 @@ namespace ADO.Net.Client.Core.Tests
             string name = $"@{_faker.Random.AlphaNumeric(30)}";
             object value = null;
 
-            _formatter.Setup(x => x.MapParameterValue(value)).Returns(value).Verifiable();
+            _formatter.Setup(x => x.MapParameterValue(value)).Returns(DBNull.Value).Verifiable();
             _formatter.Setup(x => x.MapParameterName(name)).Returns(name).Verifiable();
             DbParameter parameter = _factory.GetDbParameter(name, value);
 
             Assert.IsNotNull(parameter);
             Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
+            Assert.AreEqual(name, parameter.ParameterName);
+            Assert.AreEqual(DBNull.Value, parameter.Value);
             _formatter.Verify(x => x.MapParameterName(name), Times.Once);
             _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
         }
