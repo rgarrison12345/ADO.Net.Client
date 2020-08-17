@@ -58,7 +58,7 @@ namespace ADO.Net.Client.Core.Tests
         [SetUp]
         public void Setup()
         {
-            _formatter = new DbParameterFormatter(_faker.Random.Bool(), _faker.Random.AlphaNumeric(1));
+            _formatter = new DbParameterFormatter(_faker.Random.Bool());
         }
         #endregion
         #region Tests
