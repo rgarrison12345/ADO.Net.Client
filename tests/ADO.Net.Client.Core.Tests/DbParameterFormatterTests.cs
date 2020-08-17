@@ -348,13 +348,29 @@ namespace ADO.Net.Client.Core.Tests
         }
         [Test]
         [Category("MapValue")]
-        public void GetsDbNull()
+        public void GetValueNull()
+        {
+            int? i = null;
+
+            Assert.IsTrue(_formatter.MapParameterValue(i) == DBNull.Value);
+        }
+        [Test]
+        [Category("MapValue")]
+        public void GetValue()
+        {
+            int i = _faker.Random.Int();
+
+            Assert.IsTrue((int)_formatter.MapParameterValue(i) == i);
+        }
+        [Test]
+        [Category("MapValue")]
+        public void GetsDbNullPropertyInfo()
         {
             Assert.AreEqual(_formatter.MapParameterValue(null, null), DBNull.Value);
         }
         [Test]
         [Category("MapValue")]
-        public void GetsNormalValue()
+        public void GetsNormalValuePropertyInfo()
         {
             Employee model = new Employee() { Int32 = _faker.Random.Int() };
 
