@@ -24,6 +24,7 @@ SOFTWARE.*/
 #region Using Statements
 using ADO.Net.Client.Tests.Common.Models;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Reflection;
 #endregion
 
@@ -35,7 +36,24 @@ namespace ADO.Net.Client.Core.Tests
     [TestFixture]
     public class UtilitiesTest
     {
-        #region Tests        
+        #region Tests]
+        [Test]
+        public void ListEnumerable()
+        {
+            List<string> list = new List<string>();
+
+            Assert.IsTrue(list.IsEnumerable());
+        }
+        [Test]
+        public void StringNotEnumerable()
+        {
+            Assert.IsFalse("s".IsEnumerable());
+        }
+        [Test]
+        public void BinaryArrayNotEnumerable()
+        {
+            Assert.IsFalse(new byte[1].IsEnumerable());
+        }
         /// <summary>
         /// Cannots the name of the get property by.
         /// </summary>
