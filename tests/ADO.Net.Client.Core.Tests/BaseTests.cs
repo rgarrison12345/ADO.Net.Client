@@ -30,6 +30,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 #endregion
 
 namespace ADO.Net.Client.Core.Tests
@@ -234,13 +235,13 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbParameterTests")]
         public void ThrowsArguementExceptionValueType()
         {
-            Assert.Throws<ArgumentException>(() => _factory.GetDbParameters(1));
+            Assert.Throws<ArgumentException>(() => _factory.GetDbParameters(_faker.Random.Int()));
         }
         [Test]
         [Category("DbParameterTests")]
         public void ThrowsArguementExceptionString()
         {
-            Assert.Throws<ArgumentException>(() => _factory.GetDbParameters("Some Value"));
+            Assert.Throws<ArgumentException>(() => _factory.GetDbParameters(_faker.Random.AlphaNumeric(1)));
         }
         /// <summary>
         /// 
@@ -321,6 +322,20 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(value, parameter.Value);
             _formatter.Verify(x => x.MapParameterName(name), Times.Once);
             _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
+        }
+        /// <summary>
+        /// Adds the parameters database parameter.
+        /// </summary>
+        [Test]
+        [Category("DbParameterTests")]
+        public void AddParametersDbParameter()
+        {
+            CustomDbParameter param = new CustomDbParameter();
+
+            IEnumerable<DbParameter> returned = _factory.GetDbParameters(param);
+
+            Assert.IsTrue(returned.Count() == 1);
+            Assert.AreEqual(returned.First(), param);
         }
         /// <summary>
         /// 
