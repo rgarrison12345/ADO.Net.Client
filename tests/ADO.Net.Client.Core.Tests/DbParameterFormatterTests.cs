@@ -377,6 +377,22 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(_formatter.MapParameterValue(model.Int32, model.GetType().GetProperty(nameof(model.Int32))), model.Int32);
         }
         [Test]
+        [Category("MapName")]
+        public void MapParameterNamePrefix()
+        {
+            string name = string.Concat(_formatter.ParameterNamePrefix, _faker.Random.AlphaNumeric(10));
+
+            Assert.IsTrue(_formatter.MapParameterName(name) == name);
+        }
+        [Test]
+        [Category("MapName")]
+        public void MapParameterNameNoPrefix()
+        {
+            string name = _faker.Random.AlphaNumeric(10);
+
+            Assert.IsTrue(_formatter.MapParameterName(name) == string.Concat(_formatter.ParameterNamePrefix, name));
+        }
+        [Test]
         [Category("MapValue")]
         public void GetGuidString()
         {
