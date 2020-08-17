@@ -328,7 +328,6 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Gets an initialized instance of a <see cref="DbParameter"/> object based on the specified provider
         /// </summary>
-        /// <exception cref="ArgumentNullException">Throws when the <paramref name="paramDirection"/> is <see cref="ParameterDirection.Output"/> and the <paramref name="size"/> is <c>null</c></exception>
         /// <param name="dataType">The <see cref="DbType"/> of the field in the database</param>
         /// <param name="size">maximum size, in bytes, of the data.  The default value is <c>null</c></param>
         /// <param name="parameterName">The name of the parameter to identify the parameter</param>
