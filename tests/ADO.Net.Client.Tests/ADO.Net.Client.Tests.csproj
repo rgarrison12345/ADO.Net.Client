@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.1;netcoreapp2.1;net461;net45;</TargetFrameworks>
     <IsPackable>false</IsPackable>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Bogus" Version="30.0.2" />

@@ -28,6 +28,7 @@ using ADO.Net.Client.Tests.Common;
 using ADO.Net.Client.Tests.Common.Models;
 using Moq;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -43,11 +44,11 @@ namespace ADO.Net.Client.Tests
         /// Whens the get data object stream is called it should call SQL executor get data object stream.
         /// </summary>
         [Test]
-        public void WhenGetDataObjectStream_IsCalled_ItShouldCallSqlExecutorGetDataObjectStream()
+        public void WhenGetDataObjectsStream_IsCalled_ItShouldCallSqlExecutorGetDataObjectsStream()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
-            List<Employee> expectedEmployees = GetEmployees();
             List<Employee> returnedEmployees = new List<Employee>();
+            List<Employee> expectedEmployees = GetEmployees();
 
             mockExecutor.Setup(x => x.GetDataObjectsStream<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(expectedEmployees);
 
@@ -57,8 +58,10 @@ namespace ADO.Net.Client.Tests
                 returnedEmployees.Add(emp);
             }
 
+            Assert.IsTrue(expectedEmployees.Count == returnedEmployees.Count);
+
             //Verify the executor function was called
-            mockExecutor.Verify(x => x.GetDataObjectsStream<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Exactly(expectedEmployees.Count() + 1));
+            mockExecutor.Verify(x => x.GetDataObjectsStream<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
         }
         /// <summary>
         /// Whens the get data set is called it should call SQL exectuor get data set.
@@ -226,6 +229,18 @@ namespace ADO.Net.Client.Tests
         {
             List<Employee> returnList = new List<Employee>();
             int number = _faker.Random.Int(0, 10);
+
+            for (int i = 0; i < number; i++)
+            {
+                Employee emp = new Employee()
+                {
+                    Salary = _faker.Random.Decimal(),
+                    PhoneNumber = _faker.Phone.PhoneNumber(),
+                    EmployeeID = Guid.NewGuid()
+                };
+
+                returnList.Add(emp);
+            }
 
             return returnList;
         }
