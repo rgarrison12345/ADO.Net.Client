@@ -25,18 +25,41 @@ SOFTWARE.*/
 using ADO.Net.Client.Core;
 using ADO.Net.Client.Implementation;
 using ADO.Net.Client.Tests.Common;
+using ADO.Net.Client.Tests.Common.Models;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 #endregion
 
 namespace ADO.Net.Client.Tests
 {
     public partial class ClientTests
     {
-        #region Read Test Methods        
+        #region Read Test Methods               
+        /// <summary>
+        /// Whens the get data object stream is called it should call SQL executor get data object stream.
+        /// </summary>
+        [Test]
+        public void WhenGetDataObjectStream_IsCalled_ItShouldCallSqlExecutorGetDataObjectStream()
+        {
+            Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
+            List<Employee> expectedEmployees = GetEmployees();
+            List<Employee> returnedEmployees = new List<Employee>();
+
+            mockExecutor.Setup(x => x.GetDataObjectsStream<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(expectedEmployees);
+
+            //Keep iterating through the reader
+            foreach(Employee emp in new DbClient(mockExecutor.Object).GetDataObjectsStream<Employee>(realQuery))
+            {
+                returnedEmployees.Add(emp);
+            }
+
+            //Verify the executor function was called
+            mockExecutor.Verify(x => x.GetDataObjectsStream<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Exactly(expectedEmployees.Count() + 1));
+        }
         /// <summary>
         /// Whens the get data set is called it should call SQL exectuor get data set.
         /// </summary>
@@ -192,6 +215,19 @@ namespace ADO.Net.Client.Tests
 
             //Verify the executor was called
             mockExecutor.Verify(x => x.ExecuteNonQuery(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+        }
+        #endregion
+        #region Helper Methods        
+        /// <summary>
+        /// Gets the employees.
+        /// </summary>
+        /// <returns></returns>
+        public List<Employee> GetEmployees()
+        {
+            List<Employee> returnList = new List<Employee>();
+            int number = _faker.Random.Int(0, 10);
+
+            return returnList;
         }
         #endregion
     }
