@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Tests.Common;
+using ADO.Net.Client.Tests.Common.Models;
 using Bogus;
 using Moq;
 using NUnit.Framework;
@@ -31,6 +32,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+using System.Reflection;
 #endregion
 
 namespace ADO.Net.Client.Core.Tests
@@ -322,6 +324,17 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(value, parameter.Value);
             _formatter.Verify(x => x.MapParameterName(name), Times.Once);
             _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
+        }
+        [Test]
+        public void GetDbParameterPropertyInfo()
+        {
+            bool value = _faker.Random.Bool();
+            PropertyInfo info = typeof(Employee).GetProperty(nameof(Employee.ManagerID));
+            DbParameter param = _factory.GetDbParameter(value, info);
+
+            Assert.IsNotNull(param);
+            Assert.IsInstanceOf(typeof(CustomDbParameter), param);
+            _formatter.Verify(x => x.MapDbParameter(It.IsAny<DbParameter>(), value, info), Times.Once);
         }
         /// <summary>
         /// Adds the parameters database parameter.
