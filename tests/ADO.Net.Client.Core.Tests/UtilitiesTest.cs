@@ -36,7 +36,7 @@ namespace ADO.Net.Client.Core.Tests
     [TestFixture]
     public class UtilitiesTest
     {
-        #region Tests]
+        #region Tests
         [Test]
         public void ListEnumerable()
         {
