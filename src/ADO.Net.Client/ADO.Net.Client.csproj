@@ -6,7 +6,7 @@
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/rgarrison12345/ADO.Net.Client.git</RepositoryUrl>
-    <Version>1.1.8.2</Version>
+    <Version>1.1.9</Version>
     <PackageTags>micro-orm orm sql ado.net</PackageTags>
     <Authors>Robert Garrison</Authors>
     <Company>Robert Garrison</Company>
@@ -59,6 +59,6 @@
     <ProjectReference Include="..\ADO.Net.Client.Implementation\ADO.Net.Client.Implementation.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="ADO.Net.Client.Implementation" Version="1.1.8.2" />
+    <PackageReference Include="ADO.Net.Client.Implementation" Version="1.1.9" />
   </ItemGroup>
 </Project>
