@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using ADO.Net.Client.Annotations;
 using ADO.Net.Client.Tests.Common;
 using ADO.Net.Client.Tests.Common.Models;
 using Bogus;
@@ -326,6 +327,23 @@ namespace ADO.Net.Client.Core.Tests
             _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
         }
         [Test]
+        [Category("DbParameterTests")]
+        public void CanGetDbParameters()
+        {
+            int count = typeof(Employee).GetProperties().Where(x => x.CanRead == true).Count();
+            Employee emp = new Employee()
+            {
+                Salary = _faker.Random.Decimal(),
+                Title = _faker.Person.UserName,
+                EmployeeID = Guid.NewGuid()
+            };
+            IEnumerable<DbParameter> param = _factory.GetDbParameters(emp);
+
+            Assert.IsTrue(param.Count() == count);
+            _formatter.Verify(x => x.MapDbParameter(It.IsAny<DbParameter>(), It.IsAny<object>(), It.IsAny<PropertyInfo>()), Times.Exactly(count));
+        }
+        [Test]
+        [Category("DbParameterTests")]
         public void GetDbParameterPropertyInfo()
         {
             bool value = _faker.Random.Bool();
