@@ -39,12 +39,12 @@ namespace ADO.Net.Client.Implementation.Tests
 {
     public partial class SqlExecutorTests
     {
-        #region Read Test Methods
+        #region Read Test Methods        
         /// <summary>
-        /// When the get scalar value is called it should calls database object factory get database command.
+        /// Whens the get database data reader asynchronous is called it should calls database object factory get database command.
         /// </summary>
         [Test]
-        public async Task WhenGetDbDataReadertAsync_IsCalled__ItShouldCallsDbObjectFactory_GetDbCommand()
+        public async Task WhenGetDbDataReaderAsync_IsCalled__ItShouldCallsDbObjectFactory_GetDbCommand()
         {
             CommandBehavior behavior = _faker.PickRandom<CommandBehavior>();
             int delay = _faker.Random.Int(0, 1000);
