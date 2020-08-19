@@ -108,18 +108,20 @@ namespace ADO.Net.Client.Tests
         /// </summary>
         [Test]
         [Category("Synchronous Read Tests")]
-        public void WhenGetDataObjects_IsCalled_ItShouldCallSqlExectuorGetDataObjects()
+        public void WhenGetDataObjects_IsCalled_ItShouldCallSqlExecutorGetDataObjects()
         {
             Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
 
             //Need to setup the reader function
-            mockExecutor.Setup(x => x.GetDataObjects<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(new string[1]).Verifiable();
+            mockExecutor.Setup(x => x.GetDataObjects<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(new List<Employee>() { new Employee() }).Verifiable();
 
             //Make the call
-            IEnumerable<string> value = new DbClient(mockExecutor.Object).GetDataObjects<string>(realQuery);
+            IEnumerable<Employee> value = new DbClient(mockExecutor.Object).GetDataObjects<Employee>(realQuery);
+
+            Assert.IsTrue(value.Count() == 1);
 
             //Verify the executor function was called
-            mockExecutor.Verify(x => x.GetDataObjects<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+            mockExecutor.Verify(x => x.GetDataObjects<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
         }
         /// <summary>
         /// Whens the get data object is called it should call SQL exectuor get data object.
