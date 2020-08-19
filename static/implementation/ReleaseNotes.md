@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.1.9
+
+* Updating to ADO.Net.Client.Core 1.1.9.2
+
 ### 1.1.8.2
 
 * [MultiResultReader](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/MultiResultReader.cs) GetDataObject sync/async now return default for the type parameter if no data could be read
