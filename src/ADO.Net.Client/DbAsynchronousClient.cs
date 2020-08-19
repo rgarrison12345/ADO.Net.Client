@@ -62,7 +62,7 @@ namespace ADO.Net.Client
         /// </returns>
         public override async Task<T> GetDataObjectAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class
         {
-#if !NET45 && !NET461 && !NETSTANDARD2_0
+#if ADVANCE_ASYNC
             //Return this back to the caller
             return await _executor.GetDataObjectAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false);
 #else
@@ -79,7 +79,7 @@ namespace ADO.Net.Client
         /// <returns>Returns an instance of <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
         public override async Task<IEnumerable<T>> GetDataObjectsAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class
         {
-#if !NET45 && !NET461 && !NETSTANDARD2_0
+#if ADVANCE_ASYNC
             //Return this back to the caller
             return await _executor.GetDataObjectsAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false);
 #else
@@ -96,7 +96,7 @@ namespace ADO.Net.Client
         /// <returns>A <see cref="Task{DbDataReader}"/> object, the caller is responsible for handling closing the <see cref="DbDataReader"/>.  Once the data reader is closed, the database connection will be closed as well</returns>
         public override async Task<DbDataReader> GetDbDataReaderAsync(ISqlQuery query, CommandBehavior behavior = CommandBehavior.Default, CancellationToken token = default)
         {
-#if !NET45 && !NET461 && !NETSTANDARD2_0
+#if ADVANCE_ASYNC
             //Return this back to the caller
             return await _executor.GetDbDataReaderAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, behavior, token).ConfigureAwait(false);
 #else
@@ -113,7 +113,7 @@ namespace ADO.Net.Client
         /// <returns>Returns the value of the first column in the first row as <see cref="Task"/></returns>
         public override async Task<T> GetScalarValueAsync<T>(ISqlQuery query, CancellationToken token = default)
         {
-#if !NET45 && !NET461 && !NETSTANDARD2_0
+#if ADVANCE_ASYNC
             //Return this back to the caller
             return await _executor.GetScalarValueAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false);
 #else
@@ -131,7 +131,7 @@ namespace ADO.Net.Client
         /// </returns>
         public async override Task<IMultiResultReader> GetMultiResultReaderAsync(ISqlQuery query, CancellationToken token = default)
         {
-#if !NET45 && !NET461 && !NETSTANDARD2_0
+#if ADVANCE_ASYNC
             return await _executor.GetMultiResultReaderAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false);
 #else
             return await _executor.GetMultiResultReaderAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false);
@@ -147,7 +147,7 @@ namespace ADO.Net.Client
         /// <returns>Returns a <see cref="IAsyncEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
         public override async IAsyncEnumerable<T> GetDataObjectsStreamAsync<T>(ISqlQuery query, [EnumeratorCancellation] CancellationToken token = default) where T : class
         {
-#if !NET461 && !NETSTANDARD2_0
+#if ADVANCE_ASYNC
             //Return this back to the caller
             await foreach (T type in _executor.GetDataObjectsStreamAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false))
             {
@@ -175,7 +175,7 @@ namespace ADO.Net.Client
         /// <returns>Returns the number of rows affected by the passed in <paramref name="query"/></returns>
         public override async Task<int> ExecuteNonQueryAsync(ISqlQuery query, CancellationToken token = default)
         {
-#if !NET45 && !NET461 && !NETSTANDARD2_0
+#if ADVANCE_ASYNC
             return await _executor.ExecuteNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false);
 #else
             return await _executor.ExecuteNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false);

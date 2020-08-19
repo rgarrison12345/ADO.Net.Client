@@ -46,6 +46,9 @@
     <OutputPath>.\bin\Release</OutputPath>
     <DefineConstants>RELEASE;</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
+    <DefineConstants>ADVANCE_ASYNC;</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
