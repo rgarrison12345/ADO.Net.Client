@@ -3,9 +3,15 @@
     <TargetFrameworks>netcoreapp3.1;netcoreapp2.1;net461;net45;</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <LangVersion>latest</LangVersion>
+    <AssemblyName>ADO.Net.Client.Tests</AssemblyName>
+    <RootNamespace>ADO.Net.Client.Tests</RootNamespace>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'!='netcoreapp2.1' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
+    <DefineConstants>ADVANCE_ASYNC</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Bogus" Version="30.0.2" />
+    <PackageReference Include="Bogus" Version="30.0.4" />
     <PackageReference Include="Moq" Version="4.14.5" />
     <PackageReference Include="nunit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />

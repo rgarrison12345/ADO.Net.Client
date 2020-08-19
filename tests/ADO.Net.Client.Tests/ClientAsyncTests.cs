@@ -39,7 +39,7 @@ namespace ADO.Net.Client.Tests
 {
     public partial class ClientTests
     {
-        #region Read Test Methods       
+        #region Read Test Methods
         /// <summary>
         /// Whens the get data objects asynchronous is called it should call SQL executor get data objects asynchronous.
         /// </summary>
@@ -56,7 +56,7 @@ namespace ADO.Net.Client.Tests
                 List<Employee> returnList = new List<Employee>();
                 MultiResultReader reader = new MultiResultReader(new CustomDbReader());
 
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 mockExecutor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(reader).Verifiable();
 #else
                 mockExecutor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(reader).Verifiable();
@@ -67,7 +67,7 @@ namespace ADO.Net.Client.Tests
 
                 Assert.IsNotNull(returnedValue);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 //Verify the executor was called
                 mockExecutor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
 #else
@@ -88,22 +88,22 @@ namespace ADO.Net.Client.Tests
             //Wrap this in a using to automatically dispose of resources
             using (CancellationTokenSource source = new CancellationTokenSource(delay))
             {
-                Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>(); 
+                Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
                 List<Employee> returnList = new List<Employee>();
 
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 mockExecutor.Setup(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(returnList).Verifiable();
 #else
                 mockExecutor.Setup(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(returnList).Verifiable();
 #endif
-               
+
                 //Make the call
                 IEnumerable<Employee> returnedValue = await new DbClient(mockExecutor.Object).GetDataObjectsAsync<Employee>(realQuery, source.Token);
 
                 Assert.IsNotNull(returnedValue);
                 Assert.IsInstanceOf(typeof(List<Employee>), returnedValue);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 //Verify the executor was called
                 mockExecutor.Verify(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
 #else
@@ -126,7 +126,7 @@ namespace ADO.Net.Client.Tests
             {
                 Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
 
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 mockExecutor.Setup(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(new Employee()).Verifiable();
 #else
                 mockExecutor.Setup(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(new Employee()).Verifiable();
@@ -137,7 +137,7 @@ namespace ADO.Net.Client.Tests
 
                 Assert.IsNotNull(returnedValue);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 //Verify the executor was called
                 mockExecutor.Verify(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
 #else
@@ -161,7 +161,7 @@ namespace ADO.Net.Client.Tests
                 Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
                 string expectedValue = _faker.Random.AlphaNumeric(30);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 mockExecutor.Setup(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(expectedValue).Verifiable();
 #else
                 mockExecutor.Setup(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(expectedValue).Verifiable();
@@ -173,7 +173,7 @@ namespace ADO.Net.Client.Tests
                 Assert.IsFalse(string.IsNullOrWhiteSpace(returnedValue));
                 Assert.IsTrue(returnedValue == expectedValue);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 //Verify the executor was called
                 mockExecutor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
 #else
@@ -197,7 +197,7 @@ namespace ADO.Net.Client.Tests
                 Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
                 CommandBehavior behavior = _faker.PickRandom<CommandBehavior>();
 
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 mockExecutor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token)).ReturnsAsync(new CustomDbReader()).Verifiable();
 #else
                 mockExecutor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, source.Token)).ReturnsAsync(new CustomDbReader()).Verifiable();
@@ -209,7 +209,7 @@ namespace ADO.Net.Client.Tests
                 Assert.IsNotNull(reader);
                 Assert.IsInstanceOf(typeof(CustomDbReader), reader);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 //Verify the executor was called
                 mockExecutor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token), Times.Once);
 #else
@@ -235,7 +235,7 @@ namespace ADO.Net.Client.Tests
             {
                 Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
 
-#if !NET45 && !NET461 && !NETCOREAPP2_0 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 mockExecutor.Setup(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(returnNumber).Verifiable();
 #else
                 mockExecutor.Setup(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(returnNumber).Verifiable();
@@ -246,7 +246,7 @@ namespace ADO.Net.Client.Tests
 
                 Assert.IsTrue(records == returnNumber);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 //Verify the executor was called
                 mockExecutor.Verify(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
 #else
@@ -255,6 +255,21 @@ namespace ADO.Net.Client.Tests
 #endif
             }
         }
+        #endregion
+        #region Helper Methods     
+#if !NET45
+        /// <summary>
+        /// Gets the employees.
+        /// </summary>
+        /// <returns></returns>
+        public async IAsyncEnumerable<Employee> GetEmployeesAsync()
+        {
+            yield return new Employee();
+            yield return new Employee();
+
+            await Task.CompletedTask;
+        }
+#endif
         #endregion
     }
 }

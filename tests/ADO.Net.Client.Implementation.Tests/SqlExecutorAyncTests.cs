@@ -52,13 +52,13 @@ namespace ADO.Net.Client.Implementation.Tests
             //Wrap this in a using statement to automatically dispose of resources
             using (CancellationTokenSource source = new CancellationTokenSource(delay))
             {
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 DbDataReader returned = await _executor.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token);
 #else
                 DbDataReader returned = await _executor.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, source.Token);
 #endif
 
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 if (realQuery.ShouldBePrepared == true)
                 {
                     _command.Verify(x => x.PrepareAsync(source.Token), Times.Once);
@@ -87,13 +87,13 @@ namespace ADO.Net.Client.Implementation.Tests
             {
                 _command.Setup(x => x.ExecuteScalarAsync(source.Token)).ReturnsAsync(expected);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 string returned = await _executor.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token);
 #else
                 string returned = await _executor.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token);
 #endif
 
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 if (realQuery.ShouldBePrepared == true)
                 {
                     _command.Verify(x => x.PrepareAsync(source.Token), Times.Once);
@@ -127,13 +127,13 @@ namespace ADO.Net.Client.Implementation.Tests
             {
                 _command.Setup(x => x.ExecuteNonQueryAsync(source.Token)).ReturnsAsync(expected);
 
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 int returned = await _executor.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token);
 #else
                 int returned = await _executor.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token);
 #endif
 
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if ADVANCE_ASYNC
                 if (realQuery.ShouldBePrepared == true)
                 {
                     _command.Verify(x => x.PrepareAsync(source.Token), Times.Once);

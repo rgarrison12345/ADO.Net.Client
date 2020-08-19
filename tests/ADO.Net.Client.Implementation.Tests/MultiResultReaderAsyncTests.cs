@@ -38,7 +38,7 @@ namespace ADO.Net.Client.Implementation.Tests
     public partial class MultiResultReaderTests
     {
         #region Tests
-#if !NET45 && !NET461 && !NETCOREAPP2_1        
+#if ADVANCE_ASYNC       
         /// <summary>
         /// 
         /// </summary>

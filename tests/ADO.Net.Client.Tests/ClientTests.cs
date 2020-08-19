@@ -42,12 +42,14 @@ namespace ADO.Net.Client.Tests
     {
         #region Fields/Properties
         private ISqlQuery realQuery;
-        private Faker _faker;
+        private readonly Faker _faker = new Faker();
         #endregion
-        #region Constructors
+        #region Constructors        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClientTests"/> class.
+        /// </summary>
         public ClientTests()
         {
-            _faker = new Faker();
         }
         #endregion
         #region Setup/Teardown        
