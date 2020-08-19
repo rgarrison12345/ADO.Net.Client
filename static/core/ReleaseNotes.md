@@ -3,7 +3,7 @@ Version History
 
 ### 1.1.9.2
 
-* Updating to ADO.Net.Client.Implementation 1.1.8.2
+* Adding Cleartransaction method to [IConnectionManager](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IConnectionManager.cs)
 
 ### 1.1.9.1
 
