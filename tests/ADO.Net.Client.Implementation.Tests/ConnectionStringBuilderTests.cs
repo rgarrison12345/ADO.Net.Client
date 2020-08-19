@@ -39,7 +39,10 @@ namespace ADO.Net.Client.Implementation.Tests
         private MySqlConnectionStringBuilder _sqlBuilder;
         private ConnectionStringBuilder _builder;
         #endregion
-        #region Setup/Teardown
+        #region Setup/Teardown        
+        /// <summary>
+        /// Setups this instance.
+        /// </summary>
         [SetUp]
         public void Setup()
         {

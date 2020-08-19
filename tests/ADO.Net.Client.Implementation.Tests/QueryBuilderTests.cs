@@ -46,20 +46,29 @@ namespace ADO.Net.Client.Implementation.Tests
         private readonly Faker _faker = new Faker();
         private IQueryBuilder _builder;
         #endregion
-        #region Constructors
+        #region Constructors        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueryBuilderTests"/> class.
+        /// </summary>
         public QueryBuilderTests()
         {
             _factory = new DbObjectFactory(MySqlConnectorFactory.Instance);
         }
         #endregion
-        #region Setup/Teardown
+        #region Setup/Teardown        
+        /// <summary>
+        /// Setups this instance.
+        /// </summary>
         [SetUp]
         public void Setup()
         {
             _builder = new QueryBuilder(_factory);
         }
         #endregion
-        #region Tests    
+        #region Tests            
+        /// <summary>
+        /// Determines whether this instance [can build SQL query].
+        /// </summary>
         [Test]
         [Category("Build")]
         public void CanBuildSQLQuery()
@@ -133,6 +142,9 @@ namespace ADO.Net.Client.Implementation.Tests
 
             Assert.That(_builder.Contains("@Param4") == false);
         }
+        /// <summary>
+        /// Determines whether [contains parameter name true].
+        /// </summary>
         [Test]
         [Category("Parameters")]
         public void ContainsParameterNameTrue()
@@ -150,6 +162,9 @@ namespace ADO.Net.Client.Implementation.Tests
             Assert.That(_builder.Contains("@Param3"));
             Assert.That(_builder.Contains("@Param2"));
         }
+        /// <summary>
+        /// Rejectses the name of the duplicate parameter.
+        /// </summary>
         [Test]
         [Category("Parameters")]
         public void RejectsDuplicateParameterName()
@@ -160,6 +175,9 @@ namespace ADO.Net.Client.Implementation.Tests
 
             Assert.Throws<ArgumentException>(() => _builder.AddParameter(new MySqlParameter() { ParameterName = "@Param1" }));
         }
+        /// <summary>
+        /// Rejectses the duplicate parameter names in enumerable.
+        /// </summary>
         [Test]
         [Category("Parameters")]
         public void RejectsDuplicateParameterNamesInEnumerable()
@@ -173,6 +191,9 @@ namespace ADO.Net.Client.Implementation.Tests
 
             Assert.Throws<ArgumentException>(() => _builder.AddParameterRange(parameters));
         }
+        /// <summary>
+        /// Rejectses the duplicate parameter names.
+        /// </summary>
         [Test]
         [Category("Parameters")]
         public void RejectsDuplicateParameterNames()
