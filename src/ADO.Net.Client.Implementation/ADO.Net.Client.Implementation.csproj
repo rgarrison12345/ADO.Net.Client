@@ -57,7 +57,7 @@
     <Compile Remove="SqlExecutorAsync.cs" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net461' or '$(TargetFramework)'=='net45'">
-    <Compile Remove="SqlExecutorPrepareAsync.cs" />
+    <Compile Remove="SqlExecutorAdvanceAsync.cs" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <ProjectReference Include="..\ADO.Net.Client.Core\ADO.Net.Client.Core.csproj" />
