@@ -1,6 +1,6 @@
 # ADO.Net.Client
 These libraries are a very thin wrapper around a given [ADO.NET](https://msdn.microsoft.com/en-us/library/e80y5yhx.aspx) client driver.
-These libraries are capable of working with any ADO.Net compatible driver, meaining they are database agnostic.  There are three layers to this library, discussed below in the nuget packages section. 
+These libraries are capable of working with any ADO.Net compatible driver, meaining they are database agnostic.  There are three libraries that operate at different levels of the AOD.Net workflow, discussed below in the nuget packages section. 
 
 ## Why Use This Library?
 
