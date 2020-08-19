@@ -40,7 +40,7 @@ namespace ADO.Net.Client.Core
         /// Whether or not the passed in provider is capable of creating a <see cref="DbDataSourceEnumerator"/>
         /// </summary>
         bool CanCreateDataSourceEnumerator { get; }
-#if !NET45 && !NET461 && !NETSTANDARD2_0
+#if ADVCANCED_FEATURES
         /// <summary>
         /// Whether or not this instance is capable of creating a <see cref="DbDataAdapter"/>
         /// </summary>

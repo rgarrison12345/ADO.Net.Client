@@ -49,7 +49,7 @@ namespace ADO.Net.Client.Core
         private readonly DbProviderFactory _dbProviderFactory;
         private readonly IDbParameterFormatter _dbParameterFormatter;
 
-#if !NET45 && !NET461 && !NETSTANDARD2_0
+#if ADVANCED_FEATURES
         /// <summary>
         /// Whether or not this instance is capable of creating a <see cref="DbDataAdapter"/>
         /// </summary>
