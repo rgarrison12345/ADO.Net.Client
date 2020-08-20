@@ -35,7 +35,7 @@ using System.Threading;
 using System.Threading.Tasks;
 #endregion
 
-namespace ADO.Net.Client.Implementation.Tests
+namespace ADO.Net.Client.Implementation.Tests.Unit
 {
     public partial class SqlExecutorTests
     {

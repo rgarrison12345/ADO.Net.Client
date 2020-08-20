@@ -32,7 +32,7 @@ using System.Data;
 using System.Data.Common;
 #endregion
 
-namespace ADO.Net.Client.Implementation.Tests
+namespace ADO.Net.Client.Implementation.Tests.Unit
 {
     /// <summary>
     /// 

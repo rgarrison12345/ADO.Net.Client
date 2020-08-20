@@ -29,7 +29,7 @@ using Moq;
 using NUnit.Framework;
 #endregion
 
-namespace ADO.Net.Client.Implementation.Tests
+namespace ADO.Net.Client.Implementation.Tests.Unit
 {
     /// <summary>
     /// 
