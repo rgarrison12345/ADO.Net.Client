@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using ADO.Net.Client.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -51,7 +52,18 @@ namespace ADO.Net.Client.Core
         public static PropertyInfo GetProperty(this IEnumerable<PropertyInfo> properties, string propertyName)
         { 
             //Get the property if it exists
-            return properties.Where(x => x.Name == propertyName).FirstOrDefault();
+            return properties.Where(x => string.Equals(x.Name, propertyName, StringComparison.OrdinalIgnoreCase) == true).FirstOrDefault();
+        
+        }
+        /// <summary>
+        /// Gets a signle instance of <see cref="PropertyInfo"/> where the <see cref="DbField.DatabaseFieldName"/> matches the passed in <paramref name="name"/>
+        /// </summary>
+        /// <param name="name">A property name as a value of <see cref="string"/></param>
+        /// <param name="infos">An instance of <see cref="PropertyInfo"/></param>
+        /// <returns>Returns an instance of <see cref="PropertyInfo"/></returns>
+        public static PropertyInfo GetPropertyInfoByDbField(this IEnumerable<PropertyInfo> infos, string name)
+        {
+            return infos.Where(x => x.GetCustomAttributes(false).OfType<DbField>().Any(x => string.Equals(x.DatabaseFieldName, name, StringComparison.OrdinalIgnoreCase) == true)).FirstOrDefault();
         }
         /// <summary>
         /// Determines whether this instance is an <see cref="IEnumerable"/>

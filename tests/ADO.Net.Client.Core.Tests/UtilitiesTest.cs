@@ -58,9 +58,48 @@ namespace ADO.Net.Client.Core.Tests
         /// Cannots the name of the get property by.
         /// </summary>
         [Test]
+        public void CannotGetPropertyByDbFieldName()
+        {
+            PropertyInfo[] properties = typeof(Employee).GetProperties();
+            PropertyInfo property = properties.GetPropertyInfoByDbField("SomePropertyName");
+
+            Assert.IsNull(property);
+        }
+        /// <summary>
+        /// Gets the name of the property by.
+        /// </summary>
+        [Test]
+        public void GetPropertyByDbFieldName()
+        {
+            Employee model = new Employee();
+            PropertyInfo[] properties = typeof(Employee).GetProperties();
+
+            PropertyInfo property = properties.GetPropertyInfoByDbField("employeetitle");
+
+            Assert.IsNotNull(property);
+            Assert.That(property.Name == nameof(model.Title));
+        }
+        /// <summary>
+        /// Gets the property by name normal casing.
+        /// </summary>
+        [Test]
+        public void GetPropertyByDbFieldNameNormalCasing()
+        {
+            Employee model = new Employee();
+            PropertyInfo[] properties = typeof(Employee).GetProperties();
+
+            PropertyInfo property = properties.GetPropertyInfoByDbField("EmployeeTitle");
+
+            Assert.IsNotNull(property);
+            Assert.That(property.Name == nameof(model.Title));
+        }
+        /// <summary>
+        /// Cannots the name of the get property by.
+        /// </summary>
+        [Test]
         public void CannotGetPropertyByName()
         {
-            PropertyInfo[] properties = typeof(DbTypeModel).GetProperties();
+            PropertyInfo[] properties = typeof(Employee).GetProperties();
             PropertyInfo property = properties.GetProperty("SomePropertyName");
 
             Assert.IsNull(property);
@@ -71,13 +110,27 @@ namespace ADO.Net.Client.Core.Tests
         [Test]
         public void GetPropertyByName()
         {
-            DbTypeModel model = new DbTypeModel();
-            PropertyInfo[] properties = typeof(DbTypeModel).GetProperties();
+            Employee model = new Employee();
+            PropertyInfo[] properties = typeof(Employee).GetProperties();
 
-            PropertyInfo property = properties.GetProperty(nameof(model.NormalDateTime));
+            PropertyInfo property = properties.GetProperty(nameof(model.EmployeeID).ToLower());
 
             Assert.IsNotNull(property);
-            Assert.That(property.Name == nameof(model.NormalDateTime));
+            Assert.That(property.Name == nameof(model.EmployeeID));
+        }
+        /// <summary>
+        /// Gets the property by name normal casing.
+        /// </summary>
+        [Test]
+        public void GetPropertyByNameNormalCasing()
+        {
+            Employee model = new Employee();
+            PropertyInfo[] properties = typeof(Employee).GetProperties();
+
+            PropertyInfo property = properties.GetProperty(nameof(model.EmployeeID));
+
+            Assert.IsNotNull(property);
+            Assert.That(property.Name == nameof(model.EmployeeID));
         }
         #endregion
     }

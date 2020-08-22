@@ -135,7 +135,7 @@ namespace ADO.Net.Client.Core
             {
                 string name = record.GetName(i);
                 object value = record.GetValue(i);
-                PropertyInfo info = writeableProperties.GetProperty(name) ?? GetPropertyInfoByDbField(name, writeableProperties);
+                PropertyInfo info = writeableProperties.GetProperty(name) ?? writeableProperties.GetPropertyInfoByDbField(name);
 
                 //Check if a property could be found by name
                 if(info == null)
@@ -184,16 +184,6 @@ namespace ADO.Net.Client.Core
             return returnType;
         }
         #region Helper Methods
-        /// <summary>
-        /// Gets a signle instance of <see cref="PropertyInfo"/> where the <see cref="DbField.DatabaseFieldName"/> matches the passed in <paramref name="name"/>
-        /// </summary>
-        /// <param name="name">A property name as a value of <see cref="string"/></param>
-        /// <param name="infos">An instance of <see cref="PropertyInfo"/></param>
-        /// <returns>Returns an instance of <see cref="PropertyInfo"/></returns>
-        private PropertyInfo GetPropertyInfoByDbField(string name, IEnumerable<PropertyInfo> infos)
-        {
-            return infos.Where(x => x.GetCustomAttributes(false).OfType<DbField>().Any(x => x.DatabaseFieldName == name)).FirstOrDefault();
-        }
         #endregion
     }
 }
