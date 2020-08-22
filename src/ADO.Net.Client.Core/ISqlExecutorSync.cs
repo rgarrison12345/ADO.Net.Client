@@ -44,7 +44,7 @@ namespace ADO.Net.Client.Core
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns an instance of <see cref="DataSet"/> based on the <paramref name="query"/> passed into the routine</returns>
-        DataSet GetDataSet(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false);
+        DataSet GetDataSet(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout = 30, bool shouldBePrepared = false);
         /// <summary>
         /// Gets an instance of <see cref="DataTable"/>
         /// </summary>
@@ -54,7 +54,7 @@ namespace ADO.Net.Client.Core
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns an instance of <see cref="DataTable"/></returns>
-        DataTable GetDataTable(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false);
+        DataTable GetDataTable(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout = 30, bool shouldBePrepared = false);
         /// <summary>
         /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
         /// </summary>
@@ -65,7 +65,7 @@ namespace ADO.Net.Client.Core
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns an instance of the <typeparamref name="T"/> based on the fields in the passed in query.  Returns the default value for the type if a record is not found</returns>
-        T GetDataObject<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false) where T : class;
+        T GetDataObject<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout = 30, bool shouldBePrepared = false) where T : class;
         /// <summary>
         /// Gets a <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
@@ -76,7 +76,7 @@ namespace ADO.Net.Client.Core
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param> 
         /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        IEnumerable<T> GetDataObjects<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false) where T : class;
+        IEnumerable<T> GetDataObjects<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout = 30, bool shouldBePrepared = false) where T : class;
         /// <summary>
         /// Gets a <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine as an iterator function
         /// </summary>
@@ -87,7 +87,7 @@ namespace ADO.Net.Client.Core
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        IEnumerable<T> GetDataObjectsStream<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false) where T : class;
+        IEnumerable<T> GetDataObjectsStream<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout = 30, bool shouldBePrepared = false) where T : class;
         /// <summary>
         /// Utility method for returning a DataReader object
         /// </summary>
@@ -98,7 +98,7 @@ namespace ADO.Net.Client.Core
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>An instance of <see cref="DbDataReader"/> object</returns>
-        DbDataReader GetDbDataReader(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false, CommandBehavior behavior = default);
+        DbDataReader GetDbDataReader(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout = 30, bool shouldBePrepared = false, CommandBehavior behavior = default);
         /// <summary>
         /// Utility method for returning a scalar value from the database
         /// </summary>
@@ -109,7 +109,7 @@ namespace ADO.Net.Client.Core
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
         /// <returns>Returns the value of the first column in the first row returned from the passed in query as an instance of <typeparamref name="T"/></returns>
-        T GetScalarValue<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false);
+        T GetScalarValue<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout = 30, bool shouldBePrepared = false);
         /// <summary>
         /// Utility method for returning an instance of <see cref="IMultiResultReader"/>
         /// </summary>
@@ -119,7 +119,7 @@ namespace ADO.Net.Client.Core
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>An instance of <see cref="IMultiResultReader"/> object</returns>
-        IMultiResultReader GetMultiResultReader(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false);
+        IMultiResultReader GetMultiResultReader(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout = 30, bool shouldBePrepared = false);
         #endregion
         #region Data Modification
         /// <summary>
@@ -131,7 +131,7 @@ namespace ADO.Net.Client.Core
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns the number of rows affected by this query</returns>
-        int ExecuteNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout, bool shouldBePrepared = false);
+        int ExecuteNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters, int commandTimeout = 30, bool shouldBePrepared = false);
         #endregion
     }
 }
