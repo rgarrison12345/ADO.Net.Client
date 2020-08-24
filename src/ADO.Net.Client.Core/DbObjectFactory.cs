@@ -53,35 +53,16 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Whether or not this instance is capable of creating a <see cref="DbDataAdapter"/>
         /// </summary>
-        public bool CanCreateDataAdapter
-        {
-            get
-            {
-                return _dbProviderFactory.CanCreateDataAdapter;
-            }
-        }
+        public bool CanCreateDataAdapter => _dbProviderFactory.CanCreateDataAdapter;
         /// <summary>
         /// Whether or not this instance is capable of creating a <see cref="DbCommandBuilder"/>
         /// </summary>
-        public bool CanCreateCommandBuilder
-        {
-            get
-            {
-                return _dbProviderFactory.CanCreateCommandBuilder;
-            }
-        }
+        public bool CanCreateCommandBuilder => _dbProviderFactory.CanCreateCommandBuilder;
 #endif
         /// <summary>
         /// Whether or not this instance is capable of creating a <see cref="DbDataSourceEnumerator"/>
         /// </summary>
-        public bool CanCreateDataSourceEnumerator
-        {
-            get
-            {
-                //Return this back to the caller
-                return _dbProviderFactory.CanCreateDataSourceEnumerator;
-            }
-        }
+        public bool CanCreateDataSourceEnumerator => _dbProviderFactory.CanCreateDataSourceEnumerator;
         #endregion
         #region Constructors
         /// <summary>

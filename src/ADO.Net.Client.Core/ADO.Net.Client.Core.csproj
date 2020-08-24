@@ -5,7 +5,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
-    <Version>1.1.9.4</Version>
+    <Version>1.1.9.5</Version>
     <PackageTags>micro-orm orm sql ado.net</PackageTags>
     <Authors>Robert Garrison</Authors>
     <Company>Robert Garrison</Company>
@@ -33,9 +33,6 @@
     <ContinuousIntegrationBuild>false</ContinuousIntegrationBuild>
     <EmbedUntrackedSources>false</EmbedUntrackedSources>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
-    <DefineConstants>ADVANCED_FEATURES</DefineConstants>
-  </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\static\icon.png" Pack="true" PackagePath="icon.png" />
     <None Include="..\..\README.md" Pack="true" PackagePath="README.md" />
@@ -55,6 +52,9 @@
     <Optimize>true</Optimize>
     <OutputPath>.\bin\Release</OutputPath>
     <DefineConstants>RELEASE;</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
+    <DefineConstants>ADVANCED_FEATURES</DefineConstants>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.1' and '$(TargetFramework)'!='net45'">
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
