@@ -77,21 +77,29 @@ namespace ADO.Net.Client.Tests
         /// <returns></returns>
         private IEnumerable<DbParameter> GetDbParameters()
         {
-            List<CustomDbParameter> parameters = new List<CustomDbParameter>();
-            int number = _faker.Random.Int(1, 10);
-            
-            //Loop through all numbers
-            for(int i = 0; i < number; i++)
+            //Check if we're going to create parameters
+            if (_faker.Random.Bool() == true)
             {
-                CustomDbParameter param = new CustomDbParameter();
+                List<CustomDbParameter> parameters = new List<CustomDbParameter>();
+                int number = _faker.Random.Int(1, 10);
 
-                param.ParameterName = $"Parameter{i}";
-                param.Value = _faker.Random.AlphaNumeric(20);
+                //Loop through all numbers
+                for (int i = 0; i < number; i++)
+                {
+                    CustomDbParameter param = new CustomDbParameter();
 
-                parameters.Add(param);
+                    param.ParameterName = $"Parameter{i}";
+                    param.Value = _faker.Random.AlphaNumeric(20);
+
+                    parameters.Add(param);
+                }
+
+                return parameters;
             }
-
-            return parameters;
+            else
+            {
+                return null;
+            }
         }
         #endregion
     }
