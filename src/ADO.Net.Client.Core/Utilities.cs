@@ -53,7 +53,6 @@ namespace ADO.Net.Client.Core
         { 
             //Get the property if it exists
             return properties.Where(x => string.Equals(x.Name, propertyName, StringComparison.OrdinalIgnoreCase) == true).FirstOrDefault();
-        
         }
         /// <summary>
         /// Gets a signle instance of <see cref="PropertyInfo"/> where the <see cref="DbField.DatabaseFieldName"/> matches the passed in <paramref name="name"/>
