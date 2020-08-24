@@ -4,7 +4,7 @@ Version History
 ### 1.1.9.1
 
 * Updating to ADO.Net.Client.Implementation 1.1.9.1
-* 
+
 ### 1.1.9
 
 * Updating to ADO.Net.Client.Implementation 1.1.9

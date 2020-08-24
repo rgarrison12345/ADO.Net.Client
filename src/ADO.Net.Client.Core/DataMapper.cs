@@ -42,6 +42,7 @@ namespace ADO.Net.Client.Core
     /// <seealso cref="IDataMapper" />
     public class DataMapper : IDataMapper
     {
+        #region Mapper Methods
 #if !NET45
         /// <summary>
         /// Maps the result set one at a time by streaming the result from the server asynchronously
@@ -183,6 +184,7 @@ namespace ADO.Net.Client.Core
             //Return this back to the caller
             return returnType;
         }
+        #endregion
         #region Helper Methods
         #endregion
     }

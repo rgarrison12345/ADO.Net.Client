@@ -1,9 +1,20 @@
 Version History
 ===============
 
+### 1.1.9.4
+
+* [ISqlExecutorSync](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/ISqlExecutorSync.cs) methods that take in DbParameter no longer require that parameter it's optional
+* [ISqlExecutorAsync](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/ISqlExecutorAsync.cs) methods that take in DbParameter no longer require that parameter it's optional
+
+### 1.1.9.3
+
+* [ISqlExecutorSync](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/ISqlExecutorSync.cs) methods that take in command timeout no longer require that parameter it's optional with a default value of 30
+* [ISqlExecutorAsync](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/ISqlExecutorAsync.cs) methods that take in command timeout no longer require that parameter it's optional with a default value of 30
+
+
 ### 1.1.9.2
 
-* Adding Cleartransaction method to [IConnectionManager](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IConnectionManager.cs)
+* Adding ClearTransaction method to [IConnectionManager](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IConnectionManager.cs)
 
 ### 1.1.9.1
 
