@@ -5,6 +5,8 @@ Version History
 
 * [ISqlExecutorSync](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/ISqlExecutorSync.cs) methods that take in DbParameter no longer require that parameter it's optional
 * [ISqlExecutorAsync](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/ISqlExecutorAsync.cs) methods that take in DbParameter no longer require that parameter it's optional
+* [Utilities](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/Utilities.cs) GetProperty is now case insensitive
+* [Utilities](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/Utilities.cs) new function GetPropertyInfoByDbField
 
 ### 1.1.9.3
 
