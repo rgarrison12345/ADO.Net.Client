@@ -1,6 +1,13 @@
 Version History
 ===============
 
+### 1.1.9.5
+
+* [IDbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbObjectFactory.cs) restoring CanCreateDataAdapter .NET Standard 2.1+ builds
+* [IDbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbObjectFactory.cs) restoring CanCreateCommandBuilder .NET Standard 2.1+ builds
+* [DbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbObjectFactory.cs) restoring CanCreateDataAdapter .NET Standard 2.1+ builds
+* [DbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbObjectFactory.cs) restoring CanCreateCommandBuilder .NET Standard 2.1+ builds
+
 ### 1.1.9.4
 
 * [ISqlExecutorSync](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/ISqlExecutorSync.cs) methods that take in DbParameter no longer require that parameter it's optional
