@@ -33,11 +33,21 @@ namespace ADO.Net.Client.Tests.Common
     /// <seealso cref="DbProviderFactory" />
     public class CustomDbProviderFactory : DbProviderFactory
     {
+        #region Fields/Properties
         public static CustomDbProviderFactory Instance = new CustomDbProviderFactory();
+
+#if ADVANCED_FEATURES
+        public override bool CanCreateCommandBuilder => base.CanCreateCommandBuilder;
+        public override bool CanCreateDataAdapter => base.CanCreateDataAdapter;
+#endif
+        #endregion
+        #region Constructors
         private CustomDbProviderFactory()
         {
 
         }
+        #endregion
+        #region Utility Methods
         public override DbCommandBuilder CreateCommandBuilder()
         {
             return new CustomDbCommandBuilder();
@@ -66,5 +76,6 @@ namespace ADO.Net.Client.Tests.Common
         {
             return new CustomDbParameter();
         }
+        #endregion
     }
 }

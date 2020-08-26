@@ -38,13 +38,9 @@ namespace ADO.Net.Client.Core.Tests
     public class ConnectionTests : BaseTests
     {
         #region Setup/Teardown        
-        /// <summary>
-        /// Called when [time setup].
-        /// </summary>
-        [SetUp]
-        public override void Setup()
+        [OneTimeSetUp]
+        public override void OneTimeSetup()
         {
-            _formatter = new Mock<IDbParameterFormatter>();
             _factory = new DbObjectFactory(new CustomDbConnection(), _formatter.Object);
         }
         #endregion

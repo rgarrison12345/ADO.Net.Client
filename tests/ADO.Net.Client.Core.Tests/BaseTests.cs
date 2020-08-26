@@ -51,18 +51,42 @@ namespace ADO.Net.Client.Core.Tests
         protected IDbObjectFactory _factory;
         protected Mock<IDbParameterFormatter> _formatter = new Mock<IDbParameterFormatter>();
         #endregion
-        #region Setup/Teardown                
+        #region Setup/Teardown     
+        public abstract void OneTimeSetup();
         /// <summary>
-        /// Setups this instance.
+        /// Called when [time setup].
         /// </summary>
-        public abstract void Setup();
+        [SetUp]
+        public void Setup()
+        {
+            _formatter = new Mock<IDbParameterFormatter>();
+            _factory = new DbObjectFactory(new CustomDbConnection(), _formatter.Object);
+        }
         #endregion
         #region Basic Tests
+#if ADVANCED_FEATURES        
+        /// <summary>
+        /// Determines whether this instance [can create command builder].
+        /// </summary>
+        [Test]
+        public void CanCreateCommandBuilder()
+        {
+            Assert.IsTrue(_factory.CanCreateCommandBuilder);
+        }
+        /// <summary>
+        /// Determines whether this instance [can create database data adapter].
+        /// </summary>
+        [Test]
+        public void CanCreateDbDataAdapter()
+        {
+            Assert.IsTrue(_factory.CanCreateDataAdapter);
+        }
+#endif
         /// <summary>
         /// Determines whether this instance [can create database data source enumerator].
         /// </summary>
         [Test]
-        public void CanCreateDbDataSourceEnumerator()
+        public void CreateDbDataSourceEnumerator()
         {
             DbDataSourceEnumerator dbDataSource = _factory.GetDataSourceEnumerator();
 
@@ -73,7 +97,7 @@ namespace ADO.Net.Client.Core.Tests
         /// 
         /// </summary>
         [Test]
-        public void CanCreateDbDataAdapter()
+        public void CreateDbDataAdapter()
         {
             DbDataAdapter dbDataAdapter = _factory.GetDbDataAdapter();
 
@@ -84,7 +108,7 @@ namespace ADO.Net.Client.Core.Tests
         /// 
         /// </summary>
         [Test]
-        public void CanCreateDbConnection()
+        public void CreateDbConnection()
         {
             DbConnection connection = _factory.GetDbConnection();
 
@@ -95,7 +119,7 @@ namespace ADO.Net.Client.Core.Tests
         /// 
         /// </summary>
         [Test]
-        public void CanCreateConnectionStringBuilder()
+        public void CreateConnectionStringBuilder()
         {
             DbConnectionStringBuilder builder = _factory.GetDbConnectionStringBuilder();
 
@@ -106,7 +130,7 @@ namespace ADO.Net.Client.Core.Tests
         /// 
         /// </summary>
         [Test]
-        public void CanCreateCommandBuilder()
+        public void CreateCommandBuilder()
         {
             DbCommandBuilder builder = _factory.GetDbCommandBuilder();
 
@@ -118,7 +142,7 @@ namespace ADO.Net.Client.Core.Tests
         /// </summary>
         [Test]
         [Category("DbCommandTests")]
-        public void CanCreateDbCommand()
+        public void CreateDbCommand()
         {
             DbCommand command = _factory.GetDbCommand();
 
@@ -251,7 +275,7 @@ namespace ADO.Net.Client.Core.Tests
         /// </summary>
         [Test]
         [Category("DbParameterTests")]
-        public void CanCreateDbParameter()
+        public void CreateDbParameter()
         {
             DbParameter parameter = _factory.GetDbParameter();
 
@@ -263,7 +287,7 @@ namespace ADO.Net.Client.Core.Tests
         /// </summary>
         [Test]
         [Category("DbParameterTests")]
-        public void CanCreateDbParameterNameValue()
+        public void CreateDbParameterNameValue()
         {
             string name = $"@{_faker.Random.AlphaNumeric(30)}";
             int value = _faker.Random.Int();
@@ -284,7 +308,7 @@ namespace ADO.Net.Client.Core.Tests
         /// </summary>
         [Test]
         [Category("DbParameterTests")]
-        public void CanCreateDbParameterNameNullValue()
+        public void CreateDbParameterNameNullValue()
         {
             string name = $"@{_faker.Random.AlphaNumeric(30)}";
             object value = null;
@@ -306,7 +330,7 @@ namespace ADO.Net.Client.Core.Tests
         /// <param name="direction"></param>
         [Test]
         [Category("DbParameterTests")]
-        public void CanCreateParameterByDbTypeDirection()
+        public void CreateParameterByDbTypeDirection()
         {
             string name = $"@{_faker.Random.AlphaNumeric(30)}";
             int value = _faker.Random.Int();
@@ -328,7 +352,7 @@ namespace ADO.Net.Client.Core.Tests
         }
         [Test]
         [Category("DbParameterTests")]
-        public void CanGetDbParameters()
+        public void GetDbParameters()
         {
             int count = typeof(Employee).GetProperties().Where(x => x.CanRead == true).Count();
             Employee emp = new Employee()

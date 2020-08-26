@@ -3,6 +3,9 @@
     <TargetFrameworks>netstandard2.1;netstandard2.0;net461;net45;</TargetFrameworks>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
+    <DefineConstants>ADVANCED_FEATURES</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\ADO.Net.Client.Annotations\ADO.Net.Client.Annotations.csproj" />
   </ItemGroup>

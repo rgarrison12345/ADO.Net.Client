@@ -3,6 +3,9 @@
     <TargetFrameworks>netcoreapp3.1;netcoreapp2.1;net461;net45;</TargetFrameworks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'!='netcoreapp2.1' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
+    <DefineConstants>ADVANCED_FEATURES</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Bogus" Version="30.0.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
