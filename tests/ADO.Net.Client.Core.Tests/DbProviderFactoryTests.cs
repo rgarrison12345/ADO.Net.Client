@@ -38,9 +38,10 @@ namespace ADO.Net.Client.Core.Tests
     public class DbProviderFactoryTests : BaseTests
     {
         #region Setup/Teardown
-        [OneTimeSetUp]
-        public override void OneTimeSetup()
-        { 
+        [SetUp]
+        public override void Setup()
+        {
+            _formatter = new Mock<IDbParameterFormatter>();
             _factory = new DbObjectFactory(CustomDbProviderFactory.Instance, _formatter.Object);
         }
         #endregion

@@ -52,16 +52,7 @@ namespace ADO.Net.Client.Core.Tests
         protected Mock<IDbParameterFormatter> _formatter = new Mock<IDbParameterFormatter>();
         #endregion
         #region Setup/Teardown     
-        public abstract void OneTimeSetup();
-        /// <summary>
-        /// Called when [time setup].
-        /// </summary>
-        [SetUp]
-        public void Setup()
-        {
-            _formatter = new Mock<IDbParameterFormatter>();
-            _factory = new DbObjectFactory(new CustomDbConnection(), _formatter.Object);
-        }
+        public abstract void Setup();
         #endregion
         #region Basic Tests
 #if ADVANCED_FEATURES        
@@ -397,10 +388,10 @@ namespace ADO.Net.Client.Core.Tests
         /// </summary>
         /// <param name="size"></param>
         [Test]
-        [Category("DbParameterTests")]
         [TestCase(10)]
         [TestCase(null)]
-        public void CanCreateVariableSizeParameter(int? size)
+        [Category("DbParameterTests")]
+        public void CreateVariableSizeParameter(int? size)
         {
             string name = $"@{_faker.Random.AlphaNumeric(30)}";
             string value = _faker.Random.AlphaNumeric(40);

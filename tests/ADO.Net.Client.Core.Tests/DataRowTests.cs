@@ -44,9 +44,10 @@ namespace ADO.Net.Client.Core.Tests
         /// <summary>
         /// Called when [time setup].
         /// </summary>
-        [OneTimeSetUp]
-        public override void OneTimeSetup()
+        [SetUp]
+        public override void Setup()
         {
+            _formatter = new Mock<IDbParameterFormatter>();
             DbProviderFactories.RegisterFactory("ADO.Net.Client.Tests.Common", CustomDbProviderFactory.Instance);
 
             //For regular .NET framework the driver must be installed in the Global Assembly Cache
