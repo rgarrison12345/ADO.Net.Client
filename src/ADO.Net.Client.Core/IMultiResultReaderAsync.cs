@@ -34,7 +34,7 @@ namespace ADO.Net.Client.Core
     /// Contract class for a reader that performs asynchronous read operations against a database
     /// </summary>
     public interface IMultiResultReaderAsync
-#if !NET45 && !NET461 && !NETSTANDARD2_0
+#if ADVANCED_FEATURES
         : IAsyncDisposable
 #endif
     {
@@ -68,7 +68,7 @@ namespace ADO.Net.Client.Core
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Returns <c>true</c> if there's another result set in the dataset <c>false</c> otherwise</returns>
         Task<bool> MoveToNextResultAsync(CancellationToken token = default);
-#if !NET45 && !NET461 && !NETSTANDARD2_0
+#if ADVANCED_FEATURES
         /// <summary>
         /// Closes the underlying reader object that reads records from the database asynchronously
         /// </summary>
