@@ -189,6 +189,55 @@ namespace ADO.Net.Client.Implementation
             }
         }
         /// <summary>
+        /// Utility method for returning an <see cref="IEnumerable{T}"/> of scalar values from the database
+        /// </summary>
+        /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <param name="parameters">The parameters associated with a database query</param>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
+        /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
+        /// <returns>Returns an <see cref="IEnumerable{T}"/> of the value of the first column in the result set as an instance of <typeparamref name="T"/></returns>
+        public IEnumerable<T> GetScalarValues<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false)
+        {
+            List<T> returnValues = new List<T>();
+
+            //Wrap this to automatically handle disposing of resources
+            using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult))
+            {
+                while(reader.Read() == true)
+                {
+                    returnValues.Add(reader.GetFieldValue<T>(0));
+                }
+            }
+             
+            return returnValues;
+        }
+        /// <summary>
+        /// Utility method for returning an <see cref="IEnumerable{T}"/> of scalar values streamed from the database
+        /// </summary>
+        /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <param name="parameters">The parameters associated with a database query</param>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
+        /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
+        /// <returns>Returns an <see cref="IEnumerable{T}"/> of the value of the first column in the result set as an instance of <typeparamref name="T"/></returns>
+        public IEnumerable<T> GetScalarValuesStream<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false)
+        {
+            //Wrap this to automatically handle disposing of resources
+            using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult))
+            {
+                //Keep reading through the results
+                while (reader.Read() == true)
+                {
+                    yield return reader.GetFieldValue<T>(0);
+                }
+            }
+
+            yield break;
+        }
+        /// <summary>
         /// Utility method for returning a scalar value from the database
         /// </summary>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
