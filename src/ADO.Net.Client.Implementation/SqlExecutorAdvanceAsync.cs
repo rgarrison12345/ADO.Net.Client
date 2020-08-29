@@ -47,7 +47,7 @@ namespace ADO.Net.Client.Implementation
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
         /// <returns>Returns an <see cref="IAsyncEnumerable{T}"/> of the value of the first column in the result set as an instance of <typeparamref name="T"/></returns>
-        public async IAsyncEnumerable<T> GetScalarValuesStream<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, [EnumeratorCancellation] CancellationToken token = default)
+        public async IAsyncEnumerable<T> GetScalarValuesStreamAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, [EnumeratorCancellation] CancellationToken token = default)
         {
             //Wrap this to automatically handle disposing of resources
             using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult, token).ConfigureAwait(false))
@@ -72,7 +72,7 @@ namespace ADO.Net.Client.Implementation
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
         /// <returns>Returns an <see cref="IEnumerable{T}"/> of the value of the first column in the result set as an instance of <typeparamref name="T"/></returns>
-        public async Task<IEnumerable<T>> GetScalarValues<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
+        public async Task<IEnumerable<T>> GetScalarValuesAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
         {
             List<T> returnList = new List<T>();
 
