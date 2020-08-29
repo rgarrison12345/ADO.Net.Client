@@ -127,6 +127,32 @@ namespace ADO.Net.Client
         {
             return _executor.GetMultiResultReader(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared);
         }
+        /// <summary>
+        /// Gets an instance of <see cref="IEnumerable{T}"/> of scalar values
+        /// </summary>
+        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
+        public override IEnumerable<T> GetScalarValues<T>(ISqlQuery query)
+        {
+            return _executor.GetScalarValues<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared);
+        }
+        /// <summary>
+        /// Gets an instance of <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine streamed from the server
+        /// </summary>
+        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
+        public override IEnumerable<T> GetScalarValuesStream<T>(ISqlQuery query)
+        {
+            //Keep going through the enumerator
+            foreach(T type in _executor.GetScalarValuesStream<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared))
+            {
+                yield return type;
+            }
+
+            yield break;
+        }
         #endregion
         #region Data Modifications
         /// <summary>
