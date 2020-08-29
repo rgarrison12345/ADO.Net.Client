@@ -50,7 +50,7 @@ namespace ADO.Net.Client.Implementation
         public async IAsyncEnumerable<T> GetScalarValuesStream<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, [EnumeratorCancellation] CancellationToken token = default)
         {
             //Wrap this to automatically handle disposing of resources
-            using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult, token))
+            using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult, token).ConfigureAwait(false))
             {
                 //Keep reading through the results
                 while (await reader.ReadAsync(token).ConfigureAwait(false) == true)
@@ -60,6 +60,33 @@ namespace ADO.Net.Client.Implementation
             }
 
             yield break;
+        }
+        /// <summary>
+        /// Utility method for returning an <see cref="IEnumerable{T}"/> of scalar values from the database
+        /// </summary>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <param name="parameters">The parameters associated with a database query</param>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
+        /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
+        /// <returns>Returns an <see cref="IEnumerable{T}"/> of the value of the first column in the result set as an instance of <typeparamref name="T"/></returns>
+        public async Task<IEnumerable<T>> GetScalarValues<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
+        {
+            List<T> returnList = new List<T>();
+
+            //Wrap this to automatically handle disposing of resources
+            using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult, token).ConfigureAwait(false))
+            {
+                //Keep reading through the results
+                while (await reader.ReadAsync(token).ConfigureAwait(false) == true)
+                {
+                    returnList.Add(await reader.GetFieldValueAsync<T>(0, token).ConfigureAwait(false));
+                }
+            }
+
+            return returnList;
         }
         /// <summary>
         /// Gets an instance of the <typeparamref name="T"/> parameter object that creates an object based on the query passed into the routine
