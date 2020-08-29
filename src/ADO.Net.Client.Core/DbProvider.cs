@@ -82,14 +82,22 @@ namespace ADO.Net.Client.Core
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Returns an <see cref="IEnumerable{T}"/> of type parameter object based on the fields in the passed in query</returns>
         public abstract IAsyncEnumerable<T> GetDataObjectsStreamAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
-#endif        
         /// <summary>
-        /// Gets an <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
+        /// Gets an instance of <see cref="IAsyncEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine streamed from the server
         /// </summary>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
-        /// <returns>Returns a <see cref="IEnumerable{T}"/> of type parameter object based on the fields in the passed in query</returns>
+        /// <returns>Returns a <see cref="IAsyncEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
+        public abstract IAsyncEnumerable<T> GetScalarValuesStreamAsync<T>(ISqlQuery query, CancellationToken token = default);
+#endif
+            /// <summary>
+            /// Gets an <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
+            /// </summary>
+            /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
+            /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+            /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+            /// <returns>Returns a <see cref="IEnumerable{T}"/> of type parameter object based on the fields in the passed in query</returns>
         public abstract Task<IEnumerable<T>> GetDataObjectsAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
         /// <summary>
         /// Gets an instance of <see cref="DataSet"/>

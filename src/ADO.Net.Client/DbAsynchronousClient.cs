@@ -164,6 +164,32 @@ namespace ADO.Net.Client
             //Nothing to do here
             yield break;
         }
+        /// <summary>
+        /// Gets an instance of <see cref="IAsyncEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine streamed from the server
+        /// </summary>
+        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Returns a <see cref="IAsyncEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
+        public override async IAsyncEnumerable<T> GetScalarValuesStreamAsync<T>(ISqlQuery query, [EnumeratorCancellation] CancellationToken token = default)
+        {
+#if ADVANCE_ASYNC
+            //Return this back to the caller
+            await foreach (T type in _executor.GetScalarValuesStreamAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false))
+            {
+                yield return type;
+            }
+#else
+            //Return this back to the caller
+            await foreach (T type in _executor.GetScalarValuesStreamAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false))
+            {
+                yield return type;
+            }
+#endif
+
+            //Nothing to do here
+            yield break;
+        }
 #endif
         #endregion
         #region Data Modification        
