@@ -163,6 +163,14 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns the value of the first column in the first row as <see cref="Task{T}"/></returns>
         public abstract Task<T> GetScalarValueAsync<T>(ISqlQuery query, CancellationToken token = default);
         /// <summary>
+        /// Utility method for returning a <see cref="Task{IEnumerable}"/> value from the database
+        /// </summary>
+        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <returns>Returns the value of the first column in the first row as <see cref="Task{T}"/></returns>
+        public abstract Task<IEnumerable<T>> GetScalarValuesAsync<T>(ISqlQuery query, CancellationToken token = default);
+        /// <summary>
         /// Gets an instance of <see cref="IMultiResultReader"/> asynchronously
         /// </summary>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>

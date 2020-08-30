@@ -207,6 +207,20 @@ namespace ADO.Net.Client
             return await _executor.ExecuteNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false);
 #endif
         }
+        /// <summary>
+        /// Gets an instance of <see cref="IEnumerable{T}"/> of scalar values
+        /// </summary>
+        /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
+        /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
+        /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
+        public override async Task<IEnumerable<T>> GetScalarValuesAsync<T>(ISqlQuery query, CancellationToken token = default)
+        {
+#if ADVANCE_ASYNC
+            return await _executor.GetScalarValuesAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false);
+#else
+            return await _executor.GetScalarValuesAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false);
+#endif
+        }
         #endregion
     }
 }
