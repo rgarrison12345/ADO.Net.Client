@@ -4,6 +4,18 @@ Version History
 ### 1.2.0
 
 * Updating to ADO.Net.Client.Core 1.2.0
+* [SqlExecutor](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/SqlExecutorAsync.cs) adding two new methods
+  * GetScalarValuesAsync
+    * Returns an IEnumerable of values
+  * GetScalarValuesStreamAsync for .Net 4.6.1 .Net Standard 2.0+ builds
+    * Returns a single scalar streamed from a query
+      * Intended to be implemented as an Iterator function
+* [SqlExecutor](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/SqlExecutorSync.cs) adding two new methods
+  * GetScalarValues
+    * Returns an IEnumerable of values
+  * GetScalarValuesStream
+    * Returns a single scalar streamed from a query
+      * Intended to be implemented as an Iterator function
 
 ### 1.1.9.2
 

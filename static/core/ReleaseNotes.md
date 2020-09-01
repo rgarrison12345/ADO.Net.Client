@@ -15,6 +15,7 @@ Version History
   * GetScalarValuesStream
     * Returns a single scalar streamed from a query
       * Intended to be implemented as an Iterator function
+      
 ### 1.1.9.5
 
 * [IDbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbObjectFactory.cs) restoring CanCreateDataAdapter .NET Standard 2.1+ builds
