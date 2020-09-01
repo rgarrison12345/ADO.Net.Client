@@ -1,6 +1,20 @@
 Version History
 ===============
 
+### 1.2.0
+
+* [ISqlExecutorAsync](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/ISqlExecutorAsync.cs) adding two new methods
+  * GetScalarValuesAsync
+    * Returns an IEnumerable of values
+  * GetScalarValuesStreamAsync for .Net 4.6.1 .Net Standard 2.0+ builds
+    * Returns a single scalar streamed from a query
+      * Intended to be implemented as an Iterator function
+* [ISqlExecutorSync](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/ISqlExecutorSync.cs) adding two new methods
+  * GetScalarValues
+    * Returns an IEnumerable of values
+  * GetScalarValuesStream
+    * Returns a single scalar streamed from a query
+      * Intended to be implemented as an Iterator function
 ### 1.1.9.5
 
 * [IDbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbObjectFactory.cs) restoring CanCreateDataAdapter .NET Standard 2.1+ builds
