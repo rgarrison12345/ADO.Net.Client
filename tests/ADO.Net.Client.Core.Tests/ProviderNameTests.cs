@@ -40,11 +40,13 @@ namespace ADO.Net.Client.Core.Tests
     public class ProviderNameTests : BaseTests
     {
         #region Setup/Teardown
+        /// <summary>
+        /// 
+        /// </summary>
         [SetUp]
         public override void Setup()
         {
-            _formatter = new Mock<IDbParameterFormatter>();
-            _factory = new DbObjectFactory("ADO.Net.Client.Tests.Common", _formatter.Object);
+            _factory = new DbObjectFactory("ADO.Net.Client.Tests.Common");
         }
         #endregion
         #region Tests

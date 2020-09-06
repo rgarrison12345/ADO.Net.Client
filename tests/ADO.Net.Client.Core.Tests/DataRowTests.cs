@@ -47,7 +47,6 @@ namespace ADO.Net.Client.Core.Tests
         [SetUp]
         public override void Setup()
         {
-            _formatter = new Mock<IDbParameterFormatter>();
             DbProviderFactories.RegisterFactory("ADO.Net.Client.Tests.Common", CustomDbProviderFactory.Instance);
 
             //For regular .NET framework the driver must be installed in the Global Assembly Cache
@@ -55,7 +54,7 @@ namespace ADO.Net.Client.Core.Tests
             DataRow row = (from a in table.Rows.Cast<DataRow>()
                            where a.ItemArray[2].ToString() == "ADO.Net.Client.Tests.Common"
                            select a).FirstOrDefault();
-            _factory = new DbObjectFactory(row, _formatter.Object);
+            _factory = new DbObjectFactory(row);
         }
         #endregion
     }
