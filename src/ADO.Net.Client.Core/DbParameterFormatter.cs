@@ -74,8 +74,6 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns a value of <see cref="DbType"/></returns>
         public DbType MapDbType(PropertyInfo info)
         {
-            object[] customAttributes = info.GetCustomAttributes(false);
-
             //Check if this is a byte array
             if (info.PropertyType.Name == "Byte[]")
             {
@@ -84,7 +82,7 @@ namespace ADO.Net.Client.Core
             else if (info.PropertyType == typeof(DateTime))
             {
                 //Check which date type to map to
-                if (customAttributes.Where(x => x.GetType() == typeof(DateTime2)).Count() == 1)
+                if (Attribute.IsDefined(info, typeof(DateTime2), false) == true)
                 {
                     return DbType.DateTime2;
                 }
@@ -163,15 +161,15 @@ namespace ADO.Net.Client.Core
             else if (info.PropertyType == typeof(string))
             {
                 //Check which string type to map to
-                if (customAttributes.Where(x => x.GetType() == typeof(ANSIString)).Count() == 1)
+                if (Attribute.IsDefined(info, typeof(ANSIString), false) == true)
                 {
                     return DbType.AnsiString;
                 }
-                else if (customAttributes.Where(x => x.GetType() == typeof(ANSIStringFixedLength)).Count() == 1)
+                else if (Attribute.IsDefined(info, typeof(ANSIStringFixedLength), false) == true)
                 {
                     return DbType.AnsiStringFixedLength;
                 }
-                else if (customAttributes.Where(x => x.GetType() == typeof(StringFixedLength)).Count() == 1)
+                else if (Attribute.IsDefined(info, typeof(StringFixedLength), false) == true)
                 {
                     return DbType.StringFixedLength;
                 }
