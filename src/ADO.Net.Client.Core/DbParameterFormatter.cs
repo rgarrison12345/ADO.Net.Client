@@ -222,17 +222,15 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns a value of <see cref="ParameterDirection"/></returns>
         public ParameterDirection MapParameterDirection(PropertyInfo info)
         {
-            object[] custom = info.GetCustomAttributes(false);
-
-            if(custom.Where(x => x.GetType() == typeof(Input)).Count() == 1)
+            if(Attribute.IsDefined(info, typeof(Input), false) == true)
             {
                 return ParameterDirection.Input;
             }
-            else if(custom.Where(x => x.GetType() == typeof(Output)).Count() == 1)
+            else if (Attribute.IsDefined(info, typeof(Output), false) == true)
             {
                 return ParameterDirection.Output;
             }
-            else if (custom.Where(x => x.GetType() == typeof(ReturnValue)).Count() == 1)
+            else if (Attribute.IsDefined(info, typeof(ReturnValue), false) == true)
             {
                 return ParameterDirection.ReturnValue;
             }
