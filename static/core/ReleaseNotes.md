@@ -3,6 +3,9 @@ Version History
 
 ### 1.3.0
 
+* [SqlQuery]() moved from ADO.Net.Client.Implementation
+* New class [DbParameterBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterBuilder.cs)
+* IDbParameterUtility renamed to [IDbParameterBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbParameterBuilder.cs)
 * Removing GetDbParameter overloads from [DbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbObjectFactory.cs)
 * Removing GetDbParameter overloads from [IDbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbObjectFactory.cs)
 
