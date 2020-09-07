@@ -1,6 +1,11 @@
 Version History
 ===============
 
+### 1.3.0
+
+* Removing GetDbParameter overloads from [DbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbObjectFactory.cs)
+* Removing GetDbParameter overloads from [IDbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbObjectFactory.cs)
+
 ### 1.2.0
 
 * [ISqlExecutorAsync](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/ISqlExecutorAsync.cs) adding two new methods

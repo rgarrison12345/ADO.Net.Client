@@ -23,7 +23,6 @@ SOFTWARE.*/
 #endregion
 #region Using Declarations
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -46,88 +45,62 @@ namespace ADO.Net.Client.Core
     public class DbObjectFactory : IDbObjectFactory
     {
         #region Fields/Properties
-        private readonly DbProviderFactory _dbProviderFactory;
-        private readonly IDbParameterFormatter _dbParameterFormatter;
+        private readonly DbProviderFactory _factory;
 
 #if ADVANCED_FEATURES
         /// <summary>
         /// Whether or not this instance is capable of creating a <see cref="DbDataAdapter"/>
         /// </summary>
-        public bool CanCreateDataAdapter => _dbProviderFactory.CanCreateDataAdapter;
+        public bool CanCreateDataAdapter => _factory.CanCreateDataAdapter;
         /// <summary>
         /// Whether or not this instance is capable of creating a <see cref="DbCommandBuilder"/>
         /// </summary>
-        public bool CanCreateCommandBuilder => _dbProviderFactory.CanCreateCommandBuilder;
+        public bool CanCreateCommandBuilder => _factory.CanCreateCommandBuilder;
 #endif
         /// <summary>
         /// Whether or not this instance is capable of creating a <see cref="DbDataSourceEnumerator"/>
         /// </summary>
-        public bool CanCreateDataSourceEnumerator => _dbProviderFactory.CanCreateDataSourceEnumerator;
+        public bool CanCreateDataSourceEnumerator => _factory.CanCreateDataSourceEnumerator;
         #endregion
         #region Constructors
         /// <summary>
         /// Instantiates a new instance with the passed in <paramref name="factory"/>
         /// </summary>
         /// <param name="factory">An instance of the <see cref="DbProviderFactory"/> client class</param>
-        public DbObjectFactory(DbProviderFactory factory) : this(factory, new DbParameterFormatter())
+        public DbObjectFactory(DbProviderFactory factory)
         {
-        }
-        /// <summary>
-        /// Instantiates a new instance with the passed in <paramref name="factory"/>
-        /// </summary>
-        /// <param name="formatter"></param>
-        /// <param name="factory">An instance of the <see cref="DbProviderFactory"/> client class</param>
-        public DbObjectFactory(DbProviderFactory factory, IDbParameterFormatter formatter) : this(formatter)
-        {
-            _dbProviderFactory = factory;
+            _factory = factory;
         }
         /// <summary>
         /// Instantiates a new instance with the passed in <paramref name="providerInvariantName"/>
         /// </summary>
         /// <param name="providerInvariantName">The name of the data provider that the should be used to query a data store</param>
-        public DbObjectFactory(string providerInvariantName) : this(providerInvariantName, new DbParameterFormatter())
-        {
-
-        }
-        /// <summary>
-        /// Instantiates a new instance with the passed in <paramref name="providerInvariantName"/>
-        /// </summary>
-        /// <param name="formatter"></param>
-        /// <param name="providerInvariantName">The name of the data provider that the should be used to query a data store</param>
-        public DbObjectFactory(string providerInvariantName, IDbParameterFormatter formatter) : this(formatter)
+        public DbObjectFactory(string providerInvariantName)
         {
 #if !NETSTANDARD2_0
             try
             {
-                _dbProviderFactory = DbProviderFactories.GetFactory(providerInvariantName);
+                _factory = DbProviderFactories.GetFactory(providerInvariantName);
             }
             catch (Exception ex)
             {
-                _dbProviderFactory = GetProviderFactory(providerInvariantName);
+                _factory = GetProviderFactory(providerInvariantName);
             }
 #else
-            _dbProviderFactory = GetProviderFactory(providerInvariantName);
+            _factory = GetProviderFactory(providerInvariantName);
 #endif
         }
         /// <summary>
         /// Instantiates a new instance with the passed in <paramref name="connection"/>
         /// </summary>
         /// <param name="connection">An instance of <see cref="DbConnection"/> </param>
-        public DbObjectFactory(DbConnection connection) : this(connection, new DbParameterFormatter())
-        {
-        }
-        /// <summary>
-        /// Instantiates a new instance with the passed in <paramref name="connection"/>
-        /// </summary>
-        /// <param name="formatter"></param>
-        /// <param name="connection">An instance of <see cref="DbConnection"/> </param>
-        public DbObjectFactory(DbConnection connection, IDbParameterFormatter formatter) : this(formatter)
+        public DbObjectFactory(DbConnection connection)
         {
 #if !NETSTANDARD2_0
-            _dbProviderFactory = DbProviderFactories.GetFactory(connection);
+            _factory = DbProviderFactories.GetFactory(connection);
 #elif NETSTANDARD2_0
             //Get the assembly from the dbconnection type
-            _dbProviderFactory = GetProviderFactory(connection.GetType().Assembly);
+            _factory = GetProviderFactory(connection.GetType().Assembly);
 #endif
         }
 #if !NETSTANDARD2_0
@@ -135,27 +108,11 @@ namespace ADO.Net.Client.Core
         /// Instantiates a new instance with the passed in <paramref name="row"/>
         /// </summary>
         /// <param name="row">An instance of <see cref="DataRow"/> that has the necessary information to create an instance of <see cref="DbProviderFactory"/></param>
-        public DbObjectFactory(DataRow row) : this(row, new DbParameterFormatter())
+        public DbObjectFactory(DataRow row)
         {
-        }
-        /// <summary>
-        /// Instantiates a new instance with the passed in <paramref name="row"/>
-        /// </summary>
-        /// <param name="formatter"></param>
-        /// <param name="row">An instance of <see cref="DataRow"/> that has the necessary information to create an instance of <see cref="DbProviderFactory"/></param>
-        public DbObjectFactory(DataRow row, IDbParameterFormatter formatter) : this(formatter)
-        {
-            _dbProviderFactory = DbProviderFactories.GetFactory(row);
+            _factory = DbProviderFactories.GetFactory(row);
         }
 #endif
-        /// <summary>
-        /// Instantiates a new instance with the passed in <paramref name="dbParameterFormatter"/>
-        /// </summary>
-        /// <param name="dbParameterFormatter">An instance of <see cref="DbParameterFormatter"/> to help format <see cref="DbParameter"/></param>
-        private DbObjectFactory(IDbParameterFormatter dbParameterFormatter)
-        {
-            _dbParameterFormatter = dbParameterFormatter;
-        }
         #endregion
         #region Utility Methods
         /// <summary>
@@ -165,7 +122,7 @@ namespace ADO.Net.Client.Core
         public DbDataSourceEnumerator GetDataSourceEnumerator()
         {
             //Return this back to the caller
-            return _dbProviderFactory.CreateDataSourceEnumerator();
+            return _factory.CreateDataSourceEnumerator();
         }
         /// <summary>
         /// Gets a <see cref="DbDataAdapter"/> based on the provider the <see cref="DbObjectFactory"/> is utilizing
@@ -174,7 +131,7 @@ namespace ADO.Net.Client.Core
         public DbDataAdapter GetDbDataAdapter()
         {
             //Return this back to the caller
-            return _dbProviderFactory.CreateDataAdapter();
+            return _factory.CreateDataAdapter();
         }
         /// <summary>
         /// Gets a <see cref="DbCommandBuilder"/> based on the provider the <see cref="DbObjectFactory"/> is utilizing
@@ -183,7 +140,7 @@ namespace ADO.Net.Client.Core
         public DbCommandBuilder GetDbCommandBuilder()
         {
             //Return this back to the caller
-            return _dbProviderFactory.CreateCommandBuilder();
+            return _factory.CreateCommandBuilder();
         }
         /// <summary>
         /// Gets a <see cref="DbConnectionStringBuilder"/> based off the provider passed into class
@@ -192,7 +149,7 @@ namespace ADO.Net.Client.Core
         public DbConnectionStringBuilder GetDbConnectionStringBuilder()
         {
             //Return this back to the caller
-            return _dbProviderFactory.CreateConnectionStringBuilder();
+            return _factory.CreateConnectionStringBuilder();
         }
         /// <summary>
         /// Gets an instance of a formatted <see cref="DbCommand"/> object based on the specified provider
@@ -200,7 +157,7 @@ namespace ADO.Net.Client.Core
         ///<param name="trasaction">An instance of <see cref="DbTransaction"/></param>
         /// <param name="commandTimeout">Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.</param>
         /// <param name="connection">An instance of <see cref="DbConnection"/></param>
-        /// <param name="parameters">The list of <see cref="IEnumerable{DbParameter}"/> associated with the query parameter</param>
+        /// <param name="parameters">The list of <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/> associated with the query parameter</param>
         /// <param name="query">The SQL command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns an instance of <see cref="DbCommand"/> object based off the provider passed into the class</returns>
@@ -259,7 +216,7 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns an instance of <see cref="DbCommand"/> object</returns>
         public DbCommand GetDbCommand()
         {
-            DbCommand command = _dbProviderFactory.CreateCommand();
+            DbCommand command = _factory.CreateCommand();
 
             //Dispose interfaces to clear up any resources used by this instance
             command.Disposed += DbCommand_Disposed;
@@ -274,166 +231,7 @@ namespace ADO.Net.Client.Core
         public DbConnection GetDbConnection()
         {
             //Return this back to the caller
-            return _dbProviderFactory.CreateConnection();
-        }
-#if !NET45
-        /// <summary>
-        /// Gets an initialized instance of a <see cref="DbParameter"/> object based on the specified provider
-        /// </summary>
-        /// <param name="dataType">The <see cref="DbType"/> of the field in the database</param>
-        /// <param name="parameterName">The name of the parameter to identify the parameter</param>
-        /// <param name="parameterValue">The value of the parameter as a <see cref="object"/></param>
-        /// <param name="scale">The number of decimal places to which the <see cref="DbParameter.Value"/> property is resolved.  The default value is <c>null</c></param>
-        /// <param name="precision">The maximum number of digits used to represent the <see cref="DbParameter.Value"/> property.  The default value is <c>null</c></param>
-        /// <param name="paramDirection">The direction of the parameter, defaults to <see cref="ParameterDirection.Input"/></param>
-        /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
-        public DbParameter GetFixedSizeDbParameter(string parameterName, object parameterValue, DbType dataType, byte? scale = null, byte? precision = null, ParameterDirection paramDirection = ParameterDirection.Input)
-        {
-            //Get the DbParameter object
-            DbParameter parameter = GetDbParameter(parameterName, parameterValue, dataType, paramDirection);
-
-            //Check for values
-            if (precision.HasValue == true)
-            {
-                parameter.Precision = precision.Value;
-            }
-            if (scale.HasValue == true)
-            {
-                parameter.Scale = scale.Value;
-            }
-
-            //Return this back to the caller
-            return parameter;
-        }
-#endif
-        /// <summary>
-        /// Gets an initialized instance of a <see cref="DbParameter"/> object based on the specified provider
-        /// </summary>
-        /// <param name="dataType">The <see cref="DbType"/> of the field in the database</param>
-        /// <param name="size">maximum size, in bytes, of the data.  The default value is <c>null</c></param>
-        /// <param name="parameterName">The name of the parameter to identify the parameter</param>
-        /// <param name="parameterValue">The value of the parameter as a <see cref="object"/></param>
-        /// <param name="paramDirection">The direction of the parameter, defaults to <see cref="ParameterDirection.Input"/></param>
-        /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
-        public DbParameter GetVariableSizeDbParameter(string parameterName, object parameterValue, DbType dataType, int? size = null, ParameterDirection paramDirection = ParameterDirection.Input)
-        {
-            //Get the DbParameter object
-            DbParameter parameter = GetDbParameter(parameterName, parameterValue, dataType, paramDirection);
-
-            //Check for value
-            if (size.HasValue == true)
-            {
-                parameter.Size = size.Value;
-            }
-
-            //Return this back to the caller
-            return parameter;
-        }
-        /// <summary>
-        /// Gets an initialized instance of a <see cref="DbParameter"/> object based on the specified provider
-        /// </summary>
-        /// <param name="dataType">The <see cref="DbType"/> of the field in the database</param>
-        /// <param name="parameterName">The name of the parameter to identify the parameter</param>
-        /// <param name="parameterValue">The value of the parameter as a <see cref="object"/></param>
-        /// <param name="paramDirection">The direction of the parameter, defaults to <see cref="ParameterDirection.Input"/></param>
-        /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
-        public DbParameter GetDbParameter(string parameterName, object parameterValue, DbType dataType, ParameterDirection paramDirection = ParameterDirection.Input)
-        {
-            //Get the DbParameter object
-            DbParameter parameter = GetDbParameter(parameterName, parameterValue);
-
-            //Set parameter properties
-            parameter.DbType = dataType;
-            parameter.Direction = paramDirection;
-
-            //Return this back to the caller
-            return parameter;
-        }
-        /// <summary>
-        /// Gets an initialized instance of a <see cref="DbParameter"/>
-        /// </summary>
-        /// <param name="parameterValue">The value t0 assign to the <see cref="DbParameter"/></param>
-        /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
-        /// <returns></returns>
-        public DbParameter GetDbParameter(object parameterValue, PropertyInfo info)
-        {
-            DbParameter parameter = GetDbParameter();
-
-            _dbParameterFormatter.MapDbParameter(parameter, parameterValue, info);
-
-            return parameter;
-        }
-        /// <summary>
-        /// Gets an initialized instance of a <see cref="DbParameter"/> object based on the specified provider
-        /// </summary>
-        /// <param name="parameterName">The name of the parameter to identify the parameter</param>
-        /// <param name="parameterValue">The value of the parameter</param>
-        /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
-        public DbParameter GetDbParameter(string parameterName, object parameterValue)
-        {
-            //Get the DbParameter object
-            DbParameter parameter = GetDbParameter();
-
-            parameter.Value = _dbParameterFormatter.MapParameterValue(parameterValue);
-            parameter.ParameterName = _dbParameterFormatter.MapParameterName(parameterName);
-
-            //Return this back to the caller
-            return parameter;
-        }
-        /// <summary>
-        /// Gets an <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/> from the passed in <paramref name="values"/>
-        /// </summary>
-        /// <param name="values">An array of values to be used to create <see cref="DbParameter"/></param>
-        /// <returns>Returns an <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/></returns>
-        public IEnumerable<DbParameter> GetDbParameters(params object[] values)
-        {
-            List<DbParameter> result = new List<DbParameter>();
-
-            void ProcessArg(object value)
-            {
-                //Check if this is an enumerable object 
-                if (value.IsEnumerable() == true)
-                {
-                    //Go through each item in the enumerable
-                    foreach (var singleArg in value as IEnumerable)
-                    {
-                        //Recurse the call
-                        ProcessArg(singleArg);
-                    }
-                }
-                else if (value is DbParameter parameter)
-                {
-                    result.Add(parameter);
-                }
-                else
-                {
-                    Type type = value.GetType();
-
-                    //Can't have plain string or value types
-                    if (type.IsValueType || type == typeof(string))
-                    {
-                        throw new ArgumentException($"Value type or string passed as Parameter object: {value}");
-                    }
-
-                    //We only want properties where we can read a value
-                    IEnumerable<PropertyInfo> readableProps = type.GetProperties().Where(p => p.CanRead == true);
-
-                    //Loop through each property
-                    foreach (PropertyInfo prop in readableProps)
-                    {
-                        result.Add(GetDbParameter(prop.GetValue(value, null), prop));
-                    }
-                }
-            }
-
-            //Go through all items in the params array
-            foreach (object arg in values)
-            {
-                ProcessArg(arg);
-            }
-
-            //Nothing to return here
-            return result;
+            return _factory.CreateConnection();
         }
         /// <summary>
         /// Create an instance of <see cref="DbParameter"/> object based off of the provider passed into factory
@@ -442,7 +240,7 @@ namespace ADO.Net.Client.Core
         public DbParameter GetDbParameter()
         {
             //Return this back to the caller
-            return _dbProviderFactory.CreateParameter();
+            return _factory.CreateParameter();
         }
         /// <summary>
         /// Gets an instance of <see cref="DbProviderFactory"/> based off a .NET drivers <paramref name="providerName"/>, such as System.Data.SqlClientt
@@ -479,9 +277,9 @@ namespace ADO.Net.Client.Core
         #endregion
         #region Helper Methods                
         /// <summary>
-        /// Databases the command disposed.
+        /// Handles the database command disposed event
         /// </summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The sender as an instance of <see cref="DbCommand"/></param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void DbCommand_Disposed(object sender, EventArgs e)
         {
