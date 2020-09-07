@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
-using ADO.Net.Client.Core;
+using ADO.Net.Client.Tests.Common;
 using Bogus;
-using MySqlConnector;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -33,7 +33,7 @@ using System.Data.Common;
 using System.Linq;
 #endregion
 
-namespace ADO.Net.Client.Implementation.Tests.Unit
+namespace ADO.Net.Client.Core.Tests
 {
     /// <summary>
     /// 
@@ -42,8 +42,8 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
     public class QueryBuilderTests 
     {
         #region Fields/Properties
-        private readonly IDbObjectFactory _factory;
         private readonly Faker _faker = new Faker();
+        private Mock<IDbParameterBuilder> paramBuilder = new Mock<IDbParameterBuilder>();
         private IQueryBuilder _builder;
         #endregion
         #region Constructors        
@@ -52,7 +52,6 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         /// </summary>
         public QueryBuilderTests()
         {
-            _factory = new DbObjectFactory(MySqlConnectorFactory.Instance);
         }
         #endregion
         #region Setup/Teardown        
@@ -62,42 +61,11 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         [SetUp]
         public void Setup()
         {
-            _builder = new QueryBuilder(_factory);
+            paramBuilder = new Mock<IDbParameterBuilder>();
+            _builder = new QueryBuilder(paramBuilder.Object);
         }
         #endregion
-        #region Tests            
-        /// <summary>
-        /// Determines whether this instance [can build SQL query].
-        /// </summary>
-        [Test]
-        [Category("Build")]
-        public void CanBuildSQLQuery()
-        {
-            string queryString = _faker.Random.AlphaNumeric(30);
-            int commandTimeout = _faker.Random.Int();
-            bool clearContents = _faker.Random.Bool();
-            bool prepareQuery = _faker.Random.Bool();
-            CommandType commandType = _faker.PickRandom<CommandType>();
-            List<DbParameter> parameters = new List<DbParameter>()
-            {
-                new MySqlParameter() { ParameterName = "@Param3" },
-                new MySqlParameter() { ParameterName = "@Param2" },
-                new MySqlParameter() { ParameterName = "@Param1" }
-            };
-
-            _builder.Append(queryString);
-            _builder.AddParameterRange(parameters);
-
-            ISqlQuery query = _builder.CreateSQLQuery(commandType, commandTimeout, prepareQuery, clearContents);
-
-            Assert.IsNotNull(query);
-            Assert.AreEqual(commandTimeout, query.CommandTimeout);
-            Assert.AreEqual(queryString, query.QueryText);
-            Assert.AreEqual(prepareQuery, query.ShouldBePrepared);
-            Assert.AreEqual(commandType, query.QueryType);
-            Assert.IsTrue(_builder.Parameters.Count() == ((clearContents == false) ? parameters.Count : 0));
-            Assert.IsTrue(_builder.QueryText == ((clearContents == false) ? queryString : string.Empty));
-        }
+        #region Tests         
         /// <summary>
         /// Containtses the parameter false.
         /// </summary>
@@ -105,11 +73,11 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         [Category("Parameters")]
         public void ContainsParameterFalse()
         {
-            MySqlParameter param = new MySqlParameter() { ParameterName = "Param", Value = 12321, DbType = DbType.Int32 };
+            CustomDbParameter param = new CustomDbParameter() { ParameterName = "Param", Value = 12321, DbType = DbType.Int32 };
 
             _builder.AddParameter(param);
 
-            Assert.IsFalse(_builder.Contains(new MySqlParameter()));
+            Assert.IsFalse(_builder.Contains(new CustomDbParameter()));
         }
         /// <summary>
         /// Determines whether [contains parameter true].
@@ -118,7 +86,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         [Category("Parameters")]
         public void ContainsParameterTrue()
         {
-            MySqlParameter param = new MySqlParameter() { ParameterName = "Param", Value = 12321, DbType = DbType.Int32 };
+            CustomDbParameter param = new CustomDbParameter() { ParameterName = "Param", Value = 12321, DbType = DbType.Int32 };
 
             _builder.AddParameter(param);
 
@@ -133,9 +101,9 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         {
             List<DbParameter> parameters = new List<DbParameter>()
             {
-                new MySqlParameter() { ParameterName = "@Param3" },
-                new MySqlParameter() { ParameterName = "@Param2" },
-                new MySqlParameter() { ParameterName = "@Param1" }
+                new CustomDbParameter() { ParameterName = "@Param3" },
+                new CustomDbParameter() { ParameterName = "@Param2" },
+                new CustomDbParameter() { ParameterName = "@Param1" }
             };
 
             _builder.AddParameterRange(parameters);
@@ -151,9 +119,9 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         {
             List<DbParameter> parameters = new List<DbParameter>()
             {
-                new MySqlParameter() { ParameterName = "@Param3" },
-                new MySqlParameter() { ParameterName = "@Param2" },
-                new MySqlParameter() { ParameterName = "@Param1" }
+                new CustomDbParameter() { ParameterName = "@Param3" },
+                new CustomDbParameter() { ParameterName = "@Param2" },
+                new CustomDbParameter() { ParameterName = "@Param1" }
             };
 
             _builder.AddParameterRange(parameters);
@@ -169,11 +137,11 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         [Category("Parameters")]
         public void RejectsDuplicateParameterName()
         {
-            MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1" };
+            CustomDbParameter parameter = new CustomDbParameter() { ParameterName = "@Param1" };
 
             _builder.AddParameter(parameter);
 
-            Assert.Throws<ArgumentException>(() => _builder.AddParameter(new MySqlParameter() { ParameterName = "@Param1" }));
+            Assert.Throws<ArgumentException>(() => _builder.AddParameter(new CustomDbParameter() { ParameterName = "@Param1" }));
         }
         /// <summary>
         /// Rejectses the duplicate parameter names in enumerable.
@@ -182,11 +150,11 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         [Category("Parameters")]
         public void RejectsDuplicateParameterNamesInEnumerable()
         {
-            List<DbParameter> parameters = new List<DbParameter>()
+            List<CustomDbParameter> parameters = new List<CustomDbParameter>()
             {
-                new MySqlParameter() { ParameterName = "@Param1" },
-                new MySqlParameter() { ParameterName = "@Param2" },
-                new MySqlParameter() { ParameterName = "@Param1" }
+                new CustomDbParameter() { ParameterName = "@Param1" },
+                new CustomDbParameter() { ParameterName = "@Param2" },
+                new CustomDbParameter() { ParameterName = "@Param1" }
             };
 
             Assert.Throws<ArgumentException>(() => _builder.AddParameterRange(parameters));
@@ -198,68 +166,17 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         [Category("Parameters")]
         public void RejectsDuplicateParameterNames()
         {
-            MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1" };
-            List<DbParameter> parameters = new List<DbParameter>()
+            CustomDbParameter parameter = new CustomDbParameter() { ParameterName = "@Param1" };
+            List<CustomDbParameter> parameters = new List<CustomDbParameter>()
             {
-                new MySqlParameter() { ParameterName = "@Param3" },
-                new MySqlParameter() { ParameterName = "@Param2" },
-                new MySqlParameter() { ParameterName = "@Param1" }
+                new CustomDbParameter() { ParameterName = "@Param3" },
+                new CustomDbParameter() { ParameterName = "@Param2" },
+                new CustomDbParameter() { ParameterName = "@Param1" }
             };
 
             _builder.AddParameter(parameter);
 
             Assert.Throws<ArgumentException>(() => _builder.AddParameterRange(parameters));
-        }
-        /// <summary>
-        /// Determines whether this instance [can append string].
-        /// </summary>
-        [Test]
-        [Category("SQL")]
-        public void CanAppendString()
-        {
-            string valueToAppend = "Value To Append";
-
-            _builder.Append(valueToAppend);
-
-            Assert.That(!string.IsNullOrWhiteSpace(_builder.QueryText));
-            Assert.That(valueToAppend == _builder.QueryText);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        [Test]
-        public void CanAppendStringAndParameter()
-        {
-            string valueToAppend = "Value To Append";
-            MySqlParameter parameter = new MySqlParameter() { ParameterName = "Param1" };
-
-            _builder.Append(valueToAppend, parameter);
-
-            Assert.IsNotNull(_builder.Parameters);
-            Assert.That(!string.IsNullOrWhiteSpace(_builder.QueryText));
-            Assert.That(valueToAppend == _builder.QueryText);
-            Assert.That(_builder.Parameters.Count() == 1);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        [Test]
-        public void CanAppendStringAndParameters()
-        {
-            string valueToAppend = "Value To Append";
-            List<DbParameter> parameters = new List<DbParameter>() 
-            { 
-                new MySqlParameter() { ParameterName = "Param1" },
-                new MySqlParameter() { ParameterName = "Param2" },
-                new MySqlParameter() { ParameterName = "Param3" }
-            };
-
-            _builder.Append(valueToAppend, parameters);
-
-            Assert.IsNotNull(_builder.Parameters);
-            Assert.That(!string.IsNullOrWhiteSpace(_builder.QueryText));
-            Assert.That(valueToAppend == _builder.QueryText);
-            Assert.That(_builder.Parameters.Count() == 3);
         }
         /// <summary>
         /// 
@@ -270,9 +187,9 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         {
             List<DbParameter> parameters = new List<DbParameter>()
             {
-                new MySqlParameter() { ParameterName = "Param1" },
-                new MySqlParameter() { ParameterName = "Param2" },
-                new MySqlParameter() { ParameterName = "Param3" }
+                new CustomDbParameter() { ParameterName = "Param1" },
+                new CustomDbParameter() { ParameterName = "Param2" },
+                new CustomDbParameter() { ParameterName = "Param3" }
             };
 
             _builder.AddParameterRange(parameters);
@@ -286,35 +203,20 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             Assert.That(_builder.Parameters.Count() == 0);
         }
         /// <summary>
-        /// Determines whether this instance [can clear SQL string].
-        /// </summary>
-        [Test]
-        [Category("SQL")]
-        public void CanClearSqlString()
-        {
-            _builder.Append("A value to append \n");
-            _builder.Append("A second value to append");
-
-            //Clear the sql string
-            _builder.ClearSQL();
-
-            Assert.That(string.IsNullOrWhiteSpace(_builder.QueryText) == true);
-        }
-        /// <summary>
         /// 
         /// </summary>
         [Test]
         [Category("Parameters")]
         public void CanFindParameterByName()
         {
-            MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1", Value = 1};
+            CustomDbParameter parameter = new CustomDbParameter() { ParameterName = "@Param1", Value = 1};
 
             _builder.AddParameter(parameter);
 
             DbParameter param = _builder.GetParameter(parameter.ParameterName);
 
             Assert.IsNotNull(param);
-            Assert.AreEqual(typeof(MySqlParameter), param.GetType());
+            Assert.AreEqual(typeof(CustomDbParameter), param.GetType());
             Assert.That(_builder.Parameters.Count() == 1);
             Assert.That(param.ParameterName == parameter.ParameterName);
             Assert.That(param.Value == parameter.Value);
@@ -326,7 +228,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         [Category("Parameters")]
         public void CanRemoveParameterByName()
         {
-            MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1", Value = 1 };
+            CustomDbParameter parameter = new CustomDbParameter() { ParameterName = "@Param1", Value = 1 };
 
             _builder.AddParameter(parameter);
 
@@ -343,8 +245,8 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         [Category("Parameters")]
         public void CanReplaceParameterByName()
         {
-            MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1", Value = 1 };
-            MySqlParameter newParam = new MySqlParameter() { ParameterName="@Param2", Value = "SomeValue" };
+            CustomDbParameter parameter = new CustomDbParameter() { ParameterName = "@Param1", Value = 1 };
+            CustomDbParameter newParam = new CustomDbParameter() { ParameterName="@Param2", Value = "SomeValue" };
             
             _builder.AddParameter(parameter);
 
@@ -363,7 +265,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         [Category("Parameters")]
         public void CanSetParameterValueByName()
         {
-            MySqlParameter parameter = new MySqlParameter() { ParameterName = "@Param1", Value = 1 };
+            CustomDbParameter parameter = new CustomDbParameter() { ParameterName = "@Param1", Value = 1 };
 
             _builder.AddParameter(parameter);
             _builder.SetParamaterValue(parameter.ParameterName, 333);
