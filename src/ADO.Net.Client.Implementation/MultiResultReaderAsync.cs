@@ -90,7 +90,7 @@ namespace ADO.Net.Client.Implementation
             yield break;
         }
 #endif
-#if !NET45 && !NET461 && !NETSTANDARD2_0
+#if ADVANCE_ASYNC
         /// <summary>
         /// Closes the underlying reader object that reads records from the database asynchronously
         /// </summary>
@@ -100,7 +100,7 @@ namespace ADO.Net.Client.Implementation
         }
 #endif
         #endregion
-#if !NET45 && !NET461 && !NETSTANDARD2_0
+#if ADVANCE_ASYNC
         #region IDisposableAsync Support 
         /// <summary>
         /// Disposes the asynchronous.
