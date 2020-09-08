@@ -9,6 +9,8 @@ Version History
 * IDbParameterUtility renamed to [IDbParameterBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbParameterBuilder.cs)
 * Removing GetDbParameter overloads from [DbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbObjectFactory.cs)
 * Removing GetDbParameter overloads from [IDbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbObjectFactory.cs)
+* New interface [IAdHocQueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IAdHocQueryBuilder.cs) for creating ad-hoc queries
+* New interface [IStoredProcedureQueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IStoredProcedureQueryBuilder.cs) for creating stored procedure queries
 
 ### 1.2.0
 
