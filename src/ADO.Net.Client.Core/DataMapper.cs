@@ -135,7 +135,6 @@ namespace ADO.Net.Client.Core
             for (int i = 0; i < record.FieldCount; i++)
             {
                 string name = record.GetName(i);
-                object value = record.GetValue(i);
                 PropertyInfo info = writeableProperties.GetProperty(name) ?? writeableProperties.GetPropertyInfoByDbField(name);
 
                 //Check if a property could be found by name
@@ -144,10 +143,12 @@ namespace ADO.Net.Client.Core
                     continue;
                 }
 
+                object value = null;
+
                 //Check if this is the database representation of null
-                if (value == DBNull.Value)
+                if (record.IsDBNull(i) == false)
                 {
-                    value = null;
+                    value = record.GetValue(i);
                 }
 
                 bool nullable = info.PropertyType.IsNullableGenericType();
