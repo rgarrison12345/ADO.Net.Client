@@ -23,7 +23,6 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Common;
 #endregion
 
@@ -32,17 +31,9 @@ namespace ADO.Net.Client.Core
     /// <summary>
     /// Contract class that builds out queries to be exectued against a database
     /// </summary>
-    /// <seealso cref="IDbParameterUtility"/>
-    public interface IQueryBuilder : IDbParameterUtility
+    public interface IQueryBuilder
     {
-        #region Fields/Properties   
-        /// <summary>
-        /// The query command text or name of stored procedure to execute against the data store
-        /// </summary>
-        /// <value>
-        /// The <see cref="string"/> value of stored procedure or ad-hoc query
-        /// </value>
-        string QueryText { get; }
+        #region Fields/Properties
         /// <summary>
         /// The database parameters associated with a query
         /// </summary>
@@ -51,49 +42,71 @@ namespace ADO.Net.Client.Core
         /// </value>
         IEnumerable<DbParameter> Parameters { get; }
         #endregion
-        #region Utility Methods        
+        #region Methods
         /// <summary>
-        /// Clears the underlying SQL query being created by this instance
+        /// Retrieves a <see cref="DbParameter"/> object by using the passed in parameter name
         /// </summary>
-        void ClearSQL();
+        /// <param name="parameterName">The name of the parameter to use to find the parameter value</param>
+        /// <returns>The specified <see cref="DbParameter"/> by name</returns>
+        DbParameter GetParameter(string parameterName);
         /// <summary>
-        /// Appends the specified SQL to the existing SQL statement being built
+        /// Adds the passed in parameter to the parameters collection
         /// </summary>
-        /// <param name="sql">The SQL statement to append</param>
-        void Append(string sql);
+        /// <param name="param">An instance of the <see cref="DbParameter"/> object, that is created the by the caller</param>
+        /// <returns>Returns a <see cref="DbParameter"/></returns>
+        void AddParameter(DbParameter param);
         /// <summary>
-        /// Appends the specified SQL to the existing SQL statement being built
+        /// Adds the passed in parameter to the parameters collection
         /// </summary>
-        /// <param name="sql">The SQL statement to append</param>
-        /// <param name="parameter">The database parameter associated with this SQL statement</param>
-        void Append(string sql, DbParameter parameter);
+        /// <param name="parameterName">The name of the parameter to identify the parameter</param>
+        /// <param name="parameterValue">The value of the parameter as an <see cref="object"/></param>
+        void AddParameter(string parameterName, object parameterValue);
         /// <summary>
-        /// Appends the specified SQL to the existing SQL statement being built
+        /// Adds the passed in parameter to the parameters collection
         /// </summary>
-        /// <param name="sql">The SQL statement to append</param>
-        /// <param name="paramerterName">Name of the paramerter.</param>
-        /// <param name="parmaeterValue">The parmaeter value.</param>
-        void Append(string sql, string paramerterName, object parmaeterValue);
+        /// <param name="parameters">The parameters that are associated with a database query</param>
+        void AddParameterRange(params object[] parameters);
         /// <summary>
-        /// Appends the specified SQL to the existing SQL statement being built.
+        /// Removes a <see cref="DbParameter"/> from the parameters collection by using the parameter name
         /// </summary>
-        /// <param name="sql">The SQL statement to append</param>
-        /// <param name="parameters">The database parameters associated with this query</param>
-        void Append(string sql, params object[] parameters);
+        /// <param name="parameterName">The name of the parameter to identify the parameter to remove from the collection</param>
+        /// <returns>Returns true if item was successully removed, false otherwise if item was not found in the list</returns>
+        bool RemoveParameter(string parameterName);
         /// <summary>
-        /// Appends the specified SQL to the existing SQL statement being built
+        /// Replaces an existing parameter with the new <see cref="DbParameter"/> with an existing <see cref="DbParameter.ParameterName"/>
         /// </summary>
-        /// <param name="sql">The SQL statement to append</param>
-        /// <param name="parameters">The database parameters associated with this query</param>
-        void Append(string sql, IEnumerable<DbParameter> parameters);
+        /// <param name="parameterName">The index as a <c>string</c> to use when searching for the existing parameter</param>
+        /// <param name="param">A new instance of <see cref="DbParameter"/></param>
+        void ReplaceParameter(string parameterName, DbParameter param);
         /// <summary>
-        /// Create an instance of <see cref="ISqlQuery"/> using the existing <see cref="Parameters"/> and built sql query
+        /// Clears all parameters from the parameters collection
         /// </summary>
-        /// <param name="clearContents">If <c>true</c> when building the query the current <see cref="Parameters"/> and <see cref="QueryText"/> will be cleared</param>
-        /// <param name="shouldBePrepared">Indicates if the current sql string needs to be prepared (or compiled) version of the command on the data source.</param>
-        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
-        /// <param name="type">Represents how a command should be interpreted by the data provider</param>
-        ISqlQuery CreateSQLQuery(CommandType type, int commandTimeout = 30, bool shouldBePrepared = false, bool clearContents = true);
+        void ClearParameters();
+        /// <summary>
+        /// Sets the value of an existing <see cref="DbParameter"/> by using the <paramref name="parameterName"/> and passed in <paramref name="value"/>
+        /// </summary>
+        /// <param name="parameterName">The name of the parameter to identify the parameter</param>
+        /// <param name="value">The value of the parameter as an <see cref="object"/></param>
+        void SetParamaterValue(string parameterName, object value);
+        /// <summary>
+        /// Adds an <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/> objects to the helpers underlying db parameter collection
+        /// </summary>
+        /// <param name="dbParams">An <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/> to add to the underlying db parameter collection for the connection</param>
+        void AddParameterRange(IEnumerable<DbParameter> dbParams);
+        /// <summary>
+        /// Checks for a parameter in the parameters collection with the passed in name
+        /// </summary>
+        /// <param name="parameterName">The name of the parameter to use when searching the <see cref="Parameters"/></param>
+        /// <returns>True if this parameter exists in the parameters collection, false otherwise</returns>
+        bool Contains(string parameterName);
+        /// <summary>
+        /// Determines whether this instance contains the passed in <paramref name="parameter"/>
+        /// </summary>
+        /// <param name="parameter">An instance of <see cref="DbParameter"/> that may be associated with this instance</param>
+        /// <returns>
+        ///   <c>true</c> if this instance contains the passed in <paramref name="parameter"/> otherwise, <c>false</c>.
+        /// </returns>
+        bool Contains(DbParameter parameter);
         #endregion
     }
 }

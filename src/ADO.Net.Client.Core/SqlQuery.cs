@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -63,12 +64,12 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="type">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="list">The list of query database parameters that are associated with a query</param>
-        internal SqlQuery(string query, CommandType type, IEnumerable<DbParameter> list)
+        /// <param name="parameters">The <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/> that are associated with a query</param>
+        internal SqlQuery(string query, CommandType type, IEnumerable<DbParameter> parameters)
         {
             QueryText = query;
             QueryType = type;
-            Parameters = list;
+            Parameters = parameters;
         }
         #endregion
         #region Utility Methods

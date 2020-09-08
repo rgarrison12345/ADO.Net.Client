@@ -30,7 +30,7 @@ using System.Data.Common;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class for a transfer object that contains the information about a query to use when querying a datastore
+    /// Contract for a transfer object that contains the information about a query to use when querying a datastore
     /// </summary>
     public interface ISqlQuery
     {
@@ -58,8 +58,6 @@ namespace ADO.Net.Client.Core
         /// Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.
         /// </summary>
         int CommandTimeout { get; }
-        #endregion
-        #region Utility Methods
         #endregion
     }
 }
