@@ -1,6 +1,14 @@
 Version History
 ===============
 
+### 1.3.0
+
+* Updating to ADO.Net.Client.Core 1.3.0
+* New interface [AdHocQueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/AdHocQueryBuilder.cs) for creating ad-hoc queries
+* New interface [StoredProcedureQueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/StoredProcedureQueryBuilder.cs) for creating stored procedure queries
+* SqlQuery moved to ADO.Net.Client.Core
+* QueryBuilder moved to ADO.Net.Client.Core
+ 
 ### 1.2.0
 
 * Updating to ADO.Net.Client.Core 1.2.0
