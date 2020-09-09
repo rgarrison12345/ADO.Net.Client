@@ -1,6 +1,11 @@
 Version History
 ===============
 
+### 1.3.1
+
+* [QueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/QueryBuilder.cs) CreateSQLQuery now a public method
+* [IQueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IQueryBuilder.cs) new function CreateSQLQuery
+
 ### 1.3.0
 
 * [SqlQuery](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/SqlQuery.cs) renamed from SQLQuery
