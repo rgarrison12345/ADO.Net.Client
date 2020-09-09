@@ -154,12 +154,14 @@ namespace ADO.Net.Client.Core
                 bool nullable = info.PropertyType.IsNullableGenericType();
                 bool isEnum = (nullable == false) ? info.PropertyType.IsEnum : (Nullable.GetUnderlyingType(info.PropertyType)?.IsEnum == true);
 
-                //Might need to change the value
-                if (info.GetCustomAttributes(false).Where(x => x.GetType() == typeof(DbField)).SingleOrDefault() is DbField field && value == null)
+                //Check for a dbfield attribute
+                if (Attribute.IsDefined(info, typeof(DbField), false) == true && value == null)
                 {
                     //Set new value
-                    value = field.DefaultValueIfNull;
+                    value = ((DbField)info.GetCustomAttributes(false).Where(x => x.GetType() == typeof(DbField)).Single()).DefaultValueIfNull;
                 }
+
+                //Now attempt to set property value
                 if (nullable == true && isEnum == false)
                 {
                     if (value != null)

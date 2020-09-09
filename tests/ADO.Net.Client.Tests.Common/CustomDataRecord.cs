@@ -161,7 +161,7 @@ namespace ADO.Net.Client.Tests.Common
 
         public bool IsDBNull(int i)
         {
-            throw new NotImplementedException();
+            return (_kvp[i].Value == DBNull.Value || _kvp[i].Value == null);
         }
         #endregion
     }
