@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 #endregion
 
@@ -43,6 +44,15 @@ namespace ADO.Net.Client.Core
         IEnumerable<DbParameter> Parameters { get; }
         #endregion
         #region Methods
+        /// <summary>
+        /// Create an instance of <see cref="ISqlQuery"/> using the existing <see cref="Parameters"/> and built sql query
+        /// </summary>
+        /// <param name="queryText">The Ad-Hoc query or stored procedure name</param>
+        /// <param name="clearContents">If <c>true</c> when building the query the current <see cref="Parameters"/> will be cleared</param>
+        /// <param name="shouldBePrepared">Indicates if the current sql string needs to be prepared (or compiled) version of the command on the data source.</param>
+        /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
+        /// <param name="type">Represents how a command should be interpreted by the data provider</param>
+        SqlQuery CreateSQLQuery(string queryText, CommandType type, int commandTimeout = 30, bool shouldBePrepared = false, bool clearContents = true);
         /// <summary>
         /// Retrieves a <see cref="DbParameter"/> object by using the passed in parameter name
         /// </summary>
