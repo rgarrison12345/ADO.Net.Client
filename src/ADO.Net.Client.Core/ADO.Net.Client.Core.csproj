@@ -54,7 +54,7 @@
     <DefineConstants>RELEASE;</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
-    <DefineConstants>ADVANCED_FEATURES</DefineConstants>
+    <DefineConstants>ADVANCED_FEATURES;ADVANCE_ASYNC;</DefineConstants>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.1' and '$(TargetFramework)'!='net45'">
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />

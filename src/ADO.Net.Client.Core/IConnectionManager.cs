@@ -70,7 +70,7 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="level">Specifies the transaction locking behavior for the <see cref="Connection"/></param>
         void StartTransaction(IsolationLevel level);
-#if !NET45 && !NET461 && !NETSTANDARD2_0                
+#if ADVANCE_ASYNC               
         /// <summary>
         /// Starts a database transaction asynchronously with the specified <paramref name="level"/>
         /// </summary>
