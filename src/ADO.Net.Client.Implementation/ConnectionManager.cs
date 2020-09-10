@@ -124,7 +124,7 @@ namespace ADO.Net.Client.Implementation
         {
             Transaction = null;
         }
-#if !NET45 && !NET461 && !NETSTANDARD2_0
+#if ADVANCE_ASYNC
         /// <summary>
         /// Starts a database transaction asynchronously with the specified <paramref name="level"/>
         /// </summary>
