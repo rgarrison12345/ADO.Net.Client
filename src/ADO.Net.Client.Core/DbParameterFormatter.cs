@@ -248,9 +248,9 @@ namespace ADO.Net.Client.Core
             return parameterName.StartsWith(ParameterNamePrefix) == true ? parameterName : string.Concat(ParameterNamePrefix, parameterName);
         }
         /// <summary>
-        /// Maps an instance of a <see cref="IDbDataParameter"/> using the passed in <paramref name="info"/> <paramref name="parameterValue"/>
+        /// Maps an instance of a <see cref="DbParameter"/> using the passed in <paramref name="info"/> <paramref name="parameterValue"/>
         /// </summary>
-        /// <param name="parameter">An instance of <see cref="IDbDataParameter"/></param>
+        /// <param name="parameter">An instance of <see cref="DbParameter"/></param>
         /// <param name="parameterValue">The value of the parameter</param>
         /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
         public void MapDbParameter(DbParameter parameter, object parameterValue, PropertyInfo info)
