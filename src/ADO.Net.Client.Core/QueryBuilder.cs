@@ -35,68 +35,56 @@ namespace ADO.Net.Client.Core
     /// Utility class that builds out queries to be exectued against a database
     /// </summary>
     /// <seealso cref="IQueryBuilder"/>
-    public class QueryBuilder : IQueryBuilder
+    public abstract class QueryBuilder : IQueryBuilder
     {
         #region Fields/Properties
-        private readonly List<DbParameter> _parameters = new List<DbParameter>();
         private readonly IDbParameterBuilder _parameterBuilder;
+        private readonly List<DbParameter> _parameters = new List<DbParameter>();
 
         /// <summary>
-        /// The database parameters associated with a query
-        /// </summary>
-        /// <value>
         /// The parameters associated with a query as a <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/>
-        /// </value>
-        public IEnumerable<DbParameter> Parameters
-        {
-            get
-            {
-                return _parameters;
-            }
-        }
+        /// </summary>
+        public IEnumerable<DbParameter> Parameters => _parameters;
         #endregion
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="QueryBuilder"/> class.
         /// </summary>
-        /// <param name="paramBuilder"></param>
-        public QueryBuilder(IDbParameterBuilder paramBuilder)
+        /// <param name="parameterBuilder">An  instance of <see cref="IDbParameterBuilder"/></param>
+        protected QueryBuilder(IDbParameterBuilder parameterBuilder)
         {
-            _parameterBuilder = paramBuilder;
+            _parameterBuilder = parameterBuilder;
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="QueryBuilder"/> class.
         /// </summary>
-        /// <param name="paramBuilder"></param>
+        /// <param name="parameterBuilder">An instance of <see cref="IDbParameterBuilder"/></param>
         /// <param name="parameters">The database parameters associated with a query</param>
-        public QueryBuilder(IDbParameterBuilder paramBuilder, IEnumerable<DbParameter> parameters) : this(paramBuilder)
-        {
-            AddParameterRange(parameters);
+        protected QueryBuilder(IDbParameterBuilder parameterBuilder, IEnumerable<DbParameter> parameters) : this(parameterBuilder)
+        { 
+            _parameters.AddRange(parameters);
         }
         #endregion
-        #region SQL Methods
+        #region Methods
         /// <summary>
-        /// Create an instance of <see cref="ISqlQuery"/> using the existing <see cref="Parameters"/> and built sql query
+        /// Create an instance of <see cref="ISqlQuery"/>
         /// </summary>
-        /// <param name="queryText">The Ad-Hoc query or stored procedure name</param>
         /// <param name="clearContents">If <c>true</c> when building the query the current <see cref="Parameters"/> will be cleared</param>
+        /// <param name="queryText">The Ad-Hoc query or stored procedure name</param>
         /// <param name="shouldBePrepared">Indicates if the current sql string needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="type">Represents how a command should be interpreted by the data provider</param>
-        public ISqlQuery CreateSQLQuery(string queryText, CommandType type, int commandTimeout = 30, bool shouldBePrepared = false, bool clearContents = true)
+        protected ISqlQuery CreateSQLQuery(string queryText, CommandType type, int commandTimeout = 30, bool shouldBePrepared = false, bool clearContents = false)
         {
-            SqlQuery query = new SqlQuery(queryText, type, _parameters) { CommandTimeout = commandTimeout, ShouldBePrepared = shouldBePrepared };
+            ISqlQuery query = QueryFactory.CreateSQLQuery(queryText, type, _parameters, commandTimeout, shouldBePrepared);
 
-            //Check if we need to remove the parameters
-            if (clearContents == true)
+            if(clearContents == true)
             {
                 _parameters.Clear();
             }
 
             return query;
-        }
-        #endregion
-        #region Parameter Methods        
+        }     
         /// <summary>
         /// Adds the passed in parameter to the <see cref="Parameters"/>
         /// </summary>
@@ -136,7 +124,7 @@ namespace ADO.Net.Client.Core
         /// Adds an <see cref="IEnumerable{T}" /> of <see cref="DbParameter"/> to the <see cref="Parameters"/>
         /// </summary>
         /// <exception cref="ArgumentException">Throws argument exception when there are duplicate parameter names</exception>
-        /// <param name="dbParams">An <see cref="IEnumerable{T}" /> to add to the underlying db parameter collection for the connection</param>
+        /// <param name="dbParams">An <see cref="IEnumerable{T}" /> to add to the <see cref="Parameters"/></param>
         public void AddParameterRange(IEnumerable<DbParameter> dbParams)
         {
             //Check incoming parameters for duplicate parameters
