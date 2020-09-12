@@ -47,28 +47,22 @@ namespace ADO.Net.Client.Implementation
         /// <value>
         /// The <see cref="string"/> value of ad-hoc query
         /// </value>
-        public string QueryText
-        {
-            get
-            {
-                return _sqlQuery.ToString();
-            }
-        }
+        public string QueryText => _sqlQuery.ToString();
         #endregion
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="AdHocQueryBuilder"/> class.
         /// </summary>
-        /// <param name="parameterBuilder"></param>
+        /// <param name="parameterBuilder">An instance of <see cref="IDbParameterBuilder"/></param>
         public AdHocQueryBuilder(IDbParameterBuilder parameterBuilder) : base(parameterBuilder)
         {
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="AdHocQueryBuilder"/> class.
         /// </summary>
-        /// <param name="paramBuilder"></param>
+        /// <param name="parameterBuilder">An instance of <see cref="IDbParameterBuilder"/></param>
         /// <param name="parameters">The database parameters associated with a query</param>
-        public AdHocQueryBuilder(IDbParameterBuilder paramBuilder, IEnumerable<DbParameter> parameters) : base(paramBuilder, parameters)
+        public AdHocQueryBuilder(IDbParameterBuilder parameterBuilder, IEnumerable<DbParameter> parameters) : base(parameterBuilder, parameters)
         {
         }
         #endregion

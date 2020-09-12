@@ -62,7 +62,7 @@ namespace ADO.Net.Client.Core.Tests
         public void Setup()
         {
             paramBuilder = new Mock<IDbParameterBuilder>();
-            _builder = new QueryBuilder(paramBuilder.Object);
+            _builder = new CustomQueryBuilder(paramBuilder.Object);
         }
         #endregion
         #region Tests         
@@ -275,60 +275,6 @@ namespace ADO.Net.Client.Core.Tests
             Assert.That(_builder.Parameters.Count() == 1);
             Assert.That(param.ParameterName == parameter.ParameterName);
             Assert.That(333 == (int)param.Value);
-        }
-        /// <summary>
-        /// Determines whether this instance [can build SQL query].
-        /// </summary>
-        [Test]
-        [Category("QueryBuild")]
-        public void BuildSQLQuery()
-        {
-            CommandType type = _faker.PickRandom<CommandType>();
-            string sql = _faker.Random.AlphaNumeric(30);
-            int commandTimeout = _faker.Random.Int();
-            bool clearContents = _faker.Random.Bool();
-            bool prepareQuery = _faker.Random.Bool();
-            List<CustomDbParameter> parameters = new List<CustomDbParameter>()
-            {
-                new CustomDbParameter() { ParameterName = "@Param3" },
-                new CustomDbParameter() { ParameterName = "@Param2" },
-                new CustomDbParameter() { ParameterName = "@Param1" }
-            };
-
-            _builder.AddParameterRange(parameters);
-
-            ISqlQuery query = _builder.CreateSQLQuery(sql, type, commandTimeout, prepareQuery, clearContents);
-
-            Assert.IsNotNull(query);
-            Assert.AreEqual(type, query.QueryType);
-            Assert.AreEqual(commandTimeout, query.CommandTimeout);
-            Assert.AreEqual(sql, query.QueryText);
-            Assert.AreEqual(prepareQuery, query.ShouldBePrepared);
-            Assert.AreEqual(type, query.QueryType);
-            Assert.IsTrue(_builder.Parameters.Count() == ((clearContents == false) ? parameters.Count : 0));
-        }
-        /// <summary>
-        /// Determines whether this instance [can build SQL query].
-        /// </summary>
-        [Test]
-        [Category("QueryBuild")]
-        public void BuildSQLQueryNoParameters()
-        {
-            CommandType type = _faker.PickRandom<CommandType>();
-            string sql = _faker.Random.AlphaNumeric(30);
-            int commandTimeout = _faker.Random.Int();
-            bool clearContents = _faker.Random.Bool();
-            bool prepareQuery = _faker.Random.Bool();
-
-            ISqlQuery query = _builder.CreateSQLQuery(sql, type, commandTimeout, prepareQuery, clearContents);
-
-            Assert.IsNotNull(query);
-            Assert.AreEqual(type, query.QueryType);
-            Assert.IsTrue(query.Parameters.Count() == 0);
-            Assert.AreEqual(commandTimeout, query.CommandTimeout);
-            Assert.AreEqual(sql, query.QueryText);
-            Assert.AreEqual(prepareQuery, query.ShouldBePrepared);
-            Assert.AreEqual(type, query.QueryType);
         }
         #endregion
     }

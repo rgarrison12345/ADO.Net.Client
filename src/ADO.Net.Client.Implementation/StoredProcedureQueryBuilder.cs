@@ -31,7 +31,7 @@ using System.Data.Common;
 namespace ADO.Net.Client.Implementation
 {
     /// <summary>
-    /// 
+    /// Class for creating stored procedure queries
     /// </summary>
     /// <seealso cref="QueryBuilder"/>
     /// <seealso cref="IStoredProcedureQueryBuilder"/>
@@ -41,14 +41,14 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Initializes a new instance of the <see cref="StoredProcedureQueryBuilder"/> class.
         /// </summary>
-        /// <param name="parameterBuilder"></param>
+        /// <param name="parameterBuilder">An instance of <see cref="IDbParameterBuilder"/></param>
         public StoredProcedureQueryBuilder(IDbParameterBuilder parameterBuilder) : base(parameterBuilder)
         {
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="StoredProcedureQueryBuilder"/> class.
         /// </summary>
-        /// <param name="paramBuilder"></param>
+        /// <param name="paramBuilder">An instance of <see cref="IDbParameterBuilder"/></param>
         /// <param name="parameters">The database parameters associated with a query</param>
         public StoredProcedureQueryBuilder(IDbParameterBuilder paramBuilder, IEnumerable<DbParameter> parameters) : base(paramBuilder, parameters)
         {
