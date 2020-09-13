@@ -39,7 +39,30 @@ namespace ADO.Net.Client.Tests
 {
     public partial class ClientTests
     {
-        #region Read Test Methods               
+        #region Read Test Methods        
+        /// <summary>
+        /// Whens the get scalar values stream is called it should call SQL executor get scalar values stream.
+        /// </summary>
+        [Test]
+        public void WhenGetScalarValuesStream_IsCalled_ItShouldCallSqlExecutorGetScalarValuesStream()
+        {
+            Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
+            List<string> returnedValue = new List<string>();
+            List<string> expectedValue = GetStringScalarValues();
+
+            mockExecutor.Setup(x => x.GetScalarValuesStream<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(expectedValue);
+
+            //Keep iterating through the reader
+            foreach (string value in new DbClient(mockExecutor.Object).GetScalarValuesStream<string>(realQuery))
+            {
+                returnedValue.Add(value);
+            }
+
+            Assert.IsTrue(expectedValue.Count == returnedValue.Count);
+
+            //Verify the executor function was called
+            mockExecutor.Verify(x => x.GetScalarValuesStream<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+        }
         /// <summary>
         /// Whens the get data object stream is called it should call SQL executor get data object stream.
         /// </summary>
@@ -243,7 +266,23 @@ namespace ADO.Net.Client.Tests
             mockExecutor.Verify(x => x.ExecuteNonQuery(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
         }
         #endregion
-        #region Helper Methods        
+        #region Helper Methods       
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetStringScalarValues()
+        {
+            List<string> returnList = new List<string>();
+            int number = _faker.Random.Int(0, 10);
+
+            for (int i = 0; i < number; i++)
+            {
+                returnList.Add(_faker.Random.AlphaNumeric(10));
+            }
+
+            return returnList;
+        }
         /// <summary>
         /// Gets the employees.
         /// </summary>
