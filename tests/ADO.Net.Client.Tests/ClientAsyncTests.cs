@@ -147,6 +147,40 @@ namespace ADO.Net.Client.Tests
             }
         }
         /// <summary>
+        /// Whens the get scalar values async is called it should call SQL executor get scalar values async
+        /// </summary>
+        [Test]
+        [Category("Asynchronous Read Tests")]
+        public async Task WhenGetScalarValuesAsync_IsCalled__ItShouldCallSqlExecutorGetScalarValuesAsync()
+        {
+            int delay = _faker.Random.Int(1, 30);
+
+            //Wrap this in a using to automatically dispose of resources
+            using (CancellationTokenSource source = new CancellationTokenSource(delay))
+            {
+                Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
+                string[] expectedValue = new string[] { _faker.Random.AlphaNumeric(10), _faker.Random.AlphaNumeric(30), _faker.Random.AlphaNumeric(20) };
+
+#if ADVANCE_ASYNC
+                mockExecutor.Setup(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(expectedValue).Verifiable();
+#else
+                mockExecutor.Setup(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(expectedValue).Verifiable();
+#endif
+                //Make the call
+                IEnumerable<string> returnedValue = await new DbClient(mockExecutor.Object).GetScalarValuesAsync<string>(realQuery, source.Token);
+
+                Assert.AreEqual(expectedValue, returnedValue);
+
+#if ADVANCE_ASYNC
+                //Verify the executor was called
+                mockExecutor.Verify(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
+#else
+                //Verify the executor was called
+                mockExecutor.Verify(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
+#endif
+            }
+        }
+        /// <summary>
         /// Whens the get scalar vlue asynchronous is called it should call SQL executor get scalar value asynchronous.
         /// </summary>
         [Test]
