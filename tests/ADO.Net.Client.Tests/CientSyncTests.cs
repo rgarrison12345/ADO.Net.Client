@@ -164,6 +164,27 @@ namespace ADO.Net.Client.Tests
             mockExecutor.Verify(x => x.GetDbDataReader(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior), Times.Once);
         }
         /// <summary>
+        /// Whens the get scalar values is called it should call SQL executor get scalar values
+        /// </summary>
+        [Test]
+        [Category("Synchronous Read Tests")]
+        public void WhenGetScalarValues_IsCalled__ItShouldCallSqlExecutorGetScalarValues()
+        {
+            Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
+            string[] expectedValue = new string[] { _faker.Random.AlphaNumeric(10), _faker.Random.AlphaNumeric(30), _faker.Random.AlphaNumeric(20) };
+               
+            //Need to setup the reader function
+            mockExecutor.Setup(x => x.GetScalarValues<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(expectedValue).Verifiable();
+
+            //Make the call
+            IEnumerable<string> returnedValue = new DbClient(mockExecutor.Object).GetScalarValues<string>(realQuery);
+
+            Assert.AreEqual(expectedValue, returnedValue);
+
+            //Verify the executor was called
+            mockExecutor.Verify(x => x.GetScalarValues<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+        }
+        /// <summary>
         /// Whens the get scalar is called it should call SQL executor get scalar.
         /// </summary>
         [Test]
