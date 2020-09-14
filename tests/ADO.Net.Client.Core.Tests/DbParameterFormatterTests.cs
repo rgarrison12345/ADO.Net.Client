@@ -372,9 +372,9 @@ namespace ADO.Net.Client.Core.Tests
         [Category("MapValue")]
         public void GetsNormalValuePropertyInfo()
         {
-            Employee model = new Employee() { Int32 = _faker.Random.Int() };
+            Employee model = new Employee() { DepartmentID = _faker.Random.Int() };
 
-            Assert.AreEqual(_formatter.MapParameterValue(model.Int32, model.GetType().GetProperty(nameof(model.Int32))), model.Int32);
+            Assert.AreEqual(_formatter.MapParameterValue(model.DepartmentID, model.GetType().GetProperty(nameof(model.DepartmentID))), model.DepartmentID);
         }
         [Test]
         [Category("MapName")]

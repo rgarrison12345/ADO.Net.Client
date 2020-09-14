@@ -59,11 +59,36 @@ namespace ADO.Net.Client.Core.Tests
         [Test]
         public void MapRecordCreateInstance()
         {
+            decimal salary = _faker.Random.Decimal();
+            PhoneType type = _faker.PickRandom<PhoneType>();
+            Guid id = _faker.Random.Guid();
+            string title = _faker.Random.AlphaNumeric(30);
+            int departmentID = _faker.Random.Int();
+
             List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
             {
-
+                new KeyValuePair<string, object>("EmployeeID", id ),
+                new KeyValuePair<string, object>("Title", title),
+                new KeyValuePair<string, object>("Salary", salary),
+                new KeyValuePair<string, object>("DepartmentID", departmentID),
+                new KeyValuePair<string, object>("PhoneType", type)
             };
             CustomDataRecord record = new CustomDataRecord(kvp);
+            Employee model = _mapper.MapRecord<Employee>(record);
+
+            Assert.AreEqual(salary, model.Salary);
+            Assert.AreEqual(title, model.Title);
+            Assert.AreEqual(id, model.EmployeeID);
+            Assert.AreEqual(departmentID, model.DepartmentID);
+            Assert.AreEqual(type, model.PhoneType);
+        }
+        /// <summary>
+        /// Maps the record create instance.
+        /// </summary>
+        [Test]
+        public void MapRecordCreateInstanceNotNull()
+        {
+            CustomDataRecord record = new CustomDataRecord(new List<KeyValuePair<string, object>>());
             Employee model = _mapper.MapRecord<Employee>(record);
 
             Assert.IsNotNull(model);
@@ -119,7 +144,7 @@ namespace ADO.Net.Client.Core.Tests
         /// Maps the normal property.
         /// </summary>
         [Test]
-        public void MapEnumNullProperty()
+        public void MapNullValueNullEnumProperty()
         {
             List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
             {
@@ -129,6 +154,22 @@ namespace ADO.Net.Client.Core.Tests
             Employee model = _mapper.MapRecord<Employee>(record);
 
             Assert.IsNull(model.PhoneType);
+        }
+        /// <summary>
+        /// Maps the normal property.
+        /// </summary>
+        [Test]
+        public void MapValueNullEnumProperty()
+        {
+            PhoneType type = _faker.PickRandom<PhoneType>();
+            List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("PhoneType", type)
+            };
+            CustomDataRecord record = new CustomDataRecord(kvp);
+            Employee model = _mapper.MapRecord<Employee>(record);
+
+            Assert.AreEqual(type, model.PhoneType);
         }
         [Test]
         public void MapNullableWithValue()

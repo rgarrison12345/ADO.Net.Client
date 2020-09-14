@@ -138,7 +138,7 @@ namespace ADO.Net.Client.Core
                 PropertyInfo info = writeableProperties.GetProperty(name) ?? writeableProperties.GetPropertyInfoByDbField(name);
 
                 //Check if a property could be found by name
-                if(info == null)
+                if (info == null)
                 {
                     continue;
                 }
@@ -169,13 +169,18 @@ namespace ADO.Net.Client.Core
                         info.SetValue(returnType, Convert.ChangeType(value, Nullable.GetUnderlyingType(info.PropertyType)), null);
                     }
                 }
-                else if (isEnum == true)
+                else if (nullable == true && isEnum == true)
                 {
                     if (value != null)
                     {
                         //Property is an enum
-                        info.SetValue(returnType, Enum.Parse(info.PropertyType, value.ToString()), null);
+                        info.SetValue(returnType, Enum.Parse(Nullable.GetUnderlyingType(info.PropertyType), value.ToString()), null);
                     }
+                }
+                else if (isEnum == true)
+                {
+                    //Property is an enum
+                    info.SetValue(returnType, Enum.Parse(info.PropertyType, value.ToString()), null);
                 }
                 else
                 {
