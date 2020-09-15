@@ -49,7 +49,6 @@ namespace ADO.Net.Client.Core.Tests
         private readonly Faker _faker = new Faker();
         private readonly string _connectionString = "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;";
         protected IDbObjectFactory _factory;
-        protected Mock<IDbParameterFormatter> _formatter = new Mock<IDbParameterFormatter>();
         #endregion
         #region Setup/Teardown     
         public abstract void Setup();
