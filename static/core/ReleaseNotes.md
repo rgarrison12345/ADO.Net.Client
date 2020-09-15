@@ -1,6 +1,13 @@
 Version History
 ===============
 
+### 1.3.2.1
+
+* Bug fix in [DataMapper](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DataMapper.cs) setting value for a nullable enum property in MapRecord
+
+### 1.3.2
+
+
 ### 1.3.1
 
 * [QueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/QueryBuilder.cs) CreateSQLQuery now a public method
