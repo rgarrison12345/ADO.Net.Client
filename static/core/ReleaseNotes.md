@@ -7,8 +7,8 @@ Version History
 
 ### 1.3.2
 
-  * [QueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/QueryBuilder.cs) is now an abstract class
-    * CreateSQLQuery back to protected method
+* [QueryBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/QueryBuilder.cs) is now an abstract class
+  * CreateSQLQuery back to protected method
 * New [QueryFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/QueryFactory.cs) static class
 
 ### 1.3.1
