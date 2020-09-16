@@ -32,7 +32,7 @@ using System.Linq;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Utility class that builds out queries to be exectued against a database
+    /// Base for classes that build out queries to be exectued against a database
     /// </summary>
     /// <seealso cref="IQueryBuilder"/>
     public abstract class QueryBuilder : IQueryBuilder
