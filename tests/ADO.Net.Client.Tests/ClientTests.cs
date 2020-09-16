@@ -86,10 +86,11 @@ namespace ADO.Net.Client.Tests
                 //Loop through all numbers
                 for (int i = 0; i < number; i++)
                 {
-                    CustomDbParameter param = new CustomDbParameter();
-
-                    param.ParameterName = $"Parameter{i}";
-                    param.Value = _faker.Random.AlphaNumeric(20);
+                    CustomDbParameter param = new CustomDbParameter
+                    {
+                        ParameterName = $"Parameter{i}",
+                        Value = _faker.Random.AlphaNumeric(20)
+                    };
 
                     parameters.Add(param);
                 }
