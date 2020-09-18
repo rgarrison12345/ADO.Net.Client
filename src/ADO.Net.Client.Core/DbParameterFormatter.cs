@@ -26,6 +26,7 @@ using ADO.Net.Client.Annotations;
 using System;
 using System.Data;
 using System.Data.Common;
+using System.Linq;
 using System.Reflection;
 #endregion
 
@@ -239,6 +240,23 @@ namespace ADO.Net.Client.Core
             }
         }
         /// <summary>
+        /// Maps a parameter name from an instance of <see cref="PropertyInfo"/>
+        /// </summary>
+        /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
+        /// <returns>Returns the name of a parameter</returns>
+        public string MapParameterName(PropertyInfo info)
+        {
+            string parameterName = info.Name;
+
+            //Check if there's an alternate parameter name
+            if(Attribute.IsDefined(info, typeof(ParameterName)))
+            {
+                parameterName = ((ParameterName)info.GetCustomAttributes(false).Where(x => x.GetType() == typeof(ParameterName)).Single()).Name;
+            }
+
+            return MapParameterName(parameterName);
+        }
+        /// <summary>
         /// Maps the name of the parameter.
         /// </summary>
         /// <param name="parameterName">Name of the parameter.</param>
@@ -255,7 +273,7 @@ namespace ADO.Net.Client.Core
         /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
         public void MapDbParameter(DbParameter parameter, object parameterValue, PropertyInfo info)
         {
-            parameter.ParameterName = MapParameterName(info.Name);
+            parameter.ParameterName = MapParameterName(info);
             parameter.Value = MapParameterValue(parameterValue, info);
             parameter.DbType = MapDbType(info);
             parameter.Direction = MapParameterDirection(info);

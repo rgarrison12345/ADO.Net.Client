@@ -378,6 +378,16 @@ namespace ADO.Net.Client.Core.Tests
         }
         [Test]
         [Category("MapName")]
+        public void MapPropertyInfoName()
+        {
+            PropertyInfo info = typeof(Employee).GetProperty(nameof(Employee.Password));
+
+            string parameterName = _formatter.MapParameterName(info);
+
+            Assert.IsTrue(parameterName == string.Concat(_formatter.ParameterNamePrefix, "loginCredential"));
+        }
+        [Test]
+        [Category("MapName")]
         public void MapParameterNamePrefix()
         {
             string name = string.Concat(_formatter.ParameterNamePrefix, _faker.Random.AlphaNumeric(10));

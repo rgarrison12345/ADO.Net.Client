@@ -45,6 +45,7 @@ namespace ADO.Net.Client.Tests.Common.Models
         public string Title { get; set; }
         public Guid? ManagerID { get; set; }
         public PhoneType? PhoneType { get; set; }
+        [ParameterName("loginCredential")]
         public string Password { private get; set; }
     }
     public enum PhoneType

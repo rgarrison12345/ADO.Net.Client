@@ -52,6 +52,12 @@ namespace ADO.Net.Client.Core
         #endregion
         #region Utility Methods  
         /// <summary>
+        /// Maps a parameter name from an instance of <see cref="PropertyInfo"/>
+        /// </summary>
+        /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
+        /// <returns>Returns the name of a parameter</returns>
+        string MapParameterName(PropertyInfo info);
+        /// <summary>
         /// Maps the name of the parameter.
         /// </summary>
         /// <param name="parameterName">Name of the parameter.</param>
