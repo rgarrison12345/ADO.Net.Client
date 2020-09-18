@@ -1,6 +1,11 @@
 Version History
 ===============
 
+### 1.3.3
+
+* [DbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterFormatter.cs) new method MapParameterName that takes in an instance of [PropertyInfo](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.propertyinfo?view=netcore-3.1)
+* [IDbParamaterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbParameterFormatter.cs) new method MapParameterName that takes in an instance of [PropertyInfo](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.propertyinfo?view=netcore-3.1)
+
 ### 1.3.2.1
 
 * Bug fix in [DataMapper](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DataMapper.cs) setting value for a nullable enum property in MapRecord
