@@ -78,7 +78,7 @@ namespace ADO.Net.Client.Core
         /// <param name="parameters">The database parameters associated with this query</param>
         void Append(string sql, IEnumerable<DbParameter> parameters);
         /// <summary>
-        /// Create an instance of <see cref="ISqlQuery"/> using the existing parameters and built sql query
+        /// Create an instance of <see cref="ISqlQuery"/> using the existing parameters and <see cref="QueryText"/>
         /// </summary>
         /// <param name="clearContents">If <c>true</c> when building the query the current parameters and <see cref="QueryText"/> will be cleared</param>
         /// <param name="shouldBePrepared">Indicates if the current sql string needs to be prepared (or compiled) version of the command on the data source.</param>
