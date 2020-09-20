@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using ADO.Net.Client.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -192,11 +193,12 @@ namespace ADO.Net.Client.Core
                         throw new ArgumentException($"Value type or string passed as Parameter object: {value}");
                     }
 
-                    //We only want properties where we can read a value
-                    IEnumerable<PropertyInfo> readableProps = type.GetProperties().Where(p => p.CanRead == true);
+                    //We only want properties where we can read a value, and are not an ignored property
+                    IEnumerable<PropertyInfo> properties = type.GetProperties().Where(p => p.CanRead == true)
+                    .Where(x => Attribute.IsDefined(x, typeof(IgnoreParameter)) == false);
 
                     //Loop through each property
-                    foreach (PropertyInfo prop in readableProps)
+                    foreach (PropertyInfo prop in properties)
                     {
                         result.Add(CreateParameter(prop.GetValue(value, null), prop));
                     }
