@@ -1,6 +1,14 @@
 Version History
 ===============
 
+### 1.1.5
+
+* Adding new attribute [IgnoreParameter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/IgnoreParameter.cs) to indicate that an instance of [DbParameter](https://docs.microsoft.com/en-us/dotnet/api/system.data.common.dbparameter?view=netcore-3.1) should not be created from a property
+
+### 1.1.4
+
+* Adding new attribute [ParameterName](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/ParameterName.cs) to specify alternate parameter name when creating an instance of [DbParameter](https://docs.microsoft.com/en-us/dotnet/api/system.data.common.dbparameter?view=netcore-3.1)
+
 ### 1.1.3
 
 * Adding attribute [Input](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/Input.cs) class to indicate an input database parameter
