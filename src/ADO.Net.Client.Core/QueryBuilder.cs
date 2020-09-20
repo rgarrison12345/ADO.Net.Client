@@ -78,7 +78,7 @@ namespace ADO.Net.Client.Core
         {
             ISqlQuery query = QueryFactory.CreateSQLQuery(queryText, type, _parameters, commandTimeout, shouldBePrepared);
 
-            if(clearContents == true)
+            if(clearContents)
             {
                 _parameters.Clear();
             }
@@ -93,7 +93,7 @@ namespace ADO.Net.Client.Core
         public void AddParameter(DbParameter param)
         {
             //Check if this parameter exists before adding to collection
-            if (Contains(param.ParameterName) == true)
+            if (Contains(param.ParameterName))
             {
                 throw new ArgumentException($"Parameter with name {param.ParameterName} already exists", nameof(param));
             }
@@ -128,7 +128,7 @@ namespace ADO.Net.Client.Core
         public void AddParameterRange(IEnumerable<DbParameter> dbParams)
         {
             //Check incoming parameters for duplicate parameters
-            if (dbParams.GroupBy(x => x.ParameterName).Any(g => g.Count() > 1) == true)
+            if (dbParams.GroupBy(x => x.ParameterName).Any(g => g.Count() > 1))
             {
                 throw new ArgumentException($"The passed in {dbParams} contains duplicate parameter names");
             }
@@ -137,7 +137,7 @@ namespace ADO.Net.Client.Core
             foreach (DbParameter dbParam in dbParams)
             {
                 //Raise exception here if parameter by name already exists
-                if (Contains(dbParam.ParameterName) == true)
+                if (Contains(dbParam.ParameterName))
                 {
                     throw new ArgumentException($"Parameter with name {dbParam.ParameterName} already exists");
                 }
@@ -161,7 +161,7 @@ namespace ADO.Net.Client.Core
         public bool Contains(string parameterName)
         {
             //Check if this even has a name, caller be using a provider that doesn't support named parameters
-            if (string.IsNullOrWhiteSpace(parameterName) == true)
+            if (string.IsNullOrWhiteSpace(parameterName))
             {
                 throw new ArgumentException(nameof(parameterName) + "cannot be null or empty");
             }
@@ -197,7 +197,7 @@ namespace ADO.Net.Client.Core
         public DbParameter GetParameter(string parameterName)
         {
             //Check for null or empty
-            if (string.IsNullOrWhiteSpace(parameterName) == true)
+            if (string.IsNullOrWhiteSpace(parameterName))
             {
                 throw new ArgumentException(nameof(parameterName) + " is null or empty");
             }
