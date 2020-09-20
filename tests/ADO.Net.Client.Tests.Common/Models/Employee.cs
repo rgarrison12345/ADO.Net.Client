@@ -47,6 +47,8 @@ namespace ADO.Net.Client.Tests.Common.Models
         public PhoneType? PhoneType { get; set; }
         [ParameterName("loginCredential")]
         public string Password { private get; set; }
+        [IgnoreParameter]
+        public string UserName { get; private set; }
     }
     public enum PhoneType
     {

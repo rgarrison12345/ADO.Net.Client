@@ -79,6 +79,19 @@ namespace ADO.Net.Client.Core.Tests
         /// 
         /// </summary>
         [Test]
+        public void ThrowsInvalidOperationException()
+        {
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                Guid value = _faker.Random.Guid();
+                PropertyInfo info = typeof(Employee).GetProperty(nameof(Employee.UserName));
+                DbParameter param = _builder.CreateParameter(value, info);
+            });
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
         public void CreateParameterPropertyInfo()
         {
             Guid value = _faker.Random.Guid();

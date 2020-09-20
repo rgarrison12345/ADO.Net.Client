@@ -77,9 +77,16 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="parameterValue">The value to assign to the <see cref="DbParameter"/></param>
         /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
+        /// <exception cref="InvalidOperationException">Thrown when the passed in instance of <paramref name="info"/> is an ignored property</exception>
         /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
         public DbParameter CreateParameter(object parameterValue, PropertyInfo info)
         {
+            //Check if we should create a parameter
+            if (Attribute.IsDefined(info, typeof(IgnoreParameter)))
+            {
+                throw new InvalidOperationException("Cannot create database parameter from this property, it is an ignored property");
+            }
+
             DbParameter parameter = _factory.GetDbParameter();
 
             _formatter.MapDbParameter(parameter, parameterValue, info);
