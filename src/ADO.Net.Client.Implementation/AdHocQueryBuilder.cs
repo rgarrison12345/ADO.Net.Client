@@ -134,7 +134,7 @@ namespace ADO.Net.Client.Implementation
             ISqlQuery query = CreateSQLQuery(_sqlQuery.ToString(), CommandType.Text, commandTimeout, shouldBePrepared, clearContents);
 
             //Check if we need to clear any state
-            if (clearContents == true)  
+            if (clearContents)  
             {
                 _sqlQuery.Clear();
             }

@@ -64,7 +64,7 @@ namespace ADO.Net.Client.Implementation
         public T ReadObject<T>() where T : class
         {
             //Move to the next record if possible
-            if(_reader.Read() == false)
+            if(!_reader.Read())
             {
                 return default;
             }
