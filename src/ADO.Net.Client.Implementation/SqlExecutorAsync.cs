@@ -55,7 +55,7 @@ namespace ADO.Net.Client.Implementation
             using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, CommandBehavior.SingleResult, token).ConfigureAwait(false))
             {
                 //Keep reading through the results
-                while (await reader.ReadAsync(token).ConfigureAwait(false) == true)
+                while (await reader.ReadAsync(token).ConfigureAwait(false))
                 {
                     yield return await reader.GetFieldValueAsync<T>(0, token).ConfigureAwait(false);
                 }
@@ -79,7 +79,7 @@ namespace ADO.Net.Client.Implementation
             using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, CommandBehavior.SingleResult, token).ConfigureAwait(false))
             {
                 //Check if the reader has rows first
-                if (reader.HasRows == true)
+                if (reader.HasRows)
                 {
                     //Keep iterating
                     await foreach (T t in _mapper.MapResultSetStreamAsync<T>(reader, token).ConfigureAwait(false))
@@ -112,7 +112,7 @@ namespace ADO.Net.Client.Implementation
             using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, CommandBehavior.SingleResult, token).ConfigureAwait(false))
             {
                 //Keep reading through the results
-                while (await reader.ReadAsync(token).ConfigureAwait(false) == true)
+                while (await reader.ReadAsync(token).ConfigureAwait(false))
                 {
                     returnList.Add(await reader.GetFieldValueAsync<T>(0, token).ConfigureAwait(false));
                 }
@@ -138,7 +138,7 @@ namespace ADO.Net.Client.Implementation
             using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, CommandBehavior.SingleRow, token).ConfigureAwait(false))
             {
                 //Check if the reader has rows
-                if (reader.HasRows == true)
+                if (reader.HasRows)
                 {
                     //Move to the first record in the result set
                     await reader.ReadAsync(token).ConfigureAwait(false);

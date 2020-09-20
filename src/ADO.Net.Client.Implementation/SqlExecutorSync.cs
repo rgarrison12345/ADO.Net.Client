@@ -53,7 +53,7 @@ namespace ADO.Net.Client.Implementation
                     DataSet set = new DataSet();
 
                     //Check if we should be prepared
-                    if(shouldBePrepared == true)
+                    if(shouldBePrepared)
                     {
                         command.Prepare();
                     }
@@ -106,7 +106,7 @@ namespace ADO.Net.Client.Implementation
             using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleRow))
             {
                 //Check if the reader has rows
-                if (reader.HasRows == true)
+                if (reader.HasRows)
                 {
                     //Move to the first record in the result set
                     reader.Read();
@@ -179,7 +179,7 @@ namespace ADO.Net.Client.Implementation
             using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
             {
                 //Check if we should be prepared
-                if (shouldBePrepared == true)
+                if (shouldBePrepared)
                 {
                     command.Prepare();
                 }
@@ -205,7 +205,7 @@ namespace ADO.Net.Client.Implementation
             //Wrap this to automatically handle disposing of resources
             using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult))
             {
-                while(reader.Read() == true)
+                while(reader.Read())
                 {
                     returnValues.Add(reader.GetFieldValue<T>(0));
                 }
@@ -229,7 +229,7 @@ namespace ADO.Net.Client.Implementation
             using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult))
             {
                 //Keep reading through the results
-                while (reader.Read() == true)
+                while (reader.Read())
                 {
                     yield return reader.GetFieldValue<T>(0);
                 }
@@ -253,7 +253,7 @@ namespace ADO.Net.Client.Implementation
             using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
             {
                 //Check if we should be prepared
-                if (shouldBePrepared == true)
+                if (shouldBePrepared)
                 {
                     command.Prepare();
                 }
@@ -292,7 +292,7 @@ namespace ADO.Net.Client.Implementation
             using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
             {
                 //Check if we should be prepared
-                if (shouldBePrepared == true)
+                if (shouldBePrepared)
                 {
                     command.Prepare();
                 }
