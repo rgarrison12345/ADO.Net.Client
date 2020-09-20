@@ -157,7 +157,7 @@ namespace ADO.Net.Client.Core
             DbParameter parameter = CreateParameter(parameterName, parameterValue, dataType, paramDirection);
 
             //Check for value
-            if (size.HasValue == true)
+            if (size.HasValue)
             {
                 parameter.Size = size.Value;
             }
@@ -177,7 +177,7 @@ namespace ADO.Net.Client.Core
             void ProcessArg(object value)
             {
                 //Check if this is an enumerable object 
-                if (value.IsEnumerable() == true)
+                if (value.IsEnumerable())
                 {
                     //Go through each item in the enumerable
                     foreach (var singleArg in value as IEnumerable)
@@ -238,11 +238,11 @@ namespace ADO.Net.Client.Core
             DbParameter parameter = CreateParameter(parameterName, parameterValue, dataType, paramDirection);
 
             //Check for values
-            if (precision.HasValue == true)
+            if (precision.HasValue)
             {
                 parameter.Precision = precision.Value;
             }
-            if (scale.HasValue == true)
+            if (scale.HasValue)
             {
                 parameter.Scale = scale.Value;
             }

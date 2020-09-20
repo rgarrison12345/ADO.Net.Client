@@ -161,15 +161,15 @@ namespace ADO.Net.Client.Core
             else if (info.PropertyType == typeof(string))
             {
                 //Check which string type to map to
-                if (Attribute.IsDefined(info, typeof(ANSIString), false) == true)
+                if (Attribute.IsDefined(info, typeof(ANSIString), false))
                 {
                     return DbType.AnsiString;
                 }
-                else if (Attribute.IsDefined(info, typeof(ANSIStringFixedLength), false) == true)
+                else if (Attribute.IsDefined(info, typeof(ANSIStringFixedLength), false))
                 {
                     return DbType.AnsiStringFixedLength;
                 }
-                else if (Attribute.IsDefined(info, typeof(StringFixedLength), false) == true)
+                else if (Attribute.IsDefined(info, typeof(StringFixedLength), false))
                 {
                     return DbType.StringFixedLength;
                 }
@@ -204,11 +204,11 @@ namespace ADO.Net.Client.Core
             {
                 return DBNull.Value;
             }
-            else if (info.PropertyType.IsEnum == true)
+            else if (info.PropertyType.IsEnum)
             {
                 return Convert.ChangeType(value, ((Enum)value).GetTypeCode());
             }
-            else if (info.PropertyType == typeof(Guid) && HasNativeGuidSupport == false)
+            else if (info.PropertyType == typeof(Guid) && !HasNativeGuidSupport)
             {
                 return value.ToString();
             }
@@ -222,15 +222,15 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns a value of <see cref="ParameterDirection"/></returns>
         public ParameterDirection MapParameterDirection(PropertyInfo info)
         {
-            if(Attribute.IsDefined(info, typeof(Input), false) == true)
+            if(Attribute.IsDefined(info, typeof(Input), false))
             {
                 return ParameterDirection.Input;
             }
-            else if (Attribute.IsDefined(info, typeof(Output), false) == true)
+            else if (Attribute.IsDefined(info, typeof(Output), false))
             {
                 return ParameterDirection.Output;
             }
-            else if (Attribute.IsDefined(info, typeof(ReturnValue), false) == true)
+            else if (Attribute.IsDefined(info, typeof(ReturnValue), false))
             {
                 return ParameterDirection.ReturnValue;
             }
@@ -279,7 +279,7 @@ namespace ADO.Net.Client.Core
             parameter.Direction = MapParameterDirection(info);
 
             //Help query plan caching by using common size if this is a string or Guid Type
-            if (info == typeof(Guid) && HasNativeGuidSupport == false)
+            if (info == typeof(Guid) && !HasNativeGuidSupport)
             {
                 parameter.Size = 40;
             }

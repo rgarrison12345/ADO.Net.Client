@@ -54,7 +54,7 @@ namespace ADO.Net.Client.Core
         public async IAsyncEnumerable<T> MapResultSetStreamAsync<T>(DbDataReader reader, [EnumeratorCancellation] CancellationToken token = default) where T : class
         {
             //Keep looping through the result set
-            while (await reader.ReadAsync(token).ConfigureAwait(false) == true)
+            while (await reader.ReadAsync(token).ConfigureAwait(false))
             {
                 //Return this object
                 yield return MapRecord<T>(reader);
@@ -75,7 +75,7 @@ namespace ADO.Net.Client.Core
             List<T> returnList = new List<T>();
 
             //Keep looping through the result set
-            while (await reader.ReadAsync(token).ConfigureAwait(false) == true)
+            while (await reader.ReadAsync(token).ConfigureAwait(false))
             {
                 //Return this object
                 returnList.Add(MapRecord<T>(reader));
@@ -92,7 +92,7 @@ namespace ADO.Net.Client.Core
         public IEnumerable<T> MapResultSetStream<T>(DbDataReader reader) where T : class
         {
             //Keep looping through the result set
-            while (reader.Read() == true)
+            while (reader.Read())
             {
                 //Return this object
                 yield return MapRecord<T>(reader);
@@ -111,7 +111,7 @@ namespace ADO.Net.Client.Core
             List<T> returnList = new List<T>();
 
             //Keep looping through the result set
-            while (reader.Read() == true)
+            while (reader.Read())
             {
                 //Return this object
                 returnList.Add(MapRecord<T>(reader));
@@ -155,21 +155,21 @@ namespace ADO.Net.Client.Core
                 bool isEnum = (nullable == false) ? info.PropertyType.IsEnum : (Nullable.GetUnderlyingType(info.PropertyType)?.IsEnum == true);
 
                 //Check for a dbfield attribute
-                if (Attribute.IsDefined(info, typeof(DbField), false) == true && value == null)
+                if (Attribute.IsDefined(info, typeof(DbField), false) && value == null)
                 {
                     //Set new value
                     value = ((DbField)info.GetCustomAttributes(false).Where(x => x.GetType() == typeof(DbField)).Single()).DefaultValueIfNull;
                 }
 
                 //Now attempt to set property value
-                if (nullable == true && isEnum == false)
+                if (nullable && !isEnum)
                 {
                     if (value != null)
                     {
                         info.SetValue(returnType, Convert.ChangeType(value, Nullable.GetUnderlyingType(info.PropertyType)), null);
                     }
                 }
-                else if (nullable == true && isEnum == true)
+                else if (nullable && isEnum)
                 {
                     if (value != null)
                     {
@@ -177,7 +177,7 @@ namespace ADO.Net.Client.Core
                         info.SetValue(returnType, Enum.Parse(Nullable.GetUnderlyingType(info.PropertyType), value.ToString()), null);
                     }
                 }
-                else if (isEnum == true)
+                else if (isEnum)
                 {
                     //Property is an enum
                     info.SetValue(returnType, Enum.Parse(info.PropertyType, value.ToString()), null);
