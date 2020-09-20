@@ -146,7 +146,7 @@ namespace ADO.Net.Client.Core
                 object value = null;
 
                 //Check if this is the database representation of null
-                if (record.IsDBNull(i) == false)
+                if (!record.IsDBNull(i))
                 {
                     value = record.GetValue(i);
                 }
