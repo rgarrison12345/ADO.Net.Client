@@ -82,7 +82,7 @@ namespace ADO.Net.Client.Core
             else if (info.PropertyType == typeof(DateTime))
             {
                 //Check which date type to map to
-                if (Attribute.IsDefined(info, typeof(DateTime2), false) == true)
+                if (Attribute.IsDefined(info, typeof(DateTime2), false))
                 {
                     return DbType.DateTime2;
                 }
