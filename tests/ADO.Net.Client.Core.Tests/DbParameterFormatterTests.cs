@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using ADO.Net.Client.Tests.Common;
 using ADO.Net.Client.Tests.Common.Models;
 using Bogus;
 using NUnit.Framework;
@@ -413,6 +414,22 @@ namespace ADO.Net.Client.Core.Tests
             };
 
             Assert.AreEqual(formatter.MapParameterValue(model.EmployeeID, model.GetType().GetProperty(nameof(model.EmployeeID))), model.EmployeeID.ToString());
+        }
+        [Test]
+        [Category("MapParameter")]
+        public void MapNonNativeGuidProperty()
+        {
+            Guid guid = _faker.Random.Guid();
+            DbParameterFormatter formatter = new DbParameterFormatter(false);
+            CustomDbParameter parameter = new CustomDbParameter();
+            PropertyInfo info = typeof(Employee).GetProperty(nameof(Employee.EmployeeID));
+
+            formatter.MapDbParameter(parameter, guid, info);
+
+            Assert.IsInstanceOf(typeof(string), parameter.Value);
+            Assert.IsTrue(parameter.DbType == DbType.String);
+            Assert.IsTrue((string)parameter.Value == guid.ToString());
+            Assert.IsTrue(parameter.Size == 40);
         }
         #endregion
     }

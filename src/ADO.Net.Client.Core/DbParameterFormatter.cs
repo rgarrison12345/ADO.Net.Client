@@ -279,7 +279,7 @@ namespace ADO.Net.Client.Core
             parameter.Direction = MapParameterDirection(info);
 
             //Help query plan caching by using common size if this is a string or Guid Type
-            if (info == typeof(Guid) && !HasNativeGuidSupport)
+            if (info.PropertyType == typeof(Guid) && !HasNativeGuidSupport)
             {
                 parameter.Size = 40;
             }
