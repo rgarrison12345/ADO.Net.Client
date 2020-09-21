@@ -149,7 +149,7 @@ namespace ADO.Net.Client.Core
             }
             else if (info.PropertyType == typeof(Guid))
             {
-                if (HasNativeGuidSupport == true)
+                if (HasNativeGuidSupport)
                 {
                     return DbType.Guid;
                 }
