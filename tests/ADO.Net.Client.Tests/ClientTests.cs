@@ -42,6 +42,7 @@ namespace ADO.Net.Client.Tests
     {
         #region Fields/Properties
         private ISqlQuery realQuery;
+        private Mock<ISqlExecutor> _executor;
         private readonly Faker _faker = new Faker();
         #endregion
         #region Constructors        
@@ -54,13 +55,14 @@ namespace ADO.Net.Client.Tests
         #endregion
         #region Setup/Teardown        
         /// <summary>
-        /// Called when [time setup].
+        /// 
         /// </summary>
         [SetUp]
         public void Setup()
         {
+            _executor = new Mock<ISqlExecutor>();
             Mock<ISqlQuery> mockQuery = new Mock<ISqlQuery>();
-
+            
             mockQuery.Setup(x => x.ShouldBePrepared).Returns(_faker.Random.Bool());
             mockQuery.Setup(x => x.CommandTimeout).Returns(_faker.Random.Int());
             mockQuery.Setup(x => x.QueryText).Returns(_faker.Random.AlphaNumeric(50));
