@@ -417,6 +417,22 @@ namespace ADO.Net.Client.Core.Tests
         }
         [Test]
         [Category("MapParameter")]
+        public void MapNativeGuidProperty()
+        {
+            Guid guid = _faker.Random.Guid();
+            DbParameterFormatter formatter = new DbParameterFormatter(true);
+            CustomDbParameter parameter = new CustomDbParameter();
+            PropertyInfo info = typeof(Employee).GetProperty(nameof(Employee.EmployeeID));
+
+            formatter.MapDbParameter(parameter, guid, info);
+
+            Assert.IsInstanceOf(typeof(Guid), parameter.Value);
+            Assert.IsTrue(parameter.DbType == DbType.Guid);
+            Assert.IsTrue((Guid)parameter.Value == guid);
+            Assert.IsTrue(parameter.Size == 0);
+        }
+        [Test]
+        [Category("MapParameter")]
         public void MapNonNativeGuidProperty()
         {
             Guid guid = _faker.Random.Guid();
