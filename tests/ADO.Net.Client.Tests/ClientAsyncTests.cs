@@ -52,27 +52,26 @@ namespace ADO.Net.Client.Tests
             //Wrap this in a using to automatically dispose of resources
             using (CancellationTokenSource source = new CancellationTokenSource(delay))
             {
-                Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
                 List<Employee> returnList = new List<Employee>();
                 MultiResultReader reader = new MultiResultReader(new CustomDbReader());
 
 #if ADVANCE_ASYNC
-                mockExecutor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(reader).Verifiable();
+                _executor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(reader).Verifiable();
 #else
-                mockExecutor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(reader).Verifiable();
+                _executor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(reader).Verifiable();
 #endif
 
                 //Make the call
-                IMultiResultReader returnedValue = await new DbClient(mockExecutor.Object).GetMultiResultReaderAsync(realQuery, source.Token);
+                IMultiResultReader returnedValue = await new DbClient(_executor.Object).GetMultiResultReaderAsync(realQuery, source.Token);
 
                 Assert.IsNotNull(returnedValue);
 
 #if ADVANCE_ASYNC
                 //Verify the executor was called
-                mockExecutor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
+                _executor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
 #else
                 //Verify the executor was called
-                mockExecutor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
+                _executor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
 #endif
             }
         }
@@ -88,27 +87,26 @@ namespace ADO.Net.Client.Tests
             //Wrap this in a using to automatically dispose of resources
             using (CancellationTokenSource source = new CancellationTokenSource(delay))
             {
-                Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
                 List<Employee> returnList = new List<Employee>();
 
 #if ADVANCE_ASYNC
-                mockExecutor.Setup(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(returnList).Verifiable();
+                _executor.Setup(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(returnList).Verifiable();
 #else
-                mockExecutor.Setup(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(returnList).Verifiable();
+                _executor.Setup(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(returnList).Verifiable();
 #endif
 
                 //Make the call
-                IEnumerable<Employee> returnedValue = await new DbClient(mockExecutor.Object).GetDataObjectsAsync<Employee>(realQuery, source.Token);
+                IEnumerable<Employee> returnedValue = await new DbClient(_executor.Object).GetDataObjectsAsync<Employee>(realQuery, source.Token);
 
                 Assert.IsNotNull(returnedValue);
                 Assert.IsInstanceOf(typeof(List<Employee>), returnedValue);
 
 #if ADVANCE_ASYNC
                 //Verify the executor was called
-                mockExecutor.Verify(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
+                _executor.Verify(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
 #else
                 //Verify the executor was called
-                mockExecutor.Verify(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
+                _executor.Verify(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
 #endif
             }
         }
@@ -124,25 +122,23 @@ namespace ADO.Net.Client.Tests
             //Wrap this in a using to automatically dispose of resources
             using (CancellationTokenSource source = new CancellationTokenSource(delay))
             {
-                Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
-
 #if ADVANCE_ASYNC
-                mockExecutor.Setup(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(new Employee()).Verifiable();
+                _executor.Setup(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(new Employee()).Verifiable();
 #else
-                mockExecutor.Setup(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(new Employee()).Verifiable();
+                _executor.Setup(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(new Employee()).Verifiable();
 #endif
 
                 //Make the call
-                Employee returnedValue = await new DbClient(mockExecutor.Object).GetDataObjectAsync<Employee>(realQuery, source.Token);
+                Employee returnedValue = await new DbClient(_executor.Object).GetDataObjectAsync<Employee>(realQuery, source.Token);
 
                 Assert.IsNotNull(returnedValue);
 
 #if ADVANCE_ASYNC
                 //Verify the executor was called
-                mockExecutor.Verify(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
+                _executor.Verify(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
 #else
                 //Verify the executor was called
-                mockExecutor.Verify(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
+                _executor.Verify(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
 #endif
             }
         }
@@ -158,25 +154,24 @@ namespace ADO.Net.Client.Tests
             //Wrap this in a using to automatically dispose of resources
             using (CancellationTokenSource source = new CancellationTokenSource(delay))
             {
-                Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
                 string[] expectedValue = new string[] { _faker.Random.AlphaNumeric(10), _faker.Random.AlphaNumeric(30), _faker.Random.AlphaNumeric(20) };
 
 #if ADVANCE_ASYNC
-                mockExecutor.Setup(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(expectedValue).Verifiable();
+                _executor.Setup(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(expectedValue).Verifiable();
 #else
-                mockExecutor.Setup(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(expectedValue).Verifiable();
+                _executor.Setup(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(expectedValue).Verifiable();
 #endif
                 //Make the call
-                IEnumerable<string> returnedValue = await new DbClient(mockExecutor.Object).GetScalarValuesAsync<string>(realQuery, source.Token);
+                IEnumerable<string> returnedValue = await new DbClient(_executor.Object).GetScalarValuesAsync<string>(realQuery, source.Token);
 
                 Assert.AreEqual(expectedValue, returnedValue);
 
 #if ADVANCE_ASYNC
                 //Verify the executor was called
-                mockExecutor.Verify(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
+                _executor.Verify(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
 #else
                 //Verify the executor was called
-                mockExecutor.Verify(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
+                _executor.Verify(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
 #endif
             }
         }
@@ -192,27 +187,26 @@ namespace ADO.Net.Client.Tests
             //Wrap this in a using to automatically dispose of resources
             using (CancellationTokenSource source = new CancellationTokenSource(delay))
             {
-                Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
                 string expectedValue = _faker.Random.AlphaNumeric(30);
 
 #if ADVANCE_ASYNC
-                mockExecutor.Setup(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(expectedValue).Verifiable();
+                _executor.Setup(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(expectedValue).Verifiable();
 #else
-                mockExecutor.Setup(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(expectedValue).Verifiable();
+                _executor.Setup(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(expectedValue).Verifiable();
 #endif
 
                 //Make the call
-                string returnedValue = await new DbClient(mockExecutor.Object).GetScalarValueAsync<string>(realQuery, source.Token);
+                string returnedValue = await new DbClient(_executor.Object).GetScalarValueAsync<string>(realQuery, source.Token);
 
                 Assert.IsFalse(string.IsNullOrWhiteSpace(returnedValue));
                 Assert.IsTrue(returnedValue == expectedValue);
 
 #if ADVANCE_ASYNC
                 //Verify the executor was called
-                mockExecutor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
+                _executor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
 #else
                 //Verify the executor was called
-                mockExecutor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
+                _executor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
 #endif
             }
         }
@@ -228,27 +222,26 @@ namespace ADO.Net.Client.Tests
             //Wrap this in a using to automatically dispose of resources
             using (CancellationTokenSource source = new CancellationTokenSource(delay))
             {
-                Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
                 CommandBehavior behavior = _faker.PickRandom<CommandBehavior>();
 
 #if ADVANCE_ASYNC
-                mockExecutor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token)).ReturnsAsync(new CustomDbReader()).Verifiable();
+                _executor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token)).ReturnsAsync(new CustomDbReader()).Verifiable();
 #else
-                mockExecutor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, source.Token)).ReturnsAsync(new CustomDbReader()).Verifiable();
+                _executor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, source.Token)).ReturnsAsync(new CustomDbReader()).Verifiable();
 #endif
 
                 //Make the call
-                DbDataReader reader = await new DbClient(mockExecutor.Object).GetDbDataReaderAsync(realQuery, behavior, source.Token);
+                DbDataReader reader = await new DbClient(_executor.Object).GetDbDataReaderAsync(realQuery, behavior, source.Token);
 
                 Assert.IsNotNull(reader);
                 Assert.IsInstanceOf(typeof(CustomDbReader), reader);
 
 #if ADVANCE_ASYNC
                 //Verify the executor was called
-                mockExecutor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token), Times.Once);
+                _executor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token), Times.Once);
 #else
                 //Verify the executor was called
-                mockExecutor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, source.Token), Times.Once);
+                _executor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, source.Token), Times.Once);
 #endif
             }
         }
@@ -267,25 +260,23 @@ namespace ADO.Net.Client.Tests
             //Wrap this in a using to automatically dispose of resources
             using (CancellationTokenSource source = new CancellationTokenSource(delay))
             {
-                Mock<ISqlExecutor> mockExecutor = new Mock<ISqlExecutor>();
-
 #if ADVANCE_ASYNC
-                mockExecutor.Setup(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(returnNumber).Verifiable();
+                _executor.Setup(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(returnNumber).Verifiable();
 #else
-                mockExecutor.Setup(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(returnNumber).Verifiable();
+                _executor.Setup(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(returnNumber).Verifiable();
 #endif
 
                 //Make the call
-                int records = await new DbClient(mockExecutor.Object).ExecuteNonQueryAsync(realQuery, source.Token);
+                int records = await new DbClient(_executor.Object).ExecuteNonQueryAsync(realQuery, source.Token);
 
                 Assert.IsTrue(records == returnNumber);
 
 #if ADVANCE_ASYNC
                 //Verify the executor was called
-                mockExecutor.Verify(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
+                _executor.Verify(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
 #else
                 //Verify the executor was called
-                mockExecutor.Verify(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
+                _executor.Verify(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
 #endif
             }
         }
