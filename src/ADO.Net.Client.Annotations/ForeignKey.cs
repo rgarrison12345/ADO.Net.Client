@@ -28,17 +28,17 @@ using System;
 namespace ADO.Net.Client.Annotations
 {
     /// <summary>
-    /// Indicates if the property is considered to be a part of a primary key
+    /// Indicates if this property is considered to be a foreign key
     /// </summary>
     /// <seealso cref="Attribute"/>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class PrimaryKey : Attribute
-    { 
+    public class ForeignKey : Attribute
+    {
         #region Constructors        
         /// <summary>
-        /// Initializes a new instance of the <see cref="PrimaryKey"/> class.
+        /// Initializes a new instance of the <see cref="ForeignKey"/> class.
         /// </summary>
-        public PrimaryKey()
+        public ForeignKey()
         {
         }
         #endregion
