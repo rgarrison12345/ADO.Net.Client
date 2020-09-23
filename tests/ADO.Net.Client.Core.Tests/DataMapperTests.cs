@@ -236,6 +236,39 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsTrue(model.Salary == 0);
         }
+        [Test]
+        public void MapFullEmployeeModel()
+        {
+            bool active = _faker.Random.Bool();
+            int departmentID = _faker.Random.Int();
+            string phoneNumber = _faker.Phone.PhoneNumber();
+            decimal salary = _faker.Random.Decimal();
+            Guid managerID = Guid.NewGuid();
+            DateTime hireDate = _faker.Date.Soon();
+            PhoneType phoneType = _faker.PickRandom<PhoneType>();
+
+            List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("Earnings", salary),
+                new KeyValuePair<string, object>("ManagerID", managerID),
+                new KeyValuePair<string, object>("PhoneType", phoneType),
+                new KeyValuePair<string, object>("Active", active),
+                new KeyValuePair<string, object>("DepartmentID", departmentID),
+                new KeyValuePair<string, object>("PhoneNumber", phoneNumber),
+                new KeyValuePair<string, object>("HireDate", hireDate)
+            };
+
+            CustomDataRecord record = new CustomDataRecord(kvp);
+            Employee model = _mapper.MapRecord<Employee>(record);
+
+            Assert.AreEqual(active, model.Active);
+            Assert.AreEqual(salary, model.Salary);
+            Assert.AreEqual(hireDate, model.HireDate);
+            Assert.AreEqual(departmentID, model.DepartmentID);
+            Assert.AreEqual(managerID, model.ManagerID);
+            Assert.AreEqual(phoneNumber, model.PhoneNumber);
+            Assert.AreEqual(phoneType, model.PhoneType);
+        }
         #endregion
     }
 }

@@ -43,12 +43,14 @@ namespace ADO.Net.Client.Tests.Common.Models
         public string PhoneNumber { get; set; }
         [DbField("EmployeeTitle", "SoftwareDeveloper")]
         public string Title { get; set; }
+        public DateTime HireDate { get; set; }
         public Guid? ManagerID { get; set; }
         public PhoneType? PhoneType { get; set; }
         [ParameterName("loginCredential")]
         public string Password { private get; set; }
         [IgnoreParameter]
         public string UserName { get; private set; }
+        public bool Active { get; set; }
     }
     public enum PhoneType
     {
