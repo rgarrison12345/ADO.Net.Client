@@ -41,7 +41,7 @@ namespace ADO.Net.Client.Tests.Common.Models
         [ANSIString]
         public string AnsiString { get; set; }
         [ANSIStringFixedLength]
-        public string AnsiStrinFixedLength { get; set; }
+        public string AnsiStringFixedLength { get; set; }
         [StringFixedLength]
         public string StringFixedLength { get; set; }
         public DateTimeOffset DateTimeOffset { get; set; }

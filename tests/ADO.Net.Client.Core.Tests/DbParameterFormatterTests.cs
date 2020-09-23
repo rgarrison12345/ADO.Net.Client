@@ -127,7 +127,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsANSIStringFixedLengthCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.AnsiStrinFixedLength))) == DbType.AnsiStringFixedLength);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.AnsiStringFixedLength))) == DbType.AnsiStringFixedLength);
         }
         /// <summary>
         /// 
@@ -446,6 +446,122 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsTrue(parameter.DbType == DbType.String);
             Assert.IsTrue((string)parameter.Value == guid.ToString());
             Assert.IsTrue(parameter.Size == 40);
+        }
+        [Test]
+        [Category("MapParameter")]
+        public void StringFixedLengthCommonLength()
+        {
+            CustomDbParameter parameter = new CustomDbParameter();
+            PropertyInfo info = typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.StringFixedLength));
+            string value = _faker.Random.String(_faker.Random.Int(0, 3999));
+
+            _formatter.MapDbParameter(parameter, value, info);
+
+            Assert.AreEqual(parameter.Size, 4000);
+            Assert.AreEqual((string)parameter.Value, value);
+            Assert.AreEqual(parameter.DbType, DbType.StringFixedLength);
+        }
+        [Test]
+        [Category("MapParameter")]
+        public void StringCommonLength()
+        {
+            CustomDbParameter parameter = new CustomDbParameter();
+            PropertyInfo info = typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.NormalString));
+            string value = _faker.Random.String(_faker.Random.Int(0, 3999));
+
+            _formatter.MapDbParameter(parameter, value, info);
+
+            Assert.AreEqual(parameter.Size, 4000);
+            Assert.AreEqual((string)parameter.Value, value);
+            Assert.AreEqual(parameter.DbType, DbType.String);
+        }
+        [Test]
+        [Category("MapParameter")]
+        public void AnsiStringFixedLengthCommonLength()
+        {
+            CustomDbParameter parameter = new CustomDbParameter();
+            PropertyInfo info = typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.AnsiStringFixedLength));
+            string value = _faker.Random.String(_faker.Random.Int(0, 3999));
+
+            _formatter.MapDbParameter(parameter, value, info);
+
+            Assert.AreEqual(parameter.Size, 4000);
+            Assert.AreEqual((string)parameter.Value, value);
+            Assert.AreEqual(parameter.DbType, DbType.AnsiStringFixedLength);
+        }
+        [Test]
+        [Category("MapParameter")]
+        public void ANSIStringCommonLength()
+        {
+            CustomDbParameter parameter = new CustomDbParameter();
+            PropertyInfo info = typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.AnsiString));
+            string value = _faker.Random.String(_faker.Random.Int(0, 3999));
+
+            _formatter.MapDbParameter(parameter, value, info);
+
+            Assert.AreEqual(parameter.Size, 4000);
+            Assert.AreEqual((string)parameter.Value, value);
+            Assert.AreEqual(parameter.DbType, DbType.AnsiString);
+        }
+        [Test]
+        [Category("MapParameter")]
+        public void StringFixedLengthBeyondCommonLength()
+        {
+            CustomDbParameter parameter = new CustomDbParameter();
+            PropertyInfo info = typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.StringFixedLength));
+            string value = _faker.Random.String(4001);
+
+            _formatter.MapDbParameter(parameter, value, info);
+
+            Assert.IsTrue(parameter.Size > 4000);
+            Assert.AreEqual(parameter.Size, (value.Length + 1));
+            Assert.AreEqual((string)parameter.Value, value);
+            Assert.AreEqual(parameter.DbType, DbType.StringFixedLength);
+        }
+        [Test]
+        [Category("MapParameter")]
+        public void StringBeyondCommonLength()
+        {
+            CustomDbParameter parameter = new CustomDbParameter();
+            PropertyInfo info = typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.NormalString));
+            string value = _faker.Random.String(4001);
+
+            _formatter.MapDbParameter(parameter, value, info);
+
+            Assert.IsTrue(parameter.Size > 4000);
+            Assert.AreEqual(parameter.Size, (value.Length + 1));
+            Assert.AreEqual((string)parameter.Value, value);
+            Assert.AreEqual(parameter.DbType, DbType.String);
+        }
+        [Test]
+        [Category("MapParameter")]
+        public void AnsiStringFixedLengthBeyondCommonLength()
+        {
+            CustomDbParameter parameter = new CustomDbParameter();
+            PropertyInfo info = typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.AnsiStringFixedLength));
+            string value = _faker.Random.String(4001);
+
+            _formatter.MapDbParameter(parameter, value, info);
+
+            Assert.IsTrue(parameter.Size > 4000);
+            Assert.AreEqual(parameter.Size, (value.Length + 1));
+            Assert.AreEqual((string)parameter.Value, value);
+            Assert.AreEqual(parameter.DbType, DbType.AnsiStringFixedLength);
+        }
+        [Test]
+        [Category("MapParameter")]
+        public void ANSIStringBeyondCommonLength()
+        {
+            CustomDbParameter parameter = new CustomDbParameter();
+            PropertyInfo info = typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.AnsiString));
+            string value = _faker.Random.String(4001);
+
+            _formatter.MapDbParameter(parameter, value, info);
+
+            Assert.IsTrue(parameter.Size > 4000);
+            Assert.AreEqual(parameter.Size, (value.Length + 1));
+            Assert.AreEqual((string)parameter.Value, value);
+            Assert.AreEqual(parameter.DbType, DbType.AnsiString);
         }
         #endregion
     }
