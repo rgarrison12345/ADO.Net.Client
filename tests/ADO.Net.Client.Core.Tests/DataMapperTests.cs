@@ -243,7 +243,7 @@ namespace ADO.Net.Client.Core.Tests
             int departmentID = _faker.Random.Int();
             string phoneNumber = _faker.Phone.PhoneNumber();
             decimal salary = _faker.Random.Decimal();
-            Guid managerID = Guid.NewGuid();
+            Guid managerID = _faker.Random.Guid();
             DateTime hireDate = _faker.Date.Soon();
             PhoneType phoneType = _faker.PickRandom<PhoneType>();
 
