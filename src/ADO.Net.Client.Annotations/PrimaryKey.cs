@@ -28,7 +28,7 @@ using System;
 namespace ADO.Net.Client.Annotations
 {
     /// <summary>
-    /// Indicates if the property is considered to be a part of a primary key
+    /// Indicates if the property is considered to be a primary key field
     /// </summary>
     /// <seealso cref="Attribute"/>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]

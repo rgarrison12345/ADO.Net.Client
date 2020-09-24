@@ -28,17 +28,16 @@ using System;
 namespace ADO.Net.Client.Annotations
 {
     /// <summary>
-    /// Indicates if the property is considered to be a foreign key field
+    /// Indicates if the property is considered to be a unique key field
     /// </summary>
-    /// <seealso cref="Attribute"/>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class ForeignKey : Attribute
+    public class UniqueKey : Attribute
     {
         #region Constructors        
         /// <summary>
-        /// Initializes a new instance of the <see cref="ForeignKey"/> class.
+        /// Initializes a new instance of the <see cref="UniqueKey"/> class.
         /// </summary>
-        public ForeignKey()
+        public UniqueKey()
         {
         }
         #endregion
