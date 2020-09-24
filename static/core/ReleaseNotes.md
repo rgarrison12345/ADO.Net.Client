@@ -4,7 +4,7 @@ Version History
 ### 1.3.4.1
 
 * Bug fix in [DbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterFormatter.cs) MapDbParameter correctly set size of parameter when property type is guid, but native database guid type is not supported
-* [DbParameterBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterBuilder.cs) CreateParameter overload taking in value and PropertyInfo now throws exception is property is ignored property
+* [DbParameterBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterBuilder.cs) CreateParameter overload taking in value and [PropertyInfo](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.propertyinfo?view=netcore-3.1) now throws exception if the property is ignored property
 
 ### 1.3.4
 
