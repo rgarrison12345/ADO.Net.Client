@@ -28,18 +28,18 @@ using System;
 namespace ADO.Net.Client.Annotations
 {
     /// <summary>
-    /// Indicates if the property is considered to be a unique key field
+    /// Indicates if the property is an auto incremented value field
     /// </summary>
     /// <seealso cref="Attribute"/>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class UniqueKey : Attribute
+    public class AutoIncrement : Attribute
     {
         #region Constructors        
         /// <summary>
-        /// Initializes a new instance of the <see cref="UniqueKey"/> class.
+        /// Initializes a new instance of the <see cref="AutoIncrement"/> class.
         /// </summary>
-        public UniqueKey()
+        public AutoIncrement()
         {
+
         }
         #endregion
     }
