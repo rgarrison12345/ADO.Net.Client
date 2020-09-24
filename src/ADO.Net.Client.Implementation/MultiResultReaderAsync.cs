@@ -23,7 +23,9 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using System.Collections.Generic;
+#if !NET45
 using System.Runtime.CompilerServices;
+#endif
 using System.Threading;
 using System.Threading.Tasks;
 #endregion

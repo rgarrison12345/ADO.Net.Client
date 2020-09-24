@@ -26,7 +26,9 @@ using ADO.Net.Client.Core;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+#if !NET45
 using System.Runtime.CompilerServices;
+#endif
 using System.Threading;
 using System.Threading.Tasks;
 #endregion
@@ -35,7 +37,7 @@ namespace ADO.Net.Client
 {
     public partial class DbClient
     {
-        #region Data Retrieval
+#region Data Retrieval
         /// <summary>
         /// Gets an instance of <see cref="DataTable"/> asynchronously
         /// </summary>
@@ -206,8 +208,8 @@ namespace ADO.Net.Client
             yield break;
         }
 #endif
-        #endregion
-        #region Data Modification        
+#endregion
+#region Data Modification        
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure
         /// </summary>
@@ -222,6 +224,6 @@ namespace ADO.Net.Client
             return await _executor.ExecuteNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false);
 #endif
         }
-        #endregion
+#endregion
     }
 }
