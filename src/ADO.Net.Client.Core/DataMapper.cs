@@ -29,7 +29,9 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Reflection;
+#if !NET45
 using System.Runtime.CompilerServices;
+#endif
 using System.Threading;
 using System.Threading.Tasks;
 #endregion
