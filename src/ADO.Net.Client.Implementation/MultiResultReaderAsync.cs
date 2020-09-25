@@ -55,7 +55,7 @@ namespace ADO.Net.Client.Implementation
         public async Task<T> ReadObjectAsync<T>(CancellationToken token = default) where T : class
         {
             //Move to the next record if possible
-            if (await _reader.ReadAsync(token).ConfigureAwait(false) == false)
+            if (!await _reader.ReadAsync(token).ConfigureAwait(false))
             {
                 return default;
             }
