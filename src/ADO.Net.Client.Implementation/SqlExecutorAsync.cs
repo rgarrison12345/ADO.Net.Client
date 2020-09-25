@@ -57,7 +57,15 @@ namespace ADO.Net.Client.Implementation
                 //Keep reading through the results
                 while (await reader.ReadAsync(token).ConfigureAwait(false))
                 {
-                    yield return await reader.GetFieldValueAsync<T>(0, token).ConfigureAwait(false);
+                    //Check if we need a default value
+                    if (await reader.IsDBNullAsync(0).ConfigureAwait(false))
+                    {
+                        yield return default;
+                    }
+                    else
+                    {
+                        yield return await reader.GetFieldValueAsync<T>(0).ConfigureAwait(false);
+                    }
                 }
             }
 
@@ -114,7 +122,15 @@ namespace ADO.Net.Client.Implementation
                 //Keep reading through the results
                 while (await reader.ReadAsync(token).ConfigureAwait(false))
                 {
-                    returnList.Add(await reader.GetFieldValueAsync<T>(0, token).ConfigureAwait(false));
+                    //Check if we need a default value
+                    if (await reader.IsDBNullAsync(0).ConfigureAwait(false))
+                    {
+                        returnList.Add(default);
+                    }
+                    else
+                    {
+                        returnList.Add(await reader.GetFieldValueAsync<T>(0).ConfigureAwait(false));
+                    }
                 }
             }
 

@@ -53,7 +53,7 @@ namespace ADO.Net.Client.Implementation
                     DataSet set = new DataSet();
 
                     //Check if we should be prepared
-                    if(shouldBePrepared)
+                    if (shouldBePrepared)
                     {
                         command.Prepare();
                     }
@@ -200,18 +200,26 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Returns an <see cref="IEnumerable{T}"/> of the value of the first column in the result set as an instance of <typeparamref name="T"/></returns>
         public IEnumerable<T> GetScalarValues<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false)
         {
-            List<T> returnValues = new List<T>();
+            List<T> returnList = new List<T>();
 
             //Wrap this to automatically handle disposing of resources
             using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult))
             {
-                while(reader.Read())
+                while (reader.Read())
                 {
-                    returnValues.Add(reader.GetFieldValue<T>(0));
+                    //Check if we need a default value
+                    if (reader.IsDBNull(0))
+                    {
+                        returnList.Add(default);
+                    }
+                    else
+                    {
+                        returnList.Add(reader.GetFieldValue<T>(0));
+                    }
                 }
             }
-             
-            return returnValues;
+
+            return returnList;
         }
         /// <summary>
         /// Utility method for returning an <see cref="IEnumerable{T}"/> of scalar values streamed from the database
@@ -231,7 +239,15 @@ namespace ADO.Net.Client.Implementation
                 //Keep reading through the results
                 while (reader.Read())
                 {
-                    yield return reader.GetFieldValue<T>(0);
+                    //Check if we need a default value
+                    if (reader.IsDBNull(0))
+                    {
+                        yield return default;
+                    }
+                    else
+                    {
+                        yield return reader.GetFieldValue<T>(0);
+                    }
                 }
             }
 
