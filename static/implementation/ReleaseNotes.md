@@ -3,8 +3,8 @@ Version History
 
 ### 1.3.3.2
 
-* GetScalarValues sync/async now returns default value of T if value from database is DbNull.Value
-* GetScalarValuesStream sync/async now returns default value of T if value from database is DbNull.Value
+* GetScalarValues sync/async now returns default value of T if value from database is [DBNull.Value](https://docs.microsoft.com/en-us/dotnet/api/system.dbnull.value?view=netcore-3.1)
+* GetScalarValuesStream sync/async now returns default value of T if value from database is [DbNull.Value](https://docs.microsoft.com/en-us/dotnet/api/system.dbnull.value?view=netcore-3.1)
  
 ### 1.3.3.1
 
