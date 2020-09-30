@@ -1,6 +1,12 @@
 Version History
 ===============
 
+### 1.1.6
+
+* New attribute [ForeignKey](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/ForeignKey.cs) to indicate if a property is a part of a foreign key
+* New attribute [AutoIncrement](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/AutoIncrement.cs) to indicate a property is an auto incrementing field
+* New attribute [UniqueKey](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/UniqueKey.cs) to indicate property is a part of a unique key
+
 ### 1.1.5
 
 * Adding new attribute [IgnoreParameter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/IgnoreParameter.cs) to indicate that an instance of [DbParameter](https://docs.microsoft.com/en-us/dotnet/api/system.data.common.dbparameter?view=netcore-3.1) should not be created from a property
