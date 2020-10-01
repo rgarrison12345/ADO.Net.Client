@@ -55,12 +55,12 @@ namespace ADO.Net.Client.Core
                 propertyName = propertyName.Replace("_", "");
             }
 
-            properties.Where(x => string.Equals(x.Name, propertyName, StringComparison.Ordinal) == true).FirstOrDefault();
+            properties.Where(x => string.Equals(x.Name, propertyName, StringComparison.Ordinal) == true).SingleOrDefault();
 
             if (info == null)
             {
                 //Get the property if it exists
-                info = properties.Where(x => string.Equals(x.Name, propertyName, StringComparison.OrdinalIgnoreCase) == true).FirstOrDefault();
+                info = properties.Where(x => string.Equals(x.Name, propertyName, StringComparison.OrdinalIgnoreCase) == true).SingleOrDefault();
             }
 
             return info;
