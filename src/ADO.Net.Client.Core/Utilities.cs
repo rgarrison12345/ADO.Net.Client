@@ -55,7 +55,7 @@ namespace ADO.Net.Client.Core
                 propertyName = propertyName.Replace("_", "");
             }
 
-            properties.Where(x => string.Equals(x.Name, propertyName, StringComparison.Ordinal) == true).SingleOrDefault();
+            info = properties.Where(x => string.Equals(x.Name, propertyName, StringComparison.Ordinal) == true).SingleOrDefault();
 
             if (info == null)
             {

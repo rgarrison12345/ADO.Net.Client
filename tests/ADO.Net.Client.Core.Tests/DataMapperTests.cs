@@ -234,7 +234,22 @@ namespace ADO.Net.Client.Core.Tests
             CustomDataRecord record = new CustomDataRecord(kvp);
             Employee model = _mapper.MapRecord<Employee>(record);
 
-            Assert.IsTrue(model.Salary == 0);
+            Assert.IsTrue(model.Salary == default);
+        }
+        [Test]
+        public void MapPropertyColumnNameHasSpaces()
+        {
+            DataMapper mapper = new DataMapper(true);
+            decimal salary = _faker.Random.Decimal();
+
+            List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>("S_a_l_a_r_y", salary)
+            };
+            CustomDataRecord record = new CustomDataRecord(kvp);
+            Employee model = mapper.MapRecord<Employee>(record);
+
+            Assert.IsTrue(model.Salary == salary);
         }
         [Test]
         public void MapFullEmployeeModel()
