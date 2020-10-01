@@ -48,13 +48,22 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns an instance of <see cref="PropertyInfo"/>, null if one cannot be found</returns>
         public static PropertyInfo GetProperty(this IEnumerable<PropertyInfo> properties, string propertyName, bool matchUnderscoreNames = false)
         {
+            PropertyInfo info = null;
+
             if (matchUnderscoreNames)
             {
                 propertyName = propertyName.Replace("_", "");
             }
 
-            //Get the property if it exists
-            return properties.Where(x => string.Equals(x.Name, propertyName, StringComparison.OrdinalIgnoreCase) == true).FirstOrDefault();
+            properties.Where(x => string.Equals(x.Name, propertyName, StringComparison.Ordinal) == true).FirstOrDefault();
+
+            if (info == null)
+            {
+                //Get the property if it exists
+                info = properties.Where(x => string.Equals(x.Name, propertyName, StringComparison.OrdinalIgnoreCase) == true).FirstOrDefault();
+            }
+
+            return info;
         }
         /// <summary>
         /// Gets a signle instance of <see cref="PropertyInfo"/> where the <see cref="DbField.DatabaseFieldName"/> matches the passed in <paramref name="name"/>
