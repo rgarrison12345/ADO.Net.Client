@@ -37,6 +37,12 @@ namespace ADO.Net.Client.Core
     /// </summary>
     public interface IDataMapper
     {
+        #region Fields/Properties
+        /// <summary>
+        /// <c>true</c> if columns named like User_ID should be mapped to property called UserID, <c>false</c> otherwise
+        /// </summary>
+        public bool MatchUnderscoreNames { get; }
+        #endregion
         #region Utility Methods
 #if !NET45
         /// <summary>

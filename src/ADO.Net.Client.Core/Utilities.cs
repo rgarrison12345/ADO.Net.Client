@@ -38,19 +38,21 @@ namespace ADO.Net.Client.Core
     /// </summary>
     public static class Utilities
     {
-        #region Async Methods
-        #endregion
-        #region Sync Methods   
-        #endregion
         #region Helper Methods         
         /// <summary>
         /// Gets an instance of <see cref="PropertyInfo"/>
         /// </summary>
+        /// <param name="matchUnderscoreNames"><c>true</c> if columns named like User_ID should be mapped to property called UserID, <c>false</c> otherwise</param>
         /// <param name="properties">An instance of <see cref="IEnumerable{T}"/> of <see cref="PropertyInfo"/></param>
         /// <param name="propertyName">The name of a property as a <see cref="string"/> in the <paramref name="properties"/></param>
         /// <returns>Returns an instance of <see cref="PropertyInfo"/>, null if one cannot be found</returns>
-        public static PropertyInfo GetProperty(this IEnumerable<PropertyInfo> properties, string propertyName)
-        { 
+        public static PropertyInfo GetProperty(this IEnumerable<PropertyInfo> properties, string propertyName, bool matchUnderscoreNames = false)
+        {
+            if (matchUnderscoreNames)
+            {
+                propertyName = propertyName.Replace("_", "");
+            }
+
             //Get the property if it exists
             return properties.Where(x => string.Equals(x.Name, propertyName, StringComparison.OrdinalIgnoreCase) == true).FirstOrDefault();
         }
@@ -58,7 +60,7 @@ namespace ADO.Net.Client.Core
         /// Gets a signle instance of <see cref="PropertyInfo"/> where the <see cref="DbField.DatabaseFieldName"/> matches the passed in <paramref name="name"/>
         /// </summary>
         /// <param name="name">A property name as a value of <see cref="string"/></param>
-        /// <param name="infos">An instance of <see cref="PropertyInfo"/></param>
+        /// <param name="infos">An instance of <see cref="IEnumerable{T}"/> of <see cref="PropertyInfo"/></param>
         /// <returns>Returns an instance of <see cref="PropertyInfo"/></returns>
         public static PropertyInfo GetPropertyInfoByDbField(this IEnumerable<PropertyInfo> infos, string name)
         {

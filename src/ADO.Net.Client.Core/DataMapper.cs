@@ -44,6 +44,22 @@ namespace ADO.Net.Client.Core
     /// <seealso cref="IDataMapper" />
     public class DataMapper : IDataMapper
     {
+        #region Fields/Properties
+        /// <summary>
+        /// <c>true</c> if columns named like User_ID should be mapped to property called UserID, <c>false</c> otherwise
+        /// </summary>
+        public bool MatchUnderscoreNames { get; }
+        #endregion
+        #region Constructors
+        /// <summary>
+        /// Initializes a new instance of <see cref="DataMapper"/>
+        /// </summary>
+        /// <param name="matchUnderscoreNames"><c>true</c> if columns named like User_ID should be mapped to property called UserID, <c>false</c> otherwise</param>
+        public DataMapper(bool matchUnderscoreNames = false)
+        {
+            MatchUnderscoreNames = matchUnderscoreNames;
+        }
+        #endregion
         #region Mapper Methods
 #if !NET45
         /// <summary>
@@ -137,7 +153,7 @@ namespace ADO.Net.Client.Core
             for (int i = 0; i < record.FieldCount; i++)
             {
                 string name = record.GetName(i);
-                PropertyInfo info = writeableProperties.GetProperty(name) ?? writeableProperties.GetPropertyInfoByDbField(name);
+                PropertyInfo info = writeableProperties.GetProperty(name, MatchUnderscoreNames) ?? writeableProperties.GetPropertyInfoByDbField(name);
 
                 //Check if a property could be found by name
                 if (info == null)
