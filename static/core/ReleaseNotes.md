@@ -1,6 +1,13 @@
 Version History
 ===============
 
+### 1.3.5
+
+* New Property MatchUnderscoreNames on [DataMapper](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DataMapper.cs)
+indicates if column names have underscores separating words in the column name
+* New Property MatchUnderscoreNames on [IDataMapper](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDataMapper.cs)
+indicates if column names have underscores separating words in the column name
+
 ### 1.3.4.1
 
 * Bug fix in [DbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterFormatter.cs) MapDbParameter correctly set size of parameter when property type is guid, but native database guid type is not supported

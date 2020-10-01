@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.3.4
+
+* Updating to ADO.Net.Client.Core 1.3.5
+
 ### 1.3.3.2
 
 * GetScalarValues sync/async now returns default value of T if value from database is [DBNull.Value](https://docs.microsoft.com/en-us/dotnet/api/system.dbnull.value?view=netcore-3.1)
