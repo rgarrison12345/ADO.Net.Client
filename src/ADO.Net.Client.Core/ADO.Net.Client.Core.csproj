@@ -69,7 +69,7 @@
     <ProjectReference Include="..\ADO.Net.Client.Annotations\ADO.Net.Client.Annotations.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="ADO.Net.Client.Annotations" Version="1.1.5" />
+    <PackageReference Include="ADO.Net.Client.Annotations" Version="1.1.6" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 </Project>
