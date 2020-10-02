@@ -3,6 +3,7 @@ Version History
 
 ### 1.3.5
 
+* Updating to ADO.Net.Client.Annotations 1.1.6
 * New Property MatchUnderscoreNames on [DataMapper](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DataMapper.cs)
 indicates if column names have underscores separating words in the column name
 * New Property MatchUnderscoreNames on [IDataMapper](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDataMapper.cs)
