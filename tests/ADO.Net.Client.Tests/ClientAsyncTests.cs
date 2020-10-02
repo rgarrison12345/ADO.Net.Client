@@ -154,7 +154,7 @@ namespace ADO.Net.Client.Tests
             //Wrap this in a using to automatically dispose of resources
             using (CancellationTokenSource source = new CancellationTokenSource(delay))
             {
-                string[] expectedValue = new string[] { _faker.Random.AlphaNumeric(10), _faker.Random.AlphaNumeric(30), _faker.Random.AlphaNumeric(20) };
+                List<string> expectedValue = new List<string> { _faker.Random.AlphaNumeric(10), _faker.Random.AlphaNumeric(30), _faker.Random.AlphaNumeric(20) };
 
 #if ADVANCE_ASYNC
                 _executor.Setup(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(expectedValue).Verifiable();
@@ -165,6 +165,7 @@ namespace ADO.Net.Client.Tests
                 IEnumerable<string> returnedValue = await new DbClient(_executor.Object).GetScalarValuesAsync<string>(realQuery, source.Token);
 
                 Assert.AreEqual(expectedValue, returnedValue);
+                Assert.IsInstanceOf(typeof(List<string>), returnedValue);
 
 #if ADVANCE_ASYNC
                 //Verify the executor was called

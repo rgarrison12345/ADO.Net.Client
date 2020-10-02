@@ -182,7 +182,7 @@ namespace ADO.Net.Client.Tests
         [Category("Synchronous Read Tests")]
         public void WhenGetScalarValues_IsCalled__ItShouldCallSqlExecutorGetScalarValues()
         {
-            string[] expectedValue = new string[] { _faker.Random.AlphaNumeric(10), _faker.Random.AlphaNumeric(30), _faker.Random.AlphaNumeric(20) };
+            List<string> expectedValue = new List<string> { _faker.Random.AlphaNumeric(10), _faker.Random.AlphaNumeric(30), _faker.Random.AlphaNumeric(20) };
                
             //Need to setup the reader function
             _executor.Setup(x => x.GetScalarValues<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(expectedValue).Verifiable();
@@ -191,6 +191,7 @@ namespace ADO.Net.Client.Tests
             IEnumerable<string> returnedValue = new DbClient(_executor.Object).GetScalarValues<string>(realQuery);
 
             Assert.AreEqual(expectedValue, returnedValue);
+            Assert.IsInstanceOf(typeof(List<string>), returnedValue);
 
             //Verify the executor was called
             _executor.Verify(x => x.GetScalarValues<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
