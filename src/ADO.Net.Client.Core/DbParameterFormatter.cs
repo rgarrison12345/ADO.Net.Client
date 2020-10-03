@@ -66,7 +66,7 @@ namespace ADO.Net.Client.Core
             ParameterNamePrefix = parameterNamePrefix;
         }
         #endregion
-        #region Utility Methods                
+        #region Utility Methods
         /// <summary>
         /// Maps the type value of a <see cref="DbType"/> from an instance of <paramref name="info"/>
         /// </summary>
@@ -190,7 +190,16 @@ namespace ADO.Net.Client.Core
         /// <returns></returns>
         public object MapParameterValue(object value)
         {
-            return value ?? DBNull.Value;
+            if (value == null)
+            {
+                return DBNull.Value;
+            }
+            if (value is Enum)
+            {
+                MapEnumValue(value);
+            }
+
+            return value;
         }
         /// <summary>
         /// Maps the value for <see cref="DbParameter.Value"/> from a <paramref name="value"/> and an instance of <paramref name="info"/>
@@ -206,7 +215,7 @@ namespace ADO.Net.Client.Core
             }
             else if (info.PropertyType.IsEnum)
             {
-                return Convert.ChangeType(value, ((Enum)value).GetTypeCode());
+                return MapEnumValue(value);
             }
             else if (info.PropertyType == typeof(Guid) && !HasNativeGuidSupport)
             {
@@ -222,7 +231,7 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns a value of <see cref="ParameterDirection"/></returns>
         public ParameterDirection MapParameterDirection(PropertyInfo info)
         {
-            if(Attribute.IsDefined(info, typeof(Input), false))
+            if (Attribute.IsDefined(info, typeof(Input), false))
             {
                 return ParameterDirection.Input;
             }
@@ -249,7 +258,7 @@ namespace ADO.Net.Client.Core
             string parameterName = info.Name;
 
             //Check if there's an alternate parameter name
-            if(Attribute.IsDefined(info, typeof(ParameterName)))
+            if (Attribute.IsDefined(info, typeof(ParameterName)))
             {
                 parameterName = ((ParameterName)info.GetCustomAttributes(false).Where(x => x.GetType() == typeof(ParameterName)).Single()).Name;
             }
@@ -288,6 +297,45 @@ namespace ADO.Net.Client.Core
             {
                 parameter.Size = Math.Max(parameter.Value.ToString().Length + 1, 4000);
             }
+        }
+        #endregion
+        #region  Helper Methods
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private object MapEnumValue(object value)
+        {
+            if (!value.GetType().IsEnum)
+            {
+                throw new ArgumentException($"{nameof(value)} is not an enumeration type");
+            } 
+            
+            TypeCode typeCode;
+
+            if (value is IConvertible convertible)
+            {
+                typeCode = convertible.GetTypeCode();
+            }
+            else
+            {
+                typeCode = Type.GetTypeCode(Enum.GetUnderlyingType(value.GetType()));
+            }
+
+            switch (typeCode)
+            {
+                case TypeCode.Byte: return (byte)value;
+                case TypeCode.SByte: return (sbyte)value;
+                case TypeCode.Int16: return (short)value;
+                case TypeCode.Int32: return (int)value;
+                case TypeCode.Int64: return (long)value;
+                case TypeCode.UInt16: return (ushort)value;
+                case TypeCode.UInt32: return (uint)value;
+                case TypeCode.UInt64: return (ulong)value;
+            }
+
+            return value;
         }
         #endregion
     }
