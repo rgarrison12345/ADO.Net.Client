@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.1.7
+
+* [AutoIncrement](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/AutoIncrement.cs) missing AttributeUsage on the class to declare it is for properties
+
 ### 1.1.6
 
 * New attribute [ForeignKey](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/ForeignKey.cs) to indicate if a property is a part of a foreign key
