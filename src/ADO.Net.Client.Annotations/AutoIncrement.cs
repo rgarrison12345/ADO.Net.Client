@@ -31,6 +31,7 @@ namespace ADO.Net.Client.Annotations
     /// Indicates if the property is an auto incremented value field
     /// </summary>
     /// <seealso cref="Attribute"/>
+    [AttributeUsage(AttributeTargets.Property)]
     public class AutoIncrement : Attribute
     {
         #region Constructors        

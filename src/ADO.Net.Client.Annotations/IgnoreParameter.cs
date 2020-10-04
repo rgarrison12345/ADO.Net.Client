@@ -31,7 +31,7 @@ namespace ADO.Net.Client.Annotations
     /// Signifies if a property should not be considered a parameter for a database query
     /// </summary>
     /// <seealso cref="Attribute"/>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Property)]
     public class IgnoreParameter : Attribute
     {
         #region Constructors

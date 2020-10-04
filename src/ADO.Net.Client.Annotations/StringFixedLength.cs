@@ -32,7 +32,7 @@ namespace ADO.Net.Client.Annotations
     /// Signifies if the data type is <see cref="DbType.StringFixedLength"/>
     /// </summary>
     /// <seealso cref="Attribute"/>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Property)]
     public class StringFixedLength : Attribute
     {
         #region Fields/Properties

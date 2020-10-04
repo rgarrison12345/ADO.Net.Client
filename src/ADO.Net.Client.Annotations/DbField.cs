@@ -31,7 +31,7 @@ namespace ADO.Net.Client.Annotations
     /// Attribute class that defines a field that goes into and comes out of a database
     /// </summary>
     /// <seealso cref="Attribute"/>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Property)]
     public class DbField : Attribute
     {
         #region Fields/Properties

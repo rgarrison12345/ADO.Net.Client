@@ -32,7 +32,7 @@ namespace ADO.Net.Client.Annotations
     /// Signifies if the data type is <see cref="DbType.DateTime2"/>
     /// </summary>
     /// <seealso cref="Attribute"/>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Property)]
     public class DateTime2 : Attribute
     {
     }

@@ -32,7 +32,7 @@ namespace ADO.Net.Client.Annotations
     /// Specifies an alternate name of an instance of <see cref="PropertyInfo"/>
     /// </summary>
     /// <seealso cref="Attribute"/>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Property)]
     public class ParameterName : Attribute
     {
         #region Fields/Properties

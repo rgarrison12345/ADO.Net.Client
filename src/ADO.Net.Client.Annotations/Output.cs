@@ -32,7 +32,7 @@ namespace ADO.Net.Client.Annotations
     /// Database parameter direction that represents <see cref="ParameterDirection.Output"/>
     /// </summary>
     /// <seealso cref="Attribute" />
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Property)]
     public class Output : Attribute
     {
     }

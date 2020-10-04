@@ -31,7 +31,7 @@ namespace ADO.Net.Client.Annotations
     /// Indicates if the property is considered to be a foreign key field
     /// </summary>
     /// <seealso cref="Attribute"/>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Property)]
     public class ForeignKey : Attribute
     {
         #region Constructors        
