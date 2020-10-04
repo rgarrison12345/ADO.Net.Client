@@ -184,19 +184,24 @@ namespace ADO.Net.Client.Core
             }
         }
         /// <summary>
-        /// Maps the parameter value.
+        /// Maps the value for <see cref="DbParameter.Value"/> from a <paramref name="value"/>
         /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
+        /// <param name="value">The value for the parameter</param>
+        /// <returns>Returns the value for <see cref="DbParameter.Value"/></returns>
         public object MapParameterValue(object value)
         {
             if (value == null)
             {
                 return DBNull.Value;
             }
+            
             if (value is Enum)
             {
-                MapEnumValue(value);
+                return MapEnumValue(value);
+            }
+            else if (value is Guid && !HasNativeGuidSupport)
+            {
+                return value.ToString();
             }
 
             return value;
