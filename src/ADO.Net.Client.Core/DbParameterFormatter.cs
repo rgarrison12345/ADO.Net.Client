@@ -197,7 +197,7 @@ namespace ADO.Net.Client.Core
             
             if (value is Enum)
             {
-                return MapEnumValue(value);
+                return GetEnumValue(value);
             }
             else if (value is Guid && !HasNativeGuidSupport)
             {
@@ -220,7 +220,7 @@ namespace ADO.Net.Client.Core
             }
             else if (info.PropertyType.IsEnum)
             {
-                return MapEnumValue(value);
+                return GetEnumValue(value);
             }
             else if (info.PropertyType == typeof(Guid) && !HasNativeGuidSupport)
             {
@@ -271,10 +271,10 @@ namespace ADO.Net.Client.Core
             return MapParameterName(parameterName);
         }
         /// <summary>
-        /// Maps the name of the parameter.
+        /// Maps the name of the parameter for <see cref="DbParameter.ParameterName"/>
         /// </summary>
         /// <param name="parameterName">Name of the parameter.</param>
-        /// <returns>Returns the name of a parameter</returns>
+        /// <returns>Returns the name of a parameter to be used for <see cref="DbParameter.ParameterName"/></returns>
         public string MapParameterName(string parameterName)
         {
             return parameterName.StartsWith(ParameterNamePrefix) ? parameterName : string.Concat(ParameterNamePrefix, parameterName);
@@ -297,8 +297,10 @@ namespace ADO.Net.Client.Core
             {
                 parameter.Size = 40;
             }
-            else if (parameter.DbType == DbType.String || parameter.DbType == DbType.StringFixedLength
-                || parameter.DbType == DbType.AnsiString || parameter.DbType == DbType.AnsiStringFixedLength)
+            else if (parameter.DbType == DbType.String 
+                     || parameter.DbType == DbType.StringFixedLength
+                     || parameter.DbType == DbType.AnsiString
+                     || parameter.DbType == DbType.AnsiStringFixedLength)
             {
                 parameter.Size = Math.Max(parameter.Value.ToString().Length + 1, 4000);
             }
@@ -306,18 +308,18 @@ namespace ADO.Net.Client.Core
         #endregion
         #region  Helper Methods
         /// <summary>
-        /// 
+        /// Gets the value of an <see cref="Enum"/> based on the <see cref="TypeCode"/>
         /// </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentException">Thrown when the passed in <paramref name="value"/> is not an <see cref="Enum"/></exception>
-        /// <returns></returns>
-        private object MapEnumValue(object value)
+        /// <returns>Returns the value of an instance of <see cref="Enum"/></returns>
+        private object GetEnumValue(object value)
         {
             if (!value.GetType().IsEnum)
             {
                 throw new ArgumentException($"{nameof(value)} is not an enumeration type");
-            } 
-            
+            }
+
             TypeCode typeCode;
 
             if (value is IConvertible convertible)
