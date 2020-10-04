@@ -277,7 +277,7 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns the name of a parameter</returns>
         public string MapParameterName(string parameterName)
         {
-            return parameterName.StartsWith(ParameterNamePrefix) == true ? parameterName : string.Concat(ParameterNamePrefix, parameterName);
+            return parameterName.StartsWith(ParameterNamePrefix) ? parameterName : string.Concat(ParameterNamePrefix, parameterName);
         }
         /// <summary>
         /// Maps an instance of a <see cref="DbParameter"/> using the passed in <paramref name="info"/> <paramref name="parameterValue"/>
