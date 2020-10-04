@@ -304,6 +304,7 @@ namespace ADO.Net.Client.Core
         /// 
         /// </summary>
         /// <param name="value"></param>
+        /// <exception cref="ArgumentException">Thrown when the passed in <paramref name="value"/> is not an <see cref="Enum"/></exception>
         /// <returns></returns>
         private object MapEnumValue(object value)
         {
