@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.3.5.1
+
+* Updating to ADO.Net.Client.Annotations 1.1.7
+
 ### 1.3.5
 
 * Updating to ADO.Net.Client.Annotations 1.1.6
