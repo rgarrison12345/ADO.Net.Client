@@ -89,7 +89,7 @@ namespace ADO.Net.Client.Core
         /// <returns>A <see cref="Task{DbDataReader}"/> object, the caller is responsible for handling closing the <see cref="DbDataReader"/>.  Once the data reader is closed, the database connection will be closed as well</returns>
         Task<DbDataReader> GetDbDataReaderAsync(ISqlQuery query, CommandBehavior behavior = CommandBehavior.Default, CancellationToken token = default);
         /// <summary>
-        /// Utility method for returning a <see cref="Task{Object}"/> value from the database
+        /// Utility method for returning a <see cref="Task{T}"/> value from the database
         /// </summary>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>

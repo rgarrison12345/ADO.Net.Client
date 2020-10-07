@@ -107,7 +107,7 @@ namespace ADO.Net.Client
 #endif
         }
         /// <summary>
-        /// Utility method for returning a <see cref="Task{Object}"/> value from the database
+        /// Utility method for returning a <see cref="Task{T}"/> value from the database
         /// </summary>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
