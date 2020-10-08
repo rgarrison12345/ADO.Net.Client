@@ -154,21 +154,20 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Gets an instance of a formatted <see cref="DbCommand"/> object based on the specified provider
         /// </summary>
-        ///<param name="trasaction">An instance of <see cref="DbTransaction"/></param>
+        /// <param name="transaction">An instance of <see cref="DbTransaction"/></param>
         /// <param name="commandTimeout">Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.</param>
         /// <param name="connection">An instance of <see cref="DbConnection"/></param>
-        /// <param name="parameters">The list of <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/> associated with the query parameter</param>
+        /// <param name="parameters">The list of <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/> associated with the <paramref name="query"/></param>
         /// <param name="query">The SQL command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns an instance of <see cref="DbCommand"/> object based off the provider passed into the class</returns>
-        public DbCommand GetDbCommand(CommandType queryCommandType, string query, IEnumerable<DbParameter> parameters, DbConnection connection, int commandTimeout, DbTransaction trasaction = null)
+        public DbCommand GetDbCommand(CommandType queryCommandType, string query, IEnumerable<DbParameter> parameters, DbConnection connection, int commandTimeout = 30, DbTransaction transaction = null)
         {
             //Get the DbCommand object
-            DbCommand dCommand = GetDbCommand(connection, trasaction, commandTimeout);
+            DbCommand dCommand = GetDbCommand(connection, transaction, commandTimeout);
 
             if (parameters != null)
             {
-                //Set query and command type
                 dCommand.Parameters.AddRange(parameters.ToArray());
             }
 
@@ -188,11 +187,26 @@ namespace ADO.Net.Client.Core
         public DbCommand GetDbCommand(DbConnection connection, DbTransaction transact, int commandTimeout)
         {
             //Get the DbCommand object
+            DbCommand dCommand = GetDbCommand(connection, commandTimeout);
+
+            dCommand.Transaction = transact;
+
+            //Return this back to the caller
+            return dCommand;
+        }
+        /// <summary>
+        /// Gets an instance of a formatted <see cref="DbCommand"/> object based on the specified provider
+        /// </summary>
+        /// <param name="commandTimeout">Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.</param>
+        /// <param name="connection">Represents a connection to a database</param>
+        /// <returns>Returns an instance of <see cref="DbCommand"/> object based off the provider passed into the class</returns>
+        public DbCommand GetDbCommand(DbConnection connection, int commandTimeout)
+        {
+            //Get the DbCommand object
             DbCommand dCommand = GetDbCommand(commandTimeout);
 
             //Set query and command type
             dCommand.Connection = connection;
-            dCommand.Transaction = transact;
 
             //Return this back to the caller
             return dCommand;
