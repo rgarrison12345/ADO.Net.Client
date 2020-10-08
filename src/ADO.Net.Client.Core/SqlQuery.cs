@@ -60,11 +60,11 @@ namespace ADO.Net.Client.Core
         #endregion
         #region Constructors
         /// <summary>
-        /// Instantiates the SQL Query with text, command type, and parameter list
+        /// Instantiates an instance with <paramref name="query"/>, <paramref name="type"/>, and <paramref name="parameters"/>
         /// </summary>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="type">Represents how a command should be interpreted by the data provider</param>
-        /// <param name="parameters">The <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/> that are associated with a query</param>
+        /// <param name="parameters">The <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/> that are associated with a <paramref name="query"/></param>
         internal SqlQuery(string query, CommandType type, IEnumerable<DbParameter> parameters)
         {
             QueryText = query;
