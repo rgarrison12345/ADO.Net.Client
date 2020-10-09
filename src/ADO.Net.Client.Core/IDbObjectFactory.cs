@@ -98,16 +98,16 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns an instantiated formatted <see cref="DbCommand"/> object based off the provider passed into the class</returns>
         DbCommand GetDbCommand(DbConnection connection, DbTransaction transact, int commandTimeout);
         /// <summary>
-        /// Instantiates a new isntance of the <see cref="DbCommand"/> subclass based on the provider passed into the class constructor
+        /// Instantiates a new instance of the <see cref="DbCommand"/> subclass based on the provider passed into the class constructor
         /// </summary>
         /// <param name="commandTimeout">Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.</param>
         /// <param name="connection">Represents a connection to a database</param>
-        /// <param name="transact">An instance of <see cref="DbTransaction"/></param>
+        /// <param name="transaction">An instance of <see cref="DbTransaction"/></param>
         /// <param name="parameters">The <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/> associated with the query parameter</param>
         /// <param name="query">The SQL command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns an instantiated formatted <see cref="DbCommand"/> object based off the provider passed into the class</returns>
-        DbCommand GetDbCommand(CommandType queryCommandType, string query, IEnumerable<DbParameter> parameters, DbConnection connection, int commandTimeout = 30, DbTransaction transact = null);
+        DbCommand GetDbCommand(CommandType queryCommandType, string query, DbConnection connection, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, DbTransaction transaction = null);
         /// <summary>
         /// Instantiates a new instance of a <see cref="DbConnection"/> subclass based on the specified provider
         /// </summary>

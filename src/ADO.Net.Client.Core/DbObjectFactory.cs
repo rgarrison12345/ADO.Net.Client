@@ -161,7 +161,7 @@ namespace ADO.Net.Client.Core
         /// <param name="query">The SQL command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns an instance of <see cref="DbCommand"/> object based off the provider passed into the class</returns>
-        public virtual DbCommand GetDbCommand(CommandType queryCommandType, string query, IEnumerable<DbParameter> parameters, DbConnection connection, int commandTimeout = 30, DbTransaction transaction = null)
+        public virtual DbCommand GetDbCommand(CommandType queryCommandType, string query, DbConnection connection, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, DbTransaction transaction = null)
         {
             //Get the DbCommand object
             DbCommand dCommand = GetDbCommand(connection, transaction, commandTimeout);
