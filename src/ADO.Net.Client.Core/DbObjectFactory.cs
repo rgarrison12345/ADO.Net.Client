@@ -44,8 +44,11 @@ namespace ADO.Net.Client.Core
     /// <seealso cref="IDbObjectFactory"/>
     public class DbObjectFactory : IDbObjectFactory
     {
-        #region Fields/Properties
-        private readonly DbProviderFactory _factory;
+        #region Fields/Properties        
+        /// <summary>
+        /// An instance of <see cref="DbProviderFactory"/>
+        /// </summary>
+        protected readonly DbProviderFactory _factory;
 
 #if ADVANCED_FEATURES
         /// <summary>
