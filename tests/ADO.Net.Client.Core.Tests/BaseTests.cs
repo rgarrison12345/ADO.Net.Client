@@ -146,7 +146,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbCommandTests")]
         public void DbCommandTimeoutSame()
         {
-            int commandTimeout = 10;
+            int commandTimeout = _faker.Random.Int();
             DbCommand command = _factory.GetDbCommand(commandTimeout);
 
             Assert.IsNotNull(command);
@@ -158,9 +158,26 @@ namespace ADO.Net.Client.Core.Tests
         /// </summary>
         [Test]
         [Category("DbCommandTests")]
+        public void DbCommandTimeoutConnectionSame()
+        {
+            int commandTimeout = _faker.Random.Int();
+            CustomDbConnection connection = new CustomDbConnection() { ConnectionString = _connectionString };
+            DbCommand command = _factory.GetDbCommand(connection, commandTimeout);
+
+            Assert.IsNotNull(command);
+            Assert.AreEqual(commandTimeout, command.CommandTimeout);
+            Assert.AreEqual(connection, command.Connection);
+            Assert.IsInstanceOf(typeof(CustomDbConnection), command.Connection);
+            Assert.IsInstanceOf(typeof(CustomDbCommand), command);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbCommandTests")]
         public void DbCommandTimeoutConnectionTransactionSame()
         {
-            int commandTimeout = 10;
+            int commandTimeout = _faker.Random.Int();
             CustomDbConnection connection = new CustomDbConnection() { ConnectionString = _connectionString };
             CustomDbTransaction transaction = connection.BeginTransaction() as CustomDbTransaction;
             DbCommand command = _factory.GetDbCommand(connection, transaction, commandTimeout);
@@ -180,12 +197,12 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbCommandTests")]
         public void DbCommandTimeoutConnectionTransactionSameNullParameters()
         {
-            int commandTimeout = 10;
+            int commandTimeout = _faker.Random.Int();
             string queryText = "Select * From Users";
             CustomDbConnection connection = new CustomDbConnection() { ConnectionString = _connectionString };
             CustomDbTransaction transaction = connection.BeginTransaction() as CustomDbTransaction;
             CommandType type = _faker.PickRandom<CommandType>();
-            DbCommand command = _factory.GetDbCommand(type, queryText, null, connection, commandTimeout, transaction);
+            DbCommand command = _factory.GetDbCommand(type, queryText, connection, null, commandTimeout, transaction);
 
             Assert.IsNotNull(command);
             Assert.IsNotNull(command.Parameters);
@@ -216,12 +233,12 @@ namespace ADO.Net.Client.Core.Tests
                 new CustomDbParameter() { ParameterName = "@Param2" },
                 new CustomDbParameter() { ParameterName = "@Param1" }
             };
-            int commandTimeout = 10;
+            int commandTimeout = _faker.Random.Int();
             string queryText = "Select * From Users";
             CustomDbConnection connection = new CustomDbConnection() { ConnectionString = _connectionString };
             CustomDbTransaction transaction = connection.BeginTransaction() as CustomDbTransaction;
             CommandType type = _faker.PickRandom<CommandType>();
-            DbCommand command = _factory.GetDbCommand(type, queryText, parameters, connection, commandTimeout, transaction);
+            DbCommand command = _factory.GetDbCommand(type, queryText, connection, parameters, commandTimeout, transaction);
 
             Assert.IsNotNull(command);
             Assert.IsNotNull(command.Parameters);

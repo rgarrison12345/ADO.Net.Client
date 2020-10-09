@@ -201,7 +201,7 @@ namespace ADO.Net.Client.Implementation
         public async Task<DbDataReader> GetDbDataReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CommandBehavior behavior = CommandBehavior.Default, CancellationToken token = default)
         {
             //Wrap this in a using statement to handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
             {
                 if (shouldBePrepared)
                 {
@@ -226,7 +226,7 @@ namespace ADO.Net.Client.Implementation
         public async Task<T> GetScalarValueAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
         {
             //Wrap this in a using statement to handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
             {
                 if (shouldBePrepared)
                 {
@@ -266,7 +266,7 @@ namespace ADO.Net.Client.Implementation
         public async Task<int> ExecuteNonQueryAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
         {
             //Wrap this in a using statement to automatically handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
             {
                 if (shouldBePrepared)
                 {

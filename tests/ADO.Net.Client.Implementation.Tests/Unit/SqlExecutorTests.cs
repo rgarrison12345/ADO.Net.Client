@@ -99,7 +99,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         /// </summary>
         private void SetupFactory()
         {
-            _factory.Setup(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, _manager.Object.Transaction)).Returns(_command.Object).Verifiable();
+            _factory.Setup(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, _manager.Object.Transaction)).Returns(_command.Object).Verifiable();
         }
         private DbTransaction GetTransaction()
         {
