@@ -4,6 +4,7 @@ Version History
 ### 1.3.5.1
 
 * Updating to ADO.Net.Client.Annotations 1.1.7
+* [DbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterFormatter.cs) now properly mapping a value of enum by type code
 
 ### 1.3.5
 
