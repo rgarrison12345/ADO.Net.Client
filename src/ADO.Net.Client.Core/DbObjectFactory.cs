@@ -161,7 +161,7 @@ namespace ADO.Net.Client.Core
         /// <param name="query">The SQL command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns an instance of <see cref="DbCommand"/> object based off the provider passed into the class</returns>
-        public DbCommand GetDbCommand(CommandType queryCommandType, string query, IEnumerable<DbParameter> parameters, DbConnection connection, int commandTimeout = 30, DbTransaction transaction = null)
+        public virtual DbCommand GetDbCommand(CommandType queryCommandType, string query, IEnumerable<DbParameter> parameters, DbConnection connection, int commandTimeout = 30, DbTransaction transaction = null)
         {
             //Get the DbCommand object
             DbCommand dCommand = GetDbCommand(connection, transaction, commandTimeout);
@@ -184,7 +184,7 @@ namespace ADO.Net.Client.Core
         /// <param name="connection">Represents a connection to a database</param>
         /// <param name="transact">An instance of a <see cref="DbTransaction"/> object</param>
         /// <returns>Returns an instance of <see cref="DbCommand"/> object based off the provider passed into the class</returns>
-        public DbCommand GetDbCommand(DbConnection connection, DbTransaction transact, int commandTimeout)
+        public virtual DbCommand GetDbCommand(DbConnection connection, DbTransaction transact, int commandTimeout)
         {
             //Get the DbCommand object
             DbCommand dCommand = GetDbCommand(connection, commandTimeout);
@@ -200,7 +200,7 @@ namespace ADO.Net.Client.Core
         /// <param name="commandTimeout">Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.</param>
         /// <param name="connection">Represents a connection to a database</param>
         /// <returns>Returns an instance of <see cref="DbCommand"/> object based off the provider passed into the class</returns>
-        public DbCommand GetDbCommand(DbConnection connection, int commandTimeout)
+        public virtual DbCommand GetDbCommand(DbConnection connection, int commandTimeout)
         {
             //Get the DbCommand object
             DbCommand dCommand = GetDbCommand(commandTimeout);
@@ -216,7 +216,7 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="commandTimeout">Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.</param>
         /// <returns>Returns an instance of <see cref="DbCommand"/> object</returns>
-        public DbCommand GetDbCommand(int commandTimeout)
+        public virtual DbCommand GetDbCommand(int commandTimeout)
         {
             DbCommand command = GetDbCommand();
             command.CommandTimeout = commandTimeout;
@@ -228,7 +228,7 @@ namespace ADO.Net.Client.Core
         /// Gets an instance of <see cref="DbCommand"/> object
         /// </summary>
         /// <returns>Returns an instance of <see cref="DbCommand"/> object</returns>
-        public DbCommand GetDbCommand()
+        public virtual DbCommand GetDbCommand()
         {
             DbCommand command = _factory.CreateCommand();
 
@@ -242,7 +242,7 @@ namespace ADO.Net.Client.Core
         /// Instantiates a new instance of the <see cref="DbConnection"/> object based on the specified provider
         /// </summary>
         /// <returns>Returns a new instance of the <see cref="DbConnection"/> object based on the specified provider</returns>
-        public DbConnection GetDbConnection()
+        public virtual DbConnection GetDbConnection()
         {
             //Return this back to the caller
             return _factory.CreateConnection();
@@ -251,7 +251,7 @@ namespace ADO.Net.Client.Core
         /// Create an instance of <see cref="DbParameter"/> object based off of the provider passed into factory
         /// </summary>
         /// <returns>Returns an instantiated <see cref="DbParameter"/> object</returns>
-        public DbParameter GetDbParameter()
+        public virtual DbParameter GetDbParameter()
         {
             //Return this back to the caller
             return _factory.CreateParameter();
