@@ -114,10 +114,8 @@ namespace ADO.Net.Client.Implementation
                     //Return this back to the caller
                     return _mapper.MapRecord<T>(reader);
                 }
-                else
-                {
-                    return default;
-                }
+
+                return default;
             }
         }
         /// <summary>

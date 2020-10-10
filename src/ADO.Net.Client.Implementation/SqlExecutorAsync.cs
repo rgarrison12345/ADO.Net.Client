@@ -91,7 +91,7 @@ namespace ADO.Net.Client.Implementation
                 {
                     //Keep iterating
                     await foreach (T t in _mapper.MapResultSetStreamAsync<T>(reader, token).ConfigureAwait(false))
-                    { 
+                    {
                         //Return this back to the caller
                         yield return t;
                     }
@@ -162,10 +162,8 @@ namespace ADO.Net.Client.Implementation
                     //Return this back to the caller
                     return _mapper.MapRecord<T>(reader);
                 }
-                else
-                {
-                    return default;
-                }
+
+                return default;
             }
         }
         /// <summary>
