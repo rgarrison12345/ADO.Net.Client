@@ -122,7 +122,7 @@ namespace ADO.Net.Client.Core
         /// Provides a mechanism for enumerating all available instances of database servers within the local network
         /// </summary>
         /// <returns>Returns a new instance of <see cref="DbDataSourceEnumerator"/></returns>
-        public DbDataSourceEnumerator GetDataSourceEnumerator()
+        public virtual DbDataSourceEnumerator GetDataSourceEnumerator()
         {
             //Return this back to the caller
             return _factory.CreateDataSourceEnumerator();
@@ -131,7 +131,7 @@ namespace ADO.Net.Client.Core
         /// Gets a <see cref="DbDataAdapter"/> based on the provider the <see cref="DbObjectFactory"/> is utilizing
         /// </summary>
         /// <returns>Returns an instance of <see cref="DbDataAdapter"/></returns>
-        public DbDataAdapter GetDbDataAdapter()
+        public virtual DbDataAdapter GetDbDataAdapter()
         {
             //Return this back to the caller
             return _factory.CreateDataAdapter();
@@ -140,7 +140,7 @@ namespace ADO.Net.Client.Core
         /// Gets a <see cref="DbCommandBuilder"/> based on the provider the <see cref="DbObjectFactory"/> is utilizing
         /// </summary>
         /// <returns>Returns an instance of <see cref="DbCommandBuilder"/></returns>
-        public DbCommandBuilder GetDbCommandBuilder()
+        public virtual DbCommandBuilder GetDbCommandBuilder()
         {
             //Return this back to the caller
             return _factory.CreateCommandBuilder();
@@ -149,7 +149,7 @@ namespace ADO.Net.Client.Core
         /// Gets a <see cref="DbConnectionStringBuilder"/> based off the provider passed into class
         /// </summary>
         /// <returns>Returns a <see cref="DbConnectionStringBuilder"/> based off of target .NET framework data provider</returns>
-        public DbConnectionStringBuilder GetDbConnectionStringBuilder()
+        public virtual DbConnectionStringBuilder GetDbConnectionStringBuilder()
         {
             //Return this back to the caller
             return _factory.CreateConnectionStringBuilder();
