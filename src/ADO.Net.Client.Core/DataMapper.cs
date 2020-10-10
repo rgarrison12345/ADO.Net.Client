@@ -65,7 +65,7 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Maps the result set one at a time by streaming the result from the server asynchronously
         /// </summary>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <typeparam name="T">The <see cref="Type"/> the caller wants created from the passed in <paramref name="reader"/></typeparam>
         /// <param name="reader">An instance of <see cref="DbDataReader"/> that contains a result set of records that needs to be mapped</param>
         /// <returns>Returns the instance of <typeparamref name="T"/> created from the passed in <paramref name="reader"/></returns>
@@ -84,7 +84,7 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Maps an entire result set in the <paramref name="reader"/>
         /// </summary>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <typeparam name="T">The <see cref="Type"/> the caller wants created from the passed in <paramref name="reader"/></typeparam>
         /// <param name="reader">An instance of <see cref="DbDataReader"/> that contains a result set of records that needs to be mapped</param>
         /// <returns>Returns the instance of <typeparamref name="T"/> created from the passed in <paramref name="reader"/></returns>
