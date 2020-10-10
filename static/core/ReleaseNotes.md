@@ -1,6 +1,12 @@
 Version History
 ===============
 
+### 1.3.6
+
+* GetXXX functions in [DbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbObjectFactory.cs)  are now virtual
+* GetDbCommand new overload that takes in an instance of [DbConnection](https://docs.microsoft.com/en-us/dotnet/api/system.data.common.dbconnection?view=netcore-3.1) and command timeout as integer
+* GetDbCommand overload switching parameters and connection in signature
+
 ### 1.3.5.1
 
 * Updating to ADO.Net.Client.Annotations 1.1.7
