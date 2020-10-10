@@ -48,7 +48,7 @@ namespace ADO.Net.Client.Implementation
             using (DbDataAdapter adap = _factory.GetDbDataAdapter())
             {
                 //Wrap this automatically to dispose of resources
-                using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
+                using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
                 {
                     DataSet set = new DataSet();
 
@@ -174,7 +174,7 @@ namespace ADO.Net.Client.Implementation
         public DbDataReader GetDbDataReader(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CommandBehavior behavior = CommandBehavior.CloseConnection)
         {
             //Wrap this in a using statement to handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
             {
                 //Check if we should be prepared
                 if (shouldBePrepared)
@@ -264,7 +264,7 @@ namespace ADO.Net.Client.Implementation
         public T GetScalarValue<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false)
         {
             //Wrap this in a using statement to handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
             {
                 //Check if we should be prepared
                 if (shouldBePrepared)
@@ -292,7 +292,7 @@ namespace ADO.Net.Client.Implementation
         #endregion
         #region Data Modification
         /// <summary>
-        /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
+        /// Utility method for executing an Ad-Hoc query or stored procedure
         /// </summary>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
@@ -303,7 +303,7 @@ namespace ADO.Net.Client.Implementation
         public int ExecuteNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false)
         {
             //Wrap this in a using statement to automatically handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, parameters, _manager.Connection, commandTimeout, _manager.Transaction))
+            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
             {
                 //Check if we should be prepared
                 if (shouldBePrepared)
