@@ -56,7 +56,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             }
 
             //Verify the calls were made
-            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
         }
         /// <summary>
         /// When the get scalar value is called it should calls database object factory get database command.
@@ -83,7 +83,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             Assert.IsTrue(expected == returned);
 
             //Verify the calls were made
-            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
             _command.Verify(x => x.ExecuteScalar(), Times.Once);
         }
         #endregion
@@ -113,7 +113,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             Assert.IsTrue(expected == returned);
 
             //Verify the calls were made
-            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, realQuery.Parameters, _manager.Object.Connection, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
             _command.Verify(x => x.ExecuteNonQuery(), Times.Once);
         }
         #endregion
