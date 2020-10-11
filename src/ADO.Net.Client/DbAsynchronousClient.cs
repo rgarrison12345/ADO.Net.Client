@@ -57,7 +57,7 @@ namespace ADO.Net.Client
         /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
         /// </summary>
         /// <typeparam name="T">An instance of the type caller wants create from query passed into procedure</typeparam>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Gets an instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine.
         /// Or the default value of <typeparamref name="T"/> if there are no search results
@@ -77,7 +77,7 @@ namespace ADO.Net.Client
         /// </summary>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Returns an instance of <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
         public override async Task<IEnumerable<T>> GetDataObjectsAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class
         {
@@ -94,7 +94,7 @@ namespace ADO.Net.Client
         /// </summary>
         /// <param name="behavior">Provides a description of the results of the query and its effect on the database.  Defaults to <see cref="CommandBehavior.Default"/></param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>A <see cref="Task{DbDataReader}"/> object, the caller is responsible for handling closing the <see cref="DbDataReader"/>.  Once the data reader is closed, the database connection will be closed as well</returns>
         public override async Task<DbDataReader> GetDbDataReaderAsync(ISqlQuery query, CommandBehavior behavior = CommandBehavior.Default, CancellationToken token = default)
         {
@@ -111,7 +111,7 @@ namespace ADO.Net.Client
         /// </summary>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Returns the value of the first column in the first row as <see cref="Task"/></returns>
         public override async Task<T> GetScalarValueAsync<T>(ISqlQuery query, CancellationToken token = default)
         {
@@ -126,7 +126,7 @@ namespace ADO.Net.Client
         /// <summary>
         /// Gets an instance of <see cref="IMultiResultReader" />
         /// </summary>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>
         /// Returns an instance of <see cref="IMultiResultReader" />
@@ -142,7 +142,7 @@ namespace ADO.Net.Client
         /// <summary>
         /// Gets an instance of <see cref="IEnumerable{T}"/> of scalar values
         /// </summary>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>Returns a <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
@@ -160,7 +160,7 @@ namespace ADO.Net.Client
         /// </summary>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Returns a <see cref="IAsyncEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
         public override async IAsyncEnumerable<T> GetDataObjectsStreamAsync<T>(ISqlQuery query, [EnumeratorCancellation] CancellationToken token = default) where T : class
         {
@@ -186,7 +186,7 @@ namespace ADO.Net.Client
         /// </summary>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Returns a <see cref="IAsyncEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
         public override async IAsyncEnumerable<T> GetScalarValuesStreamAsync<T>(ISqlQuery query, [EnumeratorCancellation] CancellationToken token = default)
         {
@@ -213,7 +213,7 @@ namespace ADO.Net.Client
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure
         /// </summary>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <param name="query">An instance of <see cref="ISqlQuery"/> used to query a data store</param>
         /// <returns>Returns the number of rows affected by the passed in <paramref name="query"/></returns>
         public override async Task<int> ExecuteNonQueryAsync(ISqlQuery query, CancellationToken token = default)
