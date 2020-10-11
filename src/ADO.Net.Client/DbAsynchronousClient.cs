@@ -41,9 +41,9 @@ namespace ADO.Net.Client
         /// <summary>
         /// Gets an instance of <see cref="DataTable"/> asynchronously
         /// </summary>
-        /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
+        /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <param name="query">SQL query to use to build a <see cref="DataTable"/></param>
-        /// <returns>Returns a <see cref="Task{DataTable}"/> of datatable</returns>
+        /// <returns>Returns a <see cref="Task{T}"/> of <see cref="DataTable"/></returns>
         public override async Task<DataTable> GetDataTableAsync(ISqlQuery query, CancellationToken token = default)
         {
             DataTable dt = new DataTable();
