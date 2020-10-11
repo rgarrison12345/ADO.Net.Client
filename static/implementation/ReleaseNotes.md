@@ -1,6 +1,11 @@
 Version History
 ===============
 
+### 1.3.5
+
+* Updating to ADO.Net.Client.Core 1.3.5
+* [SqlExecutor](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/SqlExecutor.cs) properly using [CancellationToken](https://docs.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken?view=netcore-3.1) in GetScalarValuesAsync and GetScalarValuesStreamAsync
+
 ### 1.3.4.1
 
 * Updating to ADO.Net.Client.Core 1.3.5.1
