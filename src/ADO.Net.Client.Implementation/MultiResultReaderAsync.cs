@@ -41,7 +41,7 @@ namespace ADO.Net.Client.Implementation
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Returns an instance of <see cref="IEnumerable{T}"/> as an entire collection of <typeparamref name="T"/></returns>
-        public async Task<IEnumerable<T>> ReadObjectsAsync<T>(CancellationToken token = default) where T : class
+        public virtual async Task<IEnumerable<T>> ReadObjectsAsync<T>(CancellationToken token = default) where T : class
         {
             //Keep looping through each object in enumerator
             return await _mapper.MapResultSetAsync<T>(_reader, token).ConfigureAwait(false);
@@ -52,7 +52,7 @@ namespace ADO.Net.Client.Implementation
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Gets an instance of <typeparamref name="T"/></returns>
-        public async Task<T> ReadObjectAsync<T>(CancellationToken token = default) where T : class
+        public virtual async Task<T> ReadObjectAsync<T>(CancellationToken token = default) where T : class
         {
             //Move to the next record if possible
             if (!await _reader.ReadAsync(token).ConfigureAwait(false))
@@ -67,7 +67,7 @@ namespace ADO.Net.Client.Implementation
         /// </summary>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Returns <c>true</c> if there's another result set in the data set <c>false</c> otherwise</returns>
-        public async Task<bool> MoveToNextResultAsync(CancellationToken token = default)
+        public virtual async Task<bool> MoveToNextResultAsync(CancellationToken token = default)
         {
             //Move to next result set
             return await _reader.NextResultAsync(token).ConfigureAwait(false);
@@ -79,7 +79,7 @@ namespace ADO.Net.Client.Implementation
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Returns an instance of <see cref="IAsyncEnumerable{T}"/></returns>
-        public async IAsyncEnumerable<T> ReadObjectsStreamAsync<T>([EnumeratorCancellation] CancellationToken token = default) where T : class
+        public virtual async IAsyncEnumerable<T> ReadObjectsStreamAsync<T>([EnumeratorCancellation] CancellationToken token = default) where T : class
         {
             //Keep looping through each object in enumerator
             await foreach (T type in _mapper.MapResultSetStreamAsync<T>(_reader, token).ConfigureAwait(false))

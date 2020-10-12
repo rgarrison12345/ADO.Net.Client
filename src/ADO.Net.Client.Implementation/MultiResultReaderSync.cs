@@ -35,7 +35,7 @@ namespace ADO.Net.Client.Implementation
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <returns>Returns an instance of <see cref="IEnumerable{T}"/></returns>
-        public IEnumerable<T> ReadObjectsStream<T>() where T : class
+        public virtual IEnumerable<T> ReadObjectsStream<T>() where T : class
         {
             //Keep looping through each object in enumerator
             foreach (T type in _mapper.MapResultSetStream<T>(_reader))
@@ -52,7 +52,7 @@ namespace ADO.Net.Client.Implementation
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <returns>Returns an instance of <see cref="IEnumerable{T}"/> as an entire collection of <typeparamref name="T"/></returns>
-        public IEnumerable<T> ReadObjects<T>() where T : class
+        public virtual IEnumerable<T> ReadObjects<T>() where T : class
         {
             return _mapper.MapResultSet<T>(_reader);
         }
@@ -61,7 +61,7 @@ namespace ADO.Net.Client.Implementation
         /// </summary>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <returns>Gets an instance of <typeparamref name="T"/></returns>
-        public T ReadObject<T>() where T : class
+        public virtual T ReadObject<T>() where T : class
         {
             //Move to the next record if possible
             if(!_reader.Read())
@@ -75,7 +75,7 @@ namespace ADO.Net.Client.Implementation
         /// Moves to the next result in the underlying data set
         /// </summary>
         /// <returns>Returns <c>true</c> if there's another result set in the underlying data set <c>false</c> otherwise</returns>
-        public bool MoveToNextResult()
+        public virtual bool MoveToNextResult()
         {
             //Move to next result set
             return _reader.NextResult();
@@ -83,7 +83,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Closes the underlying reader object that reads records from the database synchronously
         /// </summary>
-        public void Close()
+        public virtual void Close()
         {
             _reader.Close();
         }
