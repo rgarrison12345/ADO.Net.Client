@@ -106,12 +106,12 @@ namespace ADO.Net.Client.Implementation
         /// Appends the specified SQL to the existing SQL statement being built
         /// </summary>
         /// <param name="sql">The SQL statement to append</param>
-        /// <param name="paramerterName">Name of the paramerter.</param>
-        /// <param name="parmaeterValue">The parmaeter value.</param>
-        public void Append(string sql, string paramerterName, object parmaeterValue)
+        /// <param name="parameterName">Name of the parameter.</param>
+        /// <param name="parameterValue">The parameter value.</param>
+        public void Append(string sql, string parameterName, object parameterValue)
         {
             Append(sql);
-            AddParameter(paramerterName, parmaeterValue);
+            AddParameter(parameterName, parameterValue);
         }
         /// <summary>
         /// Appends the specified SQL to the existing SQL statement being built.
