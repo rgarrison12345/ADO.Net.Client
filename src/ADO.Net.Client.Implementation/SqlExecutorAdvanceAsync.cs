@@ -47,7 +47,7 @@ namespace ADO.Net.Client.Implementation
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
         /// <returns>Returns an <see cref="IAsyncEnumerable{T}"/> of the value of the first column in the result set as an instance of <typeparamref name="T"/></returns>
-        public async IAsyncEnumerable<T> GetScalarValuesStreamAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, [EnumeratorCancellation] CancellationToken token = default)
+        public virtual async IAsyncEnumerable<T> GetScalarValuesStreamAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, [EnumeratorCancellation] CancellationToken token = default)
         {
             //Wrap this to automatically handle disposing of resources
             using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult, token).ConfigureAwait(false))
@@ -80,7 +80,7 @@ namespace ADO.Net.Client.Implementation
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
         /// <returns>Returns an <see cref="IEnumerable{T}"/> of the value of the first column in the result set as an instance of <typeparamref name="T"/></returns>
-        public async Task<IEnumerable<T>> GetScalarValuesAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
+        public virtual async Task<IEnumerable<T>> GetScalarValuesAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
         {
             List<T> returnList = new List<T>();
 
@@ -117,7 +117,7 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Gets an instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine.
         /// Or the default value of <typeparamref name="T"/> if there are no search results
         /// </returns>
-        public async Task<T> GetDataObjectAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default) where T : class
+        public virtual async Task<T> GetDataObjectAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default) where T : class
         {
             //Wrap this to automatically handle disposing of resources
             using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleRow, token).ConfigureAwait(false))
@@ -146,7 +146,7 @@ namespace ADO.Net.Client.Implementation
         /// <param name="parameters">The database parameters associated with a query</param>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Returns a <see cref="IAsyncEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        public async IAsyncEnumerable<T> GetDataObjectsStreamAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, [EnumeratorCancellation] CancellationToken token = default) where T : class
+        public virtual async IAsyncEnumerable<T> GetDataObjectsStreamAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, [EnumeratorCancellation] CancellationToken token = default) where T : class
         {
             //Wrap this to automatically handle disposing of resources
             using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult, token).ConfigureAwait(false))
@@ -177,7 +177,7 @@ namespace ADO.Net.Client.Implementation
         /// <param name="parameters">The database parameters associated with a query</param>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Returns an <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        public async Task<IEnumerable<T>> GetDataObjectsAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default) where T : class
+        public virtual async Task<IEnumerable<T>> GetDataObjectsAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default) where T : class
         {
             //Wrap this to automatically handle disposing of resources
             using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult, token).ConfigureAwait(false))
@@ -196,7 +196,7 @@ namespace ADO.Net.Client.Implementation
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns an instance of <see cref="DbDataReader"/> object, the caller is responsible for handling closing the DataReader</returns>
-        public async Task<DbDataReader> GetDbDataReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CommandBehavior behavior = CommandBehavior.Default, CancellationToken token = default)
+        public virtual async Task<DbDataReader> GetDbDataReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CommandBehavior behavior = CommandBehavior.Default, CancellationToken token = default)
         {
             //Wrap this in a using statement to handle disposing of resources
             using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
@@ -221,7 +221,7 @@ namespace ADO.Net.Client.Implementation
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
         /// <returns>Returns the value of the first column in the first row as an instance of <typeparamref name="T"/></returns>
-        public async Task<T> GetScalarValueAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
+        public virtual async Task<T> GetScalarValueAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
         {
             //Wrap this in a using statement to handle disposing of resources
             using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
@@ -245,7 +245,7 @@ namespace ADO.Net.Client.Implementation
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>An instance of <see cref="IMultiResultReader"/> object</returns>
-        public async Task<IMultiResultReader> GetMultiResultReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
+        public virtual async Task<IMultiResultReader> GetMultiResultReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
         {
             return new MultiResultReader(await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.Default, token).ConfigureAwait(false), _mapper);
         }
@@ -257,11 +257,11 @@ namespace ADO.Net.Client.Implementation
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="token">Propagates notification that operations should be canceled</param>
-        /// <param name="parameters">The database parameters associated with a query</param>
+        /// <param name="parameters">The database parameters associated with a <paramref name="query"/></param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns the number of rows affected by this query as a <see cref="Task{Int32}"/></returns>
-        public async Task<int> ExecuteNonQueryAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
+        /// <returns>Returns the number of rows affected by this query as a <see cref="Task{T}"/> of <see cref="int"/></returns>
+        public virtual async Task<int> ExecuteNonQueryAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
         {
             //Wrap this in a using statement to automatically handle disposing of resources
             using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
