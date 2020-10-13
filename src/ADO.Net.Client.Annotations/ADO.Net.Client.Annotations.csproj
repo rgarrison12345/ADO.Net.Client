@@ -6,7 +6,7 @@
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <Version>1.1.7</Version>
-	<PackageTags>micro-orm orm sql ado.net ado.net.client</PackageTags>
+	  <PackageTags>micro-orm orm sql ado.net ado.net.client</PackageTags>
     <Authors>Robert Garrison</Authors>
     <Company>Robert Garrison</Company>
     <Product>ADO.Net.Client.Annotations</Product>
