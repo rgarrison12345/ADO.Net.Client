@@ -1,4 +1,4 @@
-name: .NET Core
+name: Build
 
 on:
   push:
@@ -13,10 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET Core
+    - name: Setup Build
       uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.301
     - name: Install dependencies
       run: dotnet restore
     - name: Build
