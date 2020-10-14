@@ -1,6 +1,11 @@
 Version History
 ===============
 
+### 1.3.5.1
+
+* Getxx and ExecuteNonQuery methods on [SqlExecutor](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/SqlExecutor.cs) are now virtual
+* Methods on [MultiResultReader](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/MultiResultReader.cs) are now virtual
+
 ### 1.3.5
 
 * Updating to ADO.Net.Client.Core 1.3.5
