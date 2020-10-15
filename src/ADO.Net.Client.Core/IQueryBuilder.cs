@@ -29,7 +29,7 @@ using System.Data.Common;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class that builds out queries to be exectued against a database
+    /// Contract class that builds out queries to be executed against a database
     /// </summary>
     public interface IQueryBuilder
     {
@@ -70,7 +70,7 @@ namespace ADO.Net.Client.Core
         /// Removes a <see cref="DbParameter"/> from the parameters collection by using the parameter name
         /// </summary>
         /// <param name="parameterName">The name of the parameter to identify the parameter to remove from the collection</param>
-        /// <returns>Returns true if item was successully removed, false otherwise if item was not found in the list</returns>
+        /// <returns>Returns true if item was successfully removed, false otherwise if item was not found in the list</returns>
         bool RemoveParameter(string parameterName);
         /// <summary>
         /// Replaces an existing parameter with the new <see cref="DbParameter"/> with an existing <see cref="DbParameter.ParameterName"/>
