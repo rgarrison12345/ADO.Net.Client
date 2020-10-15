@@ -153,7 +153,7 @@ namespace ADO.Net.Client.Core
             _parameters.Clear();
         }
         /// <summary>
-        /// Checks for a paremeter in the <see cref="Parameters"/> with by <paramref name="parameterName"/>
+        /// Checks for a parameter in the <see cref="Parameters"/> with by <paramref name="parameterName"/>
         /// </summary>
         /// <param name="parameterName">The name of the parameter to use when searching the <see cref="Parameters"/></param>
         /// <exception cref="ArgumentException">Thrown when the <paramref name="parameterName"/> passed into routine is null or empty</exception>
@@ -208,7 +208,7 @@ namespace ADO.Net.Client.Core
         /// Removes a <see cref="DbParameter"/> from the <see cref="Parameters"/> for the current <see cref="DbConnection"/> by using the parameter name
         /// </summary>
         /// <param name="parameterName">The name of the parameter to identify the parameter to remove from the <see cref="Parameters"/></param>
-        /// <returns>Returns true if item was successully removed, false otherwise if item was not found in the list</returns>
+        /// <returns>Returns true if item was successfully removed, false otherwise if item was not found in the list</returns>
         public bool RemoveParameter(string parameterName)
         {
             //Return this back to the caller
