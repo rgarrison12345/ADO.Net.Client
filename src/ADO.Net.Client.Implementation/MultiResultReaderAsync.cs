@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using System;
 using System.Collections.Generic;
 #if !NET45
 using System.Runtime.CompilerServices;
@@ -43,6 +44,12 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Returns an instance of <see cref="IEnumerable{T}"/> as an entire collection of <typeparamref name="T"/></returns>
         public virtual async Task<IEnumerable<T>> ReadObjectsAsync<T>(CancellationToken token = default) where T : class
         {
+            //Check if calller has canceled the token
+            if (token.IsCancellationRequested)
+            {
+                token.ThrowIfCancellationRequested();
+            }
+
             //Keep looping through each object in enumerator
             return await _mapper.MapResultSetAsync<T>(_reader, token).ConfigureAwait(false);
         }
@@ -54,6 +61,12 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Gets an instance of <typeparamref name="T"/></returns>
         public virtual async Task<T> ReadObjectAsync<T>(CancellationToken token = default) where T : class
         {
+            //Check if calller has canceled the token
+            if (token.IsCancellationRequested)
+            {
+                token.ThrowIfCancellationRequested();
+            }
+
             //Move to the next record if possible
             if (!await _reader.ReadAsync(token).ConfigureAwait(false))
             {
@@ -65,10 +78,17 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Moves to next result set in the underlying data set asynchronously
         /// </summary>
+        /// <exception cref="OperationCanceledException"></exception>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Returns <c>true</c> if there's another result set in the data set <c>false</c> otherwise</returns>
         public virtual async Task<bool> MoveToNextResultAsync(CancellationToken token = default)
         {
+            //Check if calller has canceled the token
+            if (token.IsCancellationRequested)
+            {
+                token.ThrowIfCancellationRequested();
+            }
+
             //Move to next result set
             return await _reader.NextResultAsync(token).ConfigureAwait(false);
         }
@@ -81,6 +101,12 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Returns an instance of <see cref="IAsyncEnumerable{T}"/></returns>
         public virtual async IAsyncEnumerable<T> ReadObjectsStreamAsync<T>([EnumeratorCancellation] CancellationToken token = default) where T : class
         {
+            //Check if calller has canceled the token
+            if (token.IsCancellationRequested)
+            {
+                token.ThrowIfCancellationRequested();
+            }
+
             //Keep looping through each object in enumerator
             await foreach (T type in _mapper.MapResultSetStreamAsync<T>(_reader, token).ConfigureAwait(false))
             {
