@@ -72,7 +72,7 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
         /// <returns>Returns a value of <see cref="DbType"/></returns>
-        public DbType MapDbType(PropertyInfo info)
+        public virtual DbType MapDbType(PropertyInfo info)
         {
             //Check if this is a byte array
             if (info.PropertyType.Name == "Byte[]")
@@ -188,7 +188,7 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="value">The value for the parameter</param>
         /// <returns>Returns the value for <see cref="DbParameter.Value"/></returns>
-        public object MapParameterValue(object value)
+        public virtual object MapParameterValue(object value)
         {
             if (value == null)
             {
@@ -212,7 +212,7 @@ namespace ADO.Net.Client.Core
         /// <param name="value">The value for the parameter</param>
         /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
         /// <returns>Returns the value for <see cref="DbParameter.Value"/></returns>
-        public object MapParameterValue(object value, PropertyInfo info)
+        public virtual object MapParameterValue(object value, PropertyInfo info)
         {
             if (value == null)
             {
@@ -234,31 +234,29 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
         /// <returns>Returns a value of <see cref="ParameterDirection"/></returns>
-        public ParameterDirection MapParameterDirection(PropertyInfo info)
+        public virtual ParameterDirection MapParameterDirection(PropertyInfo info)
         {
             if (Attribute.IsDefined(info, typeof(Input), false))
             {
                 return ParameterDirection.Input;
             }
-            else if (Attribute.IsDefined(info, typeof(Output), false))
+            if (Attribute.IsDefined(info, typeof(Output), false))
             {
                 return ParameterDirection.Output;
             }
-            else if (Attribute.IsDefined(info, typeof(ReturnValue), false))
+            if (Attribute.IsDefined(info, typeof(ReturnValue), false))
             {
                 return ParameterDirection.ReturnValue;
             }
-            else
-            {
-                return ParameterDirection.InputOutput;
-            }
+
+            return ParameterDirection.InputOutput;
         }
         /// <summary>
         /// Maps a parameter name from an instance of <see cref="PropertyInfo"/>
         /// </summary>
         /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
         /// <returns>Returns the name of a parameter</returns>
-        public string MapParameterName(PropertyInfo info)
+        public virtual string MapParameterName(PropertyInfo info)
         {
             string parameterName = info.Name;
 
@@ -275,7 +273,7 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="parameterName">Name of the parameter.</param>
         /// <returns>Returns the name of a parameter to be used for <see cref="DbParameter.ParameterName"/></returns>
-        public string MapParameterName(string parameterName)
+        public virtual string MapParameterName(string parameterName)
         {
             return parameterName.StartsWith(ParameterNamePrefix) ? parameterName : string.Concat(ParameterNamePrefix, parameterName);
         }
@@ -285,7 +283,7 @@ namespace ADO.Net.Client.Core
         /// <param name="parameter">An instance of <see cref="DbParameter"/></param>
         /// <param name="parameterValue">The value of the parameter</param>
         /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
-        public void MapDbParameter(DbParameter parameter, object parameterValue, PropertyInfo info)
+        public virtual void MapDbParameter(DbParameter parameter, object parameterValue, PropertyInfo info)
         {
             parameter.ParameterName = MapParameterName(info);
             parameter.Value = MapParameterValue(parameterValue, info);
@@ -306,13 +304,42 @@ namespace ADO.Net.Client.Core
             }
         }
         #endregion
-        #region  Helper Methods
+        #region  Helper Methods        
+        /// <summary>
+        /// Gets the type code.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        private TypeCode GetTypeCode(object value)
+        {
+            Type type = value.GetType();
+
+            if (value is IConvertible convertible)
+            {
+                return convertible.GetTypeCode();
+            }
+            if (type.IsEnum)
+            {
+                return GetEnumTypeCode((Enum)value);
+            }
+
+            return Type.GetTypeCode(type);
+        }
+        /// <summary>
+        /// Gets the enum type code.
+        /// </summary>
+        /// <param name="value">The value as an instance of <see cref="Enum"/></param>
+        /// <returns>Returns an instance of <see cref="TypeCode"/></returns>
+        private TypeCode GetEnumTypeCode(Enum value)
+        {
+            return Type.GetTypeCode(Enum.GetUnderlyingType(value.GetType()));
+        }
         /// <summary>
         /// Gets the value of an <see cref="Enum"/> based on the <see cref="TypeCode"/>
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">Value as an instance of <see cref="Enum"/></param>
         /// <exception cref="ArgumentException">Thrown when the passed in <paramref name="value"/> is not an <see cref="Enum"/></exception>
-        /// <returns>Returns the value of an instance of <see cref="Enum"/></returns>
+        /// <returns>Returns the value derived from the <see cref="Enum"/> <see cref="TypeCode"/></returns>
         private object GetEnumValue(object value)
         {
             if (!value.GetType().IsEnum)
@@ -320,18 +347,7 @@ namespace ADO.Net.Client.Core
                 throw new ArgumentException($"{nameof(value)} is not an enumeration type");
             }
 
-            TypeCode typeCode;
-
-            if (value is IConvertible convertible)
-            {
-                typeCode = convertible.GetTypeCode();
-            }
-            else
-            {
-                typeCode = Type.GetTypeCode(Enum.GetUnderlyingType(value.GetType()));
-            }
-
-            switch (typeCode)
+            switch (GetEnumTypeCode((Enum)value))
             {
                 case TypeCode.Byte: return (byte)value;
                 case TypeCode.SByte: return (sbyte)value;

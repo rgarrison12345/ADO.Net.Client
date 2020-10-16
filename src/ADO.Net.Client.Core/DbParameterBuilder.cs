@@ -40,9 +40,15 @@ namespace ADO.Net.Client.Core
     /// <seealso cref="IDbParameterBuilder"/>
     public class DbParameterBuilder : IDbParameterBuilder
     {
-        #region Fields/Properties
-        private readonly IDbParameterFormatter _formatter;
-        private readonly IDbObjectFactory _factory;
+        #region Fields/Properties        
+        /// <summary>
+        /// Gets an instance of <see cref="IDbParameterFormatter"/>
+        /// </summary>
+        protected IDbParameterFormatter Formatter { get; private set; }
+        /// <summary>
+        /// Gets an instance of <see cref="IDbObjectFactory"/>
+        /// </summary>
+        protected IDbObjectFactory Factory { get; private set; }
         #endregion
         #region Constructors
         /// <summary>
@@ -67,8 +73,8 @@ namespace ADO.Net.Client.Core
         /// <param name="formatter">An instance of <see cref="IDbParameterFormatter"/></param>
         public DbParameterBuilder(IDbObjectFactory factory, IDbParameterFormatter formatter)
         {
-            _factory = factory;
-            _formatter = formatter;
+            Factory = factory;
+            Formatter = formatter;
         }
         #endregion
         #region Methods
@@ -79,7 +85,7 @@ namespace ADO.Net.Client.Core
         /// <param name="info">An instance of <see cref="PropertyInfo"/></param>
         /// <exception cref="InvalidOperationException">Thrown when the passed in instance of <paramref name="info"/> is an ignored property</exception>
         /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
-        public DbParameter CreateParameter(object parameterValue, PropertyInfo info)
+        public virtual DbParameter CreateParameter(object parameterValue, PropertyInfo info)
         {
             //Check if we should create a parameter
             if (Attribute.IsDefined(info, typeof(IgnoreParameter)))
@@ -87,9 +93,9 @@ namespace ADO.Net.Client.Core
                 throw new InvalidOperationException("Cannot create database parameter from this property, it is an ignored property");
             }
 
-            DbParameter parameter = _factory.GetDbParameter();
+            DbParameter parameter = Factory.GetDbParameter();
 
-            _formatter.MapDbParameter(parameter, parameterValue, info);
+            Formatter.MapDbParameter(parameter, parameterValue, info);
 
             return parameter;
         }
@@ -98,11 +104,11 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="parameterName">The name of the parameter to use to find the parameter value</param>
         /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
-        public DbParameter CreateParameter(string parameterName)
+        public virtual DbParameter CreateParameter(string parameterName)
         {
-            DbParameter parameter = _factory.GetDbParameter();
+            DbParameter parameter = Factory.GetDbParameter();
 
-            parameter.ParameterName = _formatter.MapParameterName(parameterName);
+            parameter.ParameterName = Formatter.MapParameterName(parameterName);
 
             return parameter;
         }
@@ -112,12 +118,12 @@ namespace ADO.Net.Client.Core
         /// <param name="parameterName">The name of the parameter to identify the parameter</param>
         /// <param name="parameterValue">The value of the parameter</param>
         /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
-        public DbParameter CreateParameter(string parameterName, object parameterValue)
+        public virtual DbParameter CreateParameter(string parameterName, object parameterValue)
         {
             //Get the DbParameter object
             DbParameter parameter = CreateParameter(parameterName);
 
-            parameter.Value = _formatter.MapParameterValue(parameterValue);
+            parameter.Value = Formatter.MapParameterValue(parameterValue);
 
             //Return this back to the caller
             return parameter;
@@ -130,7 +136,7 @@ namespace ADO.Net.Client.Core
         /// <param name="parameterValue">The value of the parameter as a <see cref="object"/></param>
         /// <param name="paramDirection">The direction of the parameter, defaults to <see cref="ParameterDirection.Input"/></param>
         /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
-        public DbParameter CreateParameter(string parameterName, object parameterValue, DbType dataType, ParameterDirection paramDirection = ParameterDirection.Input)
+        public virtual DbParameter CreateParameter(string parameterName, object parameterValue, DbType dataType, ParameterDirection paramDirection = ParameterDirection.Input)
         {
             //Get the DbParameter object
             DbParameter parameter = CreateParameter(parameterName, parameterValue);
@@ -151,7 +157,7 @@ namespace ADO.Net.Client.Core
         /// <param name="parameterValue">The value of the parameter as a <see cref="object"/></param>
         /// <param name="paramDirection">The direction of the parameter, defaults to <see cref="ParameterDirection.Input"/></param>
         /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
-        public DbParameter CreateParameter(string parameterName, object parameterValue, DbType dataType, int? size = null, ParameterDirection paramDirection = ParameterDirection.Input)
+        public virtual DbParameter CreateParameter(string parameterName, object parameterValue, DbType dataType, int? size = null, ParameterDirection paramDirection = ParameterDirection.Input)
         {
             //Get the DbParameter object
             DbParameter parameter = CreateParameter(parameterName, parameterValue, dataType, paramDirection);
@@ -170,7 +176,7 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="values">An array of values to be used to create <see cref="DbParameter"/></param>
         /// <returns>Returns an <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/></returns>
-        public IEnumerable<DbParameter> CreateParameters(params object[] values)
+        public virtual IEnumerable<DbParameter> CreateParameters(params object[] values)
         {
             List<DbParameter> result = new List<DbParameter>();
 
@@ -232,7 +238,7 @@ namespace ADO.Net.Client.Core
         /// <param name="precision">The maximum number of digits used to represent the <see cref="DbParameter.Value"/> property.  The default value is <c>null</c></param>
         /// <param name="paramDirection">The direction of the parameter, defaults to <see cref="ParameterDirection.Input"/></param>
         /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
-        public DbParameter CreateParameter(string parameterName, object parameterValue, DbType dataType, byte? scale = null, byte? precision = null, ParameterDirection paramDirection = ParameterDirection.Input)
+        public virtual DbParameter CreateParameter(string parameterName, object parameterValue, DbType dataType, byte? scale = null, byte? precision = null, ParameterDirection paramDirection = ParameterDirection.Input)
         {
             //Get the DbParameter object
             DbParameter parameter = CreateParameter(parameterName, parameterValue, dataType, paramDirection);
