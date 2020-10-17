@@ -65,7 +65,7 @@ namespace ADO.Net.Client.Core
             return info;
         }
         /// <summary>
-        /// Gets a signle instance of <see cref="PropertyInfo"/> where the <see cref="DbField.DatabaseFieldName"/> matches the passed in <paramref name="name"/>
+        /// Gets an instance of <see cref="PropertyInfo"/> where the <see cref="DbField.DatabaseFieldName"/> matches the passed in <paramref name="name"/>
         /// </summary>
         /// <param name="name">A property name as a value of <see cref="string"/></param>
         /// <param name="infos">An instance of <see cref="IEnumerable{T}"/> of <see cref="PropertyInfo"/></param>
