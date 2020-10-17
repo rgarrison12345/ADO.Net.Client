@@ -79,109 +79,106 @@ namespace ADO.Net.Client.Core
             {
                 return DbType.Binary;
             }
-            else if (info.PropertyType == typeof(DateTime))
+            if (info.PropertyType == typeof(DateTime))
             {
                 //Check which date type to map to
                 if (Attribute.IsDefined(info, typeof(DateTime2), false))
                 {
                     return DbType.DateTime2;
                 }
-                else
-                {
-                    return DbType.DateTime;
-                }
+
+                return DbType.DateTime;
             }
-            else if (info.PropertyType == typeof(DateTimeOffset))
+            if (info.PropertyType == typeof(DateTimeOffset))
             {
                 return DbType.DateTimeOffset;
             }
-            else if (info.PropertyType == typeof(TimeSpan))
+            if (info.PropertyType == typeof(TimeSpan))
             {
                 return DbType.Time;
             }
-            else if (info.PropertyType == typeof(float))
+            if (info.PropertyType == typeof(float))
             {
                 return DbType.Single;
             }
-            else if (info.PropertyType == typeof(bool))
+            if (info.PropertyType == typeof(bool))
             {
                 return DbType.Boolean;
             }
-            else if (info.PropertyType == typeof(sbyte))
+            if (info.PropertyType == typeof(sbyte))
             {
                 return DbType.SByte;
             }
-            else if (info.PropertyType == typeof(byte))
+            if (info.PropertyType == typeof(byte))
             {
                 return DbType.Byte;
             }
-            else if (info.PropertyType == typeof(double))
+            if (info.PropertyType == typeof(double))
             {
                 return DbType.Double;
             }
-            else if (info.PropertyType == typeof(decimal))
+            if (info.PropertyType == typeof(decimal))
             {
                 return DbType.Decimal;
             }
-            else if (info.PropertyType == typeof(short))
+            if (info.PropertyType == typeof(short))
             {
                 return DbType.Int16;
             }
-            else if (info.PropertyType == typeof(int))
+            if (info.PropertyType == typeof(int))
             {
                 return DbType.Int32;
             }
-            else if (info.PropertyType == typeof(long))
+            if (info.PropertyType == typeof(long))
             {
                 return DbType.Int64;
             }
-            else if (info.PropertyType == typeof(ushort))
+            if (info.PropertyType == typeof(ushort))
             {
                 return DbType.UInt16;
             }
-            else if (info.PropertyType == typeof(uint))
+            if (info.PropertyType == typeof(uint))
             {
                 return DbType.UInt32;
             }
-            else if (info.PropertyType == typeof(ulong))
+            if (info.PropertyType == typeof(ulong))
             {
                 return DbType.UInt64;
             }
-            else if (info.PropertyType == typeof(Guid))
+            if (info.PropertyType == typeof(Guid))
             {
                 if (HasNativeGuidSupport)
                 {
                     return DbType.Guid;
                 }
-                else
-                {
-                    return DbType.String;
-                }
+
+                return DbType.String;
             }
-            else if (info.PropertyType == typeof(string))
+            if (info.PropertyType == typeof(string))
             {
                 //Check which string type to map to
                 if (Attribute.IsDefined(info, typeof(ANSIString), false))
                 {
                     return DbType.AnsiString;
                 }
-                else if (Attribute.IsDefined(info, typeof(ANSIStringFixedLength), false))
+                if (Attribute.IsDefined(info, typeof(ANSIStringFixedLength), false))
                 {
                     return DbType.AnsiStringFixedLength;
                 }
-                else if (Attribute.IsDefined(info, typeof(StringFixedLength), false))
+                if (Attribute.IsDefined(info, typeof(StringFixedLength), false))
                 {
                     return DbType.StringFixedLength;
                 }
-                else
-                {
-                    return DbType.String;
-                }
+
+                return DbType.String;
             }
-            else
+
+            if (info.PropertyType == typeof(Enum))
             {
-                return DbType.Object;
+
             }
+
+            return DbType.Object;
         }
         /// <summary>
         /// Maps the value for <see cref="DbParameter.Value"/> from a <paramref name="value"/>
@@ -194,12 +191,11 @@ namespace ADO.Net.Client.Core
             {
                 return DBNull.Value;
             }
-            
             if (value is Enum)
             {
-                return GetEnumValue(value);
+                return Utilities.GetEnumValue(value);
             }
-            else if (value is Guid && !HasNativeGuidSupport)
+            if (value is Guid && !HasNativeGuidSupport)
             {
                 return value.ToString();
             }
@@ -218,11 +214,11 @@ namespace ADO.Net.Client.Core
             {
                 return DBNull.Value;
             }
-            else if (info.PropertyType.IsEnum)
+            if (info.PropertyType.IsEnum)
             {
-                return GetEnumValue(value);
+                return Utilities.GetEnumValue(value);
             }
-            else if (info.PropertyType == typeof(Guid) && !HasNativeGuidSupport)
+            if (info.PropertyType == typeof(Guid) && !HasNativeGuidSupport)
             {
                 return value.ToString();
             }
@@ -295,7 +291,7 @@ namespace ADO.Net.Client.Core
             {
                 parameter.Size = 40;
             }
-            else if (parameter.DbType == DbType.String 
+            else if (parameter.DbType == DbType.String
                      || parameter.DbType == DbType.StringFixedLength
                      || parameter.DbType == DbType.AnsiString
                      || parameter.DbType == DbType.AnsiStringFixedLength)
@@ -304,62 +300,22 @@ namespace ADO.Net.Client.Core
             }
         }
         #endregion
-        #region  Helper Methods        
-        /// <summary>
-        /// Gets the type code.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
-        private TypeCode GetTypeCode(object value)
+        #region  Helper Methods
+        private DbType MapEnumDbType(Enum eEnum)
         {
-            Type type = value.GetType();
-
-            if (value is IConvertible convertible)
+            switch (Utilities.GetEnumTypeCode(eEnum))
             {
-                return convertible.GetTypeCode();
+                case TypeCode.Byte: return DbType.Byte;
+                case TypeCode.SByte: return DbType.SByte;
+                case TypeCode.Int16: return DbType.Int16;
+                case TypeCode.Int32: return DbType.Int32;
+                case TypeCode.Int64: return DbType.Int64;
+                case TypeCode.UInt16: return DbType.UInt16;
+                case TypeCode.UInt32: return DbType.UInt32;
+                case TypeCode.UInt64: return DbType.UInt64;
+                default:
+                    throw new ArgumentException($"{nameof(Enum)} {nameof(TypeCode)} is not valid");
             }
-            if (type.IsEnum)
-            {
-                return GetEnumTypeCode((Enum)value);
-            }
-
-            return Type.GetTypeCode(type);
-        }
-        /// <summary>
-        /// Gets the enum type code.
-        /// </summary>
-        /// <param name="value">The value as an instance of <see cref="Enum"/></param>
-        /// <returns>Returns an instance of <see cref="TypeCode"/></returns>
-        private TypeCode GetEnumTypeCode(Enum value)
-        {
-            return Type.GetTypeCode(Enum.GetUnderlyingType(value.GetType()));
-        }
-        /// <summary>
-        /// Gets the value of an <see cref="Enum"/> based on the <see cref="TypeCode"/>
-        /// </summary>
-        /// <param name="value">Value as an instance of <see cref="Enum"/></param>
-        /// <exception cref="ArgumentException">Thrown when the passed in <paramref name="value"/> is not an <see cref="Enum"/></exception>
-        /// <returns>Returns the value derived from the <see cref="Enum"/> <see cref="TypeCode"/></returns>
-        private object GetEnumValue(object value)
-        {
-            if (!value.GetType().IsEnum)
-            {
-                throw new ArgumentException($"{nameof(value)} is not an enumeration type");
-            }
-
-            switch (GetEnumTypeCode((Enum)value))
-            {
-                case TypeCode.Byte: return (byte)value;
-                case TypeCode.SByte: return (sbyte)value;
-                case TypeCode.Int16: return (short)value;
-                case TypeCode.Int32: return (int)value;
-                case TypeCode.Int64: return (long)value;
-                case TypeCode.UInt16: return (ushort)value;
-                case TypeCode.UInt32: return (uint)value;
-                case TypeCode.UInt64: return (ulong)value;
-            }
-
-            return value;
         }
         #endregion
     }

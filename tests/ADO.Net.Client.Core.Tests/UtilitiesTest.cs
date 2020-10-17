@@ -22,7 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using System;
 using ADO.Net.Client.Tests.Common.Models;
+using ADO.Net.Client.Tests.Common.Enums;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Reflection;
@@ -37,6 +39,41 @@ namespace ADO.Net.Client.Core.Tests
     public class UtilitiesTest
     {
         #region Tests
+        [Test]
+        public void ThrowsExceptionNotEnumGetEnumValue()
+        {
+            Assert.Throws<ArgumentException>(() => Utilities.GetEnumValue(1));
+        }
+        [Test]
+        public void GetInt16TypeCode()
+        {
+            Assert.AreEqual(Utilities.GetEnumTypeCode(Int16Enum.Value), TypeCode.Int16);
+        }
+        [Test]
+        public void GetInt32TypeCode()
+        {
+            Assert.AreEqual(Utilities.GetEnumTypeCode(Int32Enum.Value), TypeCode.Int32);
+        }
+        [Test]
+        public void GetInt64TypeCode()
+        {
+            Assert.AreEqual(Utilities.GetEnumTypeCode(Int64Enum.Value), TypeCode.Int64);
+        }
+        [Test]
+        public void GetUInt64TypeCode()
+        {
+            Assert.AreEqual(Utilities.GetEnumTypeCode(UInt64Enum.Value), TypeCode.UInt64);
+        }
+        [Test]
+        public void GetUInt32TypeCode()
+        {
+            Assert.AreEqual(Utilities.GetEnumTypeCode(UInt32Enum.Value), TypeCode.UInt32);
+        }
+        [Test]
+        public void GetUInt16TypeCode()
+        {
+            Assert.AreEqual(Utilities.GetEnumTypeCode(UInt16Enum.Value), TypeCode.UInt16);
+        }
         [Test]
         public void ListEnumerable()
         {

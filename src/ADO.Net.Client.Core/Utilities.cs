@@ -37,7 +37,63 @@ namespace ADO.Net.Client.Core
     /// </summary>
     public static class Utilities
     {
-        #region Helper Methods         
+        #region Helper Methods     
+        /// <summary>
+        /// Gets the value of an <see cref="Enum"/> based on the <see cref="TypeCode"/>
+        /// </summary>
+        /// <param name="value">Value as an instance of <see cref="Enum"/></param>
+        /// <exception cref="ArgumentException">Thrown when the passed in <paramref name="value"/> is not an <see cref="Enum"/></exception>
+        /// <returns>Returns the value derived from the <see cref="Enum"/> <see cref="TypeCode"/></returns>
+        public static object GetEnumValue(object value)
+        {
+            if (!value.GetType().IsEnum)
+            {
+                throw new ArgumentException($"{nameof(value)} is not an enumeration type");
+            }
+
+            switch (GetEnumTypeCode((Enum)value))
+            {
+                case TypeCode.Byte: return (byte)value;
+                case TypeCode.SByte: return (sbyte)value;
+                case TypeCode.Int16: return (short)value;
+                case TypeCode.Int32: return (int)value;
+                case TypeCode.Int64: return (long)value;
+                case TypeCode.UInt16: return (ushort)value;
+                case TypeCode.UInt32: return (uint)value;
+                case TypeCode.UInt64: return (ulong)value;
+            }
+
+            return value;
+        }
+        /// <summary>
+        /// Gets the type code.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public static TypeCode GetTypeCode(object value)
+        {
+            Type type = value.GetType();
+
+            if (value is IConvertible convertible)
+            {
+                return convertible.GetTypeCode();
+            }
+            if (type.IsEnum)
+            {
+                return GetEnumTypeCode((Enum)value);
+            }
+
+            return Type.GetTypeCode(type);
+        }
+        /// <summary>
+        /// Gets the <see cref="TypeCode"/> that is represented by the <paramref name="value"/>
+        /// </summary>
+        /// <param name="value">The value as an instance of <see cref="Enum"/></param>
+        /// <returns>Returns an instance of <see cref="TypeCode"/> that the <paramref name="value"/> represents</returns>
+        public static TypeCode GetEnumTypeCode(Enum value)
+        {
+            return Type.GetTypeCode(Enum.GetUnderlyingType(value.GetType()));
+        }
         /// <summary>
         /// Gets an instance of <see cref="PropertyInfo"/>
         /// </summary>
