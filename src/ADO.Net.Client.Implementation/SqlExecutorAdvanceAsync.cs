@@ -49,7 +49,6 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Returns an <see cref="IAsyncEnumerable{T}"/> of the value of the first column in the result set as an instance of <typeparamref name="T"/></returns>
         public virtual async IAsyncEnumerable<T> GetScalarValuesStreamAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, [EnumeratorCancellation] CancellationToken token = default)
         {
-            //Check if calller has canceled the token
             if (token.IsCancellationRequested)
             {
                 token.ThrowIfCancellationRequested();
@@ -88,7 +87,6 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Returns an <see cref="IEnumerable{T}"/> of the value of the first column in the result set as an instance of <typeparamref name="T"/></returns>
         public virtual async Task<IEnumerable<T>> GetScalarValuesAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
         {
-            //Check if calller has canceled the token
             if (token.IsCancellationRequested)
             {
                 token.ThrowIfCancellationRequested();
@@ -131,7 +129,6 @@ namespace ADO.Net.Client.Implementation
         /// </returns>
         public virtual async Task<T> GetDataObjectAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default) where T : class
         {
-            //Check if calller has canceled the token
             if (token.IsCancellationRequested)
             {
                 token.ThrowIfCancellationRequested();
@@ -166,7 +163,6 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Returns a <see cref="IAsyncEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
         public virtual async IAsyncEnumerable<T> GetDataObjectsStreamAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, [EnumeratorCancellation] CancellationToken token = default) where T : class
         {
-            //Check if calller has canceled the token
             if (token.IsCancellationRequested)
             {
                 token.ThrowIfCancellationRequested();
@@ -203,7 +199,6 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Returns an <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
         public virtual async Task<IEnumerable<T>> GetDataObjectsAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default) where T : class
         {
-            //Check if calller has canceled the token
             if (token.IsCancellationRequested)
             {
                 token.ThrowIfCancellationRequested();
@@ -228,7 +223,7 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Returns an instance of <see cref="DbDataReader"/> object, the caller is responsible for handling closing the DataReader</returns>
         public virtual async Task<DbDataReader> GetDbDataReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CommandBehavior behavior = CommandBehavior.Default, CancellationToken token = default)
         {
-            //Check if calller has canceled the token
+            //Check if caller has canceled the token
             if (token.IsCancellationRequested)
             {
                 token.ThrowIfCancellationRequested();
@@ -259,7 +254,7 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Returns the value of the first column in the first row as an instance of <typeparamref name="T"/></returns>
         public virtual async Task<T> GetScalarValueAsync<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
         {
-            //Check if calller has canceled the token
+            //Check if caller has canceled the token
             if (token.IsCancellationRequested)
             {
                 token.ThrowIfCancellationRequested();
@@ -289,7 +284,7 @@ namespace ADO.Net.Client.Implementation
         /// <returns>An instance of <see cref="IMultiResultReader"/> object</returns>
         public virtual async Task<IMultiResultReader> GetMultiResultReaderAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
         {
-            //Check if calller has canceled the token
+            //Check if caller has canceled the token
             if (token.IsCancellationRequested)
             {
                 token.ThrowIfCancellationRequested();
@@ -311,7 +306,7 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Returns the number of rows affected by this query as a <see cref="Task{T}"/> of <see cref="int"/></returns>
         public virtual async Task<int> ExecuteNonQueryAsync(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CancellationToken token = default)
         {
-            //Check if calller has canceled the token
+            //Check if caller has canceled the token
             if (token.IsCancellationRequested)
             {
                 token.ThrowIfCancellationRequested();
