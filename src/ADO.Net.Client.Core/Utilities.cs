@@ -66,10 +66,9 @@ namespace ADO.Net.Client.Core
             return value;
         }
         /// <summary>
-        /// Gets the type code.
+        /// Gets the <see cref="TypeCode"/> that is represented by the <paramref name="value"/>
         /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
+        /// <returns>Returns an instance of <see cref="TypeCode"/> that the <paramref name="value"/> represents</returns>
         public static TypeCode GetTypeCode(object value)
         {
             Type type = value.GetType();
