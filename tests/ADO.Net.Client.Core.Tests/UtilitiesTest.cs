@@ -45,6 +45,16 @@ namespace ADO.Net.Client.Core.Tests
             Assert.Throws<ArgumentException>(() => Utilities.GetEnumValue(1));
         }
         [Test]
+        public void GetSByteTypeCode()
+        {
+            Assert.AreEqual(Utilities.GetEnumTypeCode(SByteEnum.Value), TypeCode.SByte);
+        }
+        [Test]
+        public void GetByteTypeCode()
+        {
+            Assert.AreEqual(Utilities.GetEnumTypeCode(ByteEnum.Value), TypeCode.Byte);
+        }
+        [Test]
         public void GetInt16TypeCode()
         {
             Assert.AreEqual(Utilities.GetEnumTypeCode(Int16Enum.Value), TypeCode.Int16);
