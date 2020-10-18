@@ -51,19 +51,18 @@ namespace ADO.Net.Client.Core
                 throw new ArgumentException($"{nameof(value)} is not an enumeration type");
             }
 
-            switch (GetEnumTypeCode((Enum)value))
+            return (GetEnumTypeCode((Enum)value)) switch
             {
-                case TypeCode.Byte: return (byte)value;
-                case TypeCode.SByte: return (sbyte)value;
-                case TypeCode.Int16: return (short)value;
-                case TypeCode.Int32: return (int)value;
-                case TypeCode.Int64: return (long)value;
-                case TypeCode.UInt16: return (ushort)value;
-                case TypeCode.UInt32: return (uint)value;
-                case TypeCode.UInt64: return (ulong)value;
-            }
-
-            return value;
+                TypeCode.Byte => (byte)value,
+                TypeCode.SByte => (sbyte)value,
+                TypeCode.Int16 => (short)value,
+                TypeCode.Int32 => (int)value,
+                TypeCode.Int64 => (long)value,
+                TypeCode.UInt16 => (ushort)value,
+                TypeCode.UInt32 => (uint)value,
+                TypeCode.UInt64 => (ulong)value,
+                _ => value,
+            };
         }
         /// <summary>
         /// Gets the <see cref="TypeCode"/> that is represented by the <paramref name="value"/>
