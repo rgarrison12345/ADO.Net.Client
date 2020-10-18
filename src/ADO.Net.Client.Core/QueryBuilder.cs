@@ -176,12 +176,12 @@ namespace ADO.Net.Client.Core
         /// <returns>
         ///   <c>true</c> if this instance contains the passed in <paramref name="parameter"/> otherwise, <c>false</c>.
         /// </returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentNullException">Thrown when the passed in <paramref name="parameter"/> is <c>null</c></exception>
         public bool Contains(DbParameter parameter)
         {
             if (parameter == null)
             {
-                throw new ArgumentException(nameof(parameter) + "cannot be null");
+                throw new ArgumentNullException(nameof(parameter) + "cannot be null");
             }
 
             //Return this back to the caller
