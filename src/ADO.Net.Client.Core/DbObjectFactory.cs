@@ -208,7 +208,6 @@ namespace ADO.Net.Client.Core
             //Get the DbCommand object
             DbCommand dCommand = GetDbCommand(commandTimeout);
 
-            //Set query and command type
             dCommand.Connection = connection;
 
             //Return this back to the caller
@@ -222,6 +221,7 @@ namespace ADO.Net.Client.Core
         public virtual DbCommand GetDbCommand(int commandTimeout)
         {
             DbCommand command = GetDbCommand();
+
             command.CommandTimeout = commandTimeout;
 
             //Return this back to the caller
