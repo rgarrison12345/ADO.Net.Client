@@ -44,7 +44,7 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Returns an instance of <see cref="IEnumerable{T}"/> as an entire collection of <typeparamref name="T"/></returns>
         public virtual async Task<IEnumerable<T>> ReadObjectsAsync<T>(CancellationToken token = default) where T : class
         {
-            //Check if calller has canceled the token
+            //Check if caller has canceled the token
             if (token.IsCancellationRequested)
             {
                 token.ThrowIfCancellationRequested();
@@ -61,7 +61,7 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Gets an instance of <typeparamref name="T"/></returns>
         public virtual async Task<T> ReadObjectAsync<T>(CancellationToken token = default) where T : class
         {
-            //Check if calller has canceled the token
+            //Check if caller has canceled the token
             if (token.IsCancellationRequested)
             {
                 token.ThrowIfCancellationRequested();
@@ -83,7 +83,7 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Returns <c>true</c> if there's another result set in the data set <c>false</c> otherwise</returns>
         public virtual async Task<bool> MoveToNextResultAsync(CancellationToken token = default)
         {
-            //Check if calller has canceled the token
+            //Check if caller has canceled the token
             if (token.IsCancellationRequested)
             {
                 token.ThrowIfCancellationRequested();
@@ -101,7 +101,7 @@ namespace ADO.Net.Client.Implementation
         /// <returns>Returns an instance of <see cref="IAsyncEnumerable{T}"/></returns>
         public virtual async IAsyncEnumerable<T> ReadObjectsStreamAsync<T>([EnumeratorCancellation] CancellationToken token = default) where T : class
         {
-            //Check if calller has canceled the token
+            //Check if caller has canceled the token
             if (token.IsCancellationRequested)
             {
                 token.ThrowIfCancellationRequested();
