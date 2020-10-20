@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+
+using System;
 using ADO.Net.Client.Core;
 using ADO.Net.Client.Implementation;
 using ADO.Net.Client.Tests.Common;
@@ -39,40 +41,62 @@ namespace ADO.Net.Client.Tests
 {
     public partial class ClientTests
     {
-        #region Read Test Methods
+        #region Read Test Methods        
         /// <summary>
-        /// Whens the get data objects asynchronous is called it should call SQL executor get data objects asynchronous.
+        /// Whens the get multi result readers asynchronous is cancelled it should throw operation cancelled.
         /// </summary>
         [Test]
         [Category("Asynchronous Read Tests")]
-        public async Task WhenGetMultiRestultReadersAsync_IsCalled__ItShouldCallSqlExecutorGetMultiResultReaderAsync()
+        public void WhenGetMultiResultReadersAsync_IsCancelled__ItShouldThrowOperationCancelledException()
         {
-            int delay = _faker.Random.Int(1, 30);
-
             //Wrap this in a using to automatically dispose of resources
-            using (CancellationTokenSource source = new CancellationTokenSource(delay))
+            using (CancellationTokenSource source = new CancellationTokenSource(0))
             {
-                List<Employee> returnList = new List<Employee>();
-                MultiResultReader reader = new MultiResultReader(new CustomDbReader());
-
-#if ADVANCE_ASYNC
-                _executor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(reader).Verifiable();
-#else
-                _executor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(reader).Verifiable();
-#endif
-
                 //Make the call
-                IMultiResultReader returnedValue = await new DbClient(_executor.Object).GetMultiResultReaderAsync(realQuery, source.Token);
-
-                Assert.IsNotNull(returnedValue);
+                Assert.ThrowsAsync<OperationCanceledException>(async () => await new DbClient(_executor.Object).GetMultiResultReaderAsync(realQuery, source.Token));
+            }
+        }
+        /// <summary>
+        /// Whens the get multi result readers asynchronous is called it should call SQL executor get multi result reader asynchronous.
+        /// </summary>
+        [Test]
+        [Category("Asynchronous Read Tests")]
+        public async Task WhenGetMultiResultReadersAsync_IsCalled__ItShouldCallSqlExecutorGetMultiResultReaderAsync()
+        {
+            List<Employee> returnList = new List<Employee>();
+            MultiResultReader reader = new MultiResultReader(new CustomDbReader());
 
 #if ADVANCE_ASYNC
-                //Verify the executor was called
-                _executor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
+            _executor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None)).ReturnsAsync(reader).Verifiable();
 #else
-                //Verify the executor was called
-                _executor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
+            _executor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None)).ReturnsAsync(reader).Verifiable();
 #endif
+
+            //Make the call
+            IMultiResultReader returnedValue = await new DbClient(_executor.Object).GetMultiResultReaderAsync(realQuery, CancellationToken.None);
+
+            Assert.IsNotNull(returnedValue);
+
+#if ADVANCE_ASYNC
+            //Verify the executor was called
+            _executor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
+#else 
+            //Verify the executor was called
+            _executor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
+#endif
+        }
+        /// <summary>
+        /// Whens the get data objects asynchronous is called it should throw operation cancelled exception.
+        /// </summary>
+        [Test]
+        [Category("Asynchronous Read Tests")]
+        public void WhenGetDataObjectsAsync_IsCalled__ItShouldThrowOperationCancelledException()
+        {
+            //Wrap this in a using to automatically dispose of resources
+            using (CancellationTokenSource source = new CancellationTokenSource(0))
+            {
+                //Make the call
+                Assert.ThrowsAsync<OperationCanceledException>(async () => await new DbClient(_executor.Object).GetDataObjectsAsync<Employee>(realQuery, source.Token));
             }
         }
         /// <summary>
@@ -82,32 +106,40 @@ namespace ADO.Net.Client.Tests
         [Category("Asynchronous Read Tests")]
         public async Task WhenGetDataObjectsAsync_IsCalled__ItShouldCallSqlExecutorGetDataObjectsAsync()
         {
-            int delay = _faker.Random.Int(1, 30);
+            List<Employee> returnList = new List<Employee>();
 
+#if ADVANCE_ASYNC
+            _executor.Setup(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None)).ReturnsAsync(returnList).Verifiable();
+#else
+            _executor.Setup(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None)).ReturnsAsync(returnList).Verifiable();
+#endif
+
+            //Make the call
+            IEnumerable<Employee> returnedValue = await new DbClient(_executor.Object).GetDataObjectsAsync<Employee>(realQuery, CancellationToken.None);
+
+            Assert.IsNotNull(returnedValue);
+            Assert.IsInstanceOf(typeof(List<Employee>), returnedValue);
+
+#if ADVANCE_ASYNC
+            //Verify the executor was called
+            _executor.Verify(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
+#else 
+            //Verify the executor was called
+            _executor.Verify(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
+#endif
+        }
+        /// <summary>
+        /// Whens the get data object asynchronous is called it should throw operation cancelled.
+        /// </summary>
+        [Test]
+        [Category("Asynchronous Read Tests")]
+        public void WhenGetDataObjectAsync_IsCalled__ItShouldThrowOperationCancelled()
+        {
             //Wrap this in a using to automatically dispose of resources
-            using (CancellationTokenSource source = new CancellationTokenSource(delay))
+            using (CancellationTokenSource source = new CancellationTokenSource(0))
             {
-                List<Employee> returnList = new List<Employee>();
-
-#if ADVANCE_ASYNC
-                _executor.Setup(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(returnList).Verifiable();
-#else
-                _executor.Setup(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(returnList).Verifiable();
-#endif
-
                 //Make the call
-                IEnumerable<Employee> returnedValue = await new DbClient(_executor.Object).GetDataObjectsAsync<Employee>(realQuery, source.Token);
-
-                Assert.IsNotNull(returnedValue);
-                Assert.IsInstanceOf(typeof(List<Employee>), returnedValue);
-
-#if ADVANCE_ASYNC
-                //Verify the executor was called
-                _executor.Verify(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
-#else
-                //Verify the executor was called
-                _executor.Verify(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
-#endif
+                Assert.ThrowsAsync<OperationCanceledException>(async () => await new DbClient(_executor.Object).GetDataObjectAsync<Employee>(realQuery, source.Token));
             }
         }
         /// <summary>
@@ -117,29 +149,36 @@ namespace ADO.Net.Client.Tests
         [Category("Asynchronous Read Tests")]
         public async Task WhenGetDataObjectAsync_IsCalled__ItShouldCallSqlExecutorGetDataObjectAsync()
         {
-            int delay = _faker.Random.Int(1, 30);
+#if ADVANCE_ASYNC
+            _executor.Setup(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None)).ReturnsAsync(new Employee()).Verifiable();
+#else
+            _executor.Setup(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None)).ReturnsAsync(new Employee()).Verifiable();
+#endif
 
+            //Make the call
+            Employee returnedValue = await new DbClient(_executor.Object).GetDataObjectAsync<Employee>(realQuery, CancellationToken.None);
+
+            Assert.IsNotNull(returnedValue);
+
+#if ADVANCE_ASYNC
+            //Verify the executor was called
+            _executor.Verify(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
+#else
+            //Verify the executor was called
+            _executor.Verify(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
+#endif
+        }
+        /// <summary>
+        /// Whens the get scalar values asynchronous is called it should throw operation canceled exception.
+        /// </summary>
+        [Test]
+        [Category("Asynchronous Read Tests")]
+        public void WhenGetScalarValuesAsync_IsCalled__ItShouldThrowOperationCanceledException()
+        {
             //Wrap this in a using to automatically dispose of resources
-            using (CancellationTokenSource source = new CancellationTokenSource(delay))
+            using (CancellationTokenSource source = new CancellationTokenSource(0))
             {
-#if ADVANCE_ASYNC
-                _executor.Setup(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(new Employee()).Verifiable();
-#else
-                _executor.Setup(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(new Employee()).Verifiable();
-#endif
-
-                //Make the call
-                Employee returnedValue = await new DbClient(_executor.Object).GetDataObjectAsync<Employee>(realQuery, source.Token);
-
-                Assert.IsNotNull(returnedValue);
-
-#if ADVANCE_ASYNC
-                //Verify the executor was called
-                _executor.Verify(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
-#else
-                //Verify the executor was called
-                _executor.Verify(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
-#endif
+                Assert.ThrowsAsync<OperationCanceledException>(async () => await new DbClient(_executor.Object).GetScalarValuesAsync<string>(realQuery, source.Token));
             }
         }
         /// <summary>
@@ -149,66 +188,84 @@ namespace ADO.Net.Client.Tests
         [Category("Asynchronous Read Tests")]
         public async Task WhenGetScalarValuesAsync_IsCalled__ItShouldCallSqlExecutorGetScalarValuesAsync()
         {
-            int delay = _faker.Random.Int(1, 30);
+            List<string> expectedValue = new List<string> { _faker.Random.AlphaNumeric(10), _faker.Random.AlphaNumeric(30), _faker.Random.AlphaNumeric(20) };
 
+#if ADVANCE_ASYNC
+            _executor.Setup(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None)).ReturnsAsync(expectedValue).Verifiable();
+#else
+            _executor.Setup(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None)).ReturnsAsync(expectedValue).Verifiable();
+#endif
+            //Make the call
+            IEnumerable<string> returnedValue = await new DbClient(_executor.Object).GetScalarValuesAsync<string>(realQuery, CancellationToken.None);
+
+            Assert.AreEqual(expectedValue, returnedValue);
+            Assert.IsInstanceOf(typeof(List<string>), returnedValue);
+
+#if ADVANCE_ASYNC
+            //Verify the executor was called
+            _executor.Verify(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
+#else 
+            //Verify the executor was called
+            _executor.Verify(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
+#endif
+        }
+        /// <summary>
+        /// Whens the get scalar value asynchronous is called it should throw operation canceled exception.
+        /// </summary>
+        [Test]
+        [Category("Asynchronous Read Tests")]
+        public void WhenGetScalarValueAsync_IsCalled__ItShouldThrowOperationCanceledException()
+        {
             //Wrap this in a using to automatically dispose of resources
-            using (CancellationTokenSource source = new CancellationTokenSource(delay))
+            using (CancellationTokenSource source = new CancellationTokenSource(0))
             {
-                List<string> expectedValue = new List<string> { _faker.Random.AlphaNumeric(10), _faker.Random.AlphaNumeric(30), _faker.Random.AlphaNumeric(20) };
-
-#if ADVANCE_ASYNC
-                _executor.Setup(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(expectedValue).Verifiable();
-#else
-                _executor.Setup(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(expectedValue).Verifiable();
-#endif
                 //Make the call
-                IEnumerable<string> returnedValue = await new DbClient(_executor.Object).GetScalarValuesAsync<string>(realQuery, source.Token);
-
-                Assert.AreEqual(expectedValue, returnedValue);
-                Assert.IsInstanceOf(typeof(List<string>), returnedValue);
-
-#if ADVANCE_ASYNC
-                //Verify the executor was called
-                _executor.Verify(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
-#else
-                //Verify the executor was called
-                _executor.Verify(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
-#endif
+                Assert.ThrowsAsync<OperationCanceledException>(async () => await new DbClient(_executor.Object).GetScalarValueAsync<string>(realQuery, source.Token));
             }
         }
         /// <summary>
-        /// Whens the get scalar vlue asynchronous is called it should call SQL executor get scalar value asynchronous.
+        /// Whens the get scalar value asynchronous is called it should call SQL executor get scalar value asynchronous.
         /// </summary>
         [Test]
         [Category("Asynchronous Read Tests")]
         public async Task WhenGetScalarValueAsync_IsCalled__ItShouldCallSqlExecutorGetScalarValueAsync()
         {
-            int delay = _faker.Random.Int(1, 30);
-
-            //Wrap this in a using to automatically dispose of resources
-            using (CancellationTokenSource source = new CancellationTokenSource(delay))
-            {
-                string expectedValue = _faker.Random.AlphaNumeric(30);
+            string expectedValue = _faker.Random.AlphaNumeric(30);
 
 #if ADVANCE_ASYNC
-                _executor.Setup(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(expectedValue).Verifiable();
+            _executor.Setup(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None)).ReturnsAsync(expectedValue).Verifiable();
 #else
-                _executor.Setup(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(expectedValue).Verifiable();
+            _executor.Setup(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None)).ReturnsAsync(expectedValue).Verifiable();
 #endif
+
+            //Make the call
+            string returnedValue = await new DbClient(_executor.Object).GetScalarValueAsync<string>(realQuery, CancellationToken.None);
+
+            Assert.IsFalse(string.IsNullOrWhiteSpace(returnedValue));
+            Assert.AreEqual(returnedValue, expectedValue);
+
+#if ADVANCE_ASYNC
+            //Verify the executor was called
+            _executor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
+#else 
+            //Verify the executor was called
+            _executor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
+#endif
+        }
+        /// <summary>
+        /// Whens the get database data reader asynchronous is called it should throw operation canceled exception.
+        /// </summary>
+        [Test]
+        [Category("Asynchronous Read Tests")]
+        public void WhenGetDbDataReaderAsync_IsCalled__ItShouldThrowOperationCanceledException()
+        {
+            //Wrap this in a using to automatically dispose of resources
+            using (CancellationTokenSource source = new CancellationTokenSource(0))
+            {
+                CommandBehavior behavior = _faker.PickRandom<CommandBehavior>();
 
                 //Make the call
-                string returnedValue = await new DbClient(_executor.Object).GetScalarValueAsync<string>(realQuery, source.Token);
-
-                Assert.IsFalse(string.IsNullOrWhiteSpace(returnedValue));
-                Assert.IsTrue(returnedValue == expectedValue);
-
-#if ADVANCE_ASYNC
-                //Verify the executor was called
-                _executor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
-#else
-                //Verify the executor was called
-                _executor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
-#endif
+                Assert.ThrowsAsync<OperationCanceledException>(async () => await new DbClient(_executor.Object).GetDbDataReaderAsync(realQuery, behavior, source.Token));
             }
         }
         /// <summary>
@@ -218,36 +275,44 @@ namespace ADO.Net.Client.Tests
         [Category("Asynchronous Read Tests")]
         public async Task WhenGetDbDataReaderAsync_IsCalled__ItShouldCallSqlExecutorGetDbDataReaderAsync()
         {
-            int delay = _faker.Random.Int(1, 30);
-
-            //Wrap this in a using to automatically dispose of resources
-            using (CancellationTokenSource source = new CancellationTokenSource(delay))
-            {
-                CommandBehavior behavior = _faker.PickRandom<CommandBehavior>();
+            CommandBehavior behavior = _faker.PickRandom<CommandBehavior>();
 
 #if ADVANCE_ASYNC
-                _executor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token)).ReturnsAsync(new CustomDbReader()).Verifiable();
+            _executor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, CancellationToken.None)).ReturnsAsync(new CustomDbReader()).Verifiable();
 #else
-                _executor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, source.Token)).ReturnsAsync(new CustomDbReader()).Verifiable();
+            _executor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, CancellationToken.None)).ReturnsAsync(new CustomDbReader()).Verifiable();
 #endif
 
-                //Make the call
-                DbDataReader reader = await new DbClient(_executor.Object).GetDbDataReaderAsync(realQuery, behavior, source.Token);
+            //Make the call
+            DbDataReader reader = await new DbClient(_executor.Object).GetDbDataReaderAsync(realQuery, behavior, CancellationToken.None);
 
-                Assert.IsNotNull(reader);
-                Assert.IsInstanceOf(typeof(CustomDbReader), reader);
+            Assert.IsNotNull(reader);
+            Assert.IsInstanceOf(typeof(CustomDbReader), reader);
 
 #if ADVANCE_ASYNC
-                //Verify the executor was called
-                _executor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token), Times.Once);
-#else
-                //Verify the executor was called
-                _executor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, source.Token), Times.Once);
+            //Verify the executor was called
+            _executor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, CancellationToken.None), Times.Once);
+#else 
+            //Verify the executor was called
+            _executor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, CancellationToken.None), Times.Once);
 #endif
-            }
         }
         #endregion
-        #region Write Test Methods
+        #region Write Test Methods        
+        /// <summary>
+        /// Whens the execute non query asynchronous is called it should throw operation canceled.
+        /// </summary>
+        [Test]
+        [Category("Asynchronous Write Tests")]
+        public void WhenExecuteNonQueryAsync_IsCalled__ItShouldThrowOperationCanceled()
+        {
+            //Wrap this in a using to automatically dispose of resources
+            using (CancellationTokenSource source = new CancellationTokenSource(0))
+            {
+                //Make the call
+                Assert.ThrowsAsync<OperationCanceledException>(async () => await new DbClient(_executor.Object).ExecuteNonQueryAsync(realQuery, source.Token));
+            }
+        }
         /// <summary>
         /// Whens the execute non query async is called it should call SQL executor execute non query asynchronous.
         /// </summary>
@@ -255,31 +320,26 @@ namespace ADO.Net.Client.Tests
         [Category("Asynchronous Write Tests")]
         public async Task WhenExecuteNonQueryAsync_IsCalled__ItShouldCallSqlExecutorExecuteNonQueryAsync()
         {
-            int delay = _faker.Random.Int(1, 30);
             int returnNumber = _faker.Random.Int(1, 30);
 
-            //Wrap this in a using to automatically dispose of resources
-            using (CancellationTokenSource source = new CancellationTokenSource(delay))
-            {
 #if ADVANCE_ASYNC
-                _executor.Setup(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token)).ReturnsAsync(returnNumber).Verifiable();
+            _executor.Setup(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None)).ReturnsAsync(returnNumber).Verifiable();
 #else
-                _executor.Setup(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token)).ReturnsAsync(returnNumber).Verifiable();
+            _executor.Setup(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None)).ReturnsAsync(returnNumber).Verifiable();
 #endif
 
-                //Make the call
-                int records = await new DbClient(_executor.Object).ExecuteNonQueryAsync(realQuery, source.Token);
+            //Make the call
+            int records = await new DbClient(_executor.Object).ExecuteNonQueryAsync(realQuery, CancellationToken.None);
 
-                Assert.IsTrue(records == returnNumber);
+            Assert.AreEqual(records, returnNumber);
 
 #if ADVANCE_ASYNC
-                //Verify the executor was called
-                _executor.Verify(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token), Times.Once);
-#else
-                //Verify the executor was called
-                _executor.Verify(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token), Times.Once);
+            //Verify the executor was called
+            _executor.Verify(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
+#else 
+            //Verify the executor was called
+            _executor.Verify(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
 #endif
-            }
         }
         #endregion
         #region Helper Methods     

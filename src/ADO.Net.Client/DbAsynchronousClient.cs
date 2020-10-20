@@ -161,7 +161,7 @@ namespace ADO.Net.Client
         /// <returns>
         /// Returns an instance of <see cref="IMultiResultReader" />
         /// </returns>
-        public async override Task<IMultiResultReader> GetMultiResultReaderAsync(ISqlQuery query, CancellationToken token = default)
+        public override async Task<IMultiResultReader> GetMultiResultReaderAsync(ISqlQuery query, CancellationToken token = default)
         {
             //Check if caller has canceled the token
             if (token.IsCancellationRequested)
