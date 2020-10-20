@@ -1,6 +1,12 @@
 Version History
 ===============
 
+### 1.3.6.1
+
+* [DataMapper](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DataMapper.cs) methods are now virtual
+* [DbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterFormatter.cs) methods are now virtual
+* [DbParameterBuilder](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterBuilder.cs) methods are now virtual
+
 ### 1.3.6
 
 * GetXXX functions in [DbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbObjectFactory.cs)  are now virtual
