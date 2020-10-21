@@ -119,9 +119,9 @@ namespace ADO.Net.Client.Core
         #endregion
         #region Utility Methods
         /// <summary>
-        /// Provides a mechanism for enumerating all available instances of database servers within the local network
+        /// Gets an instance of <see cref="DbDataSourceEnumerator"/>
         /// </summary>
-        /// <returns>Returns a new instance of <see cref="DbDataSourceEnumerator"/></returns>
+        /// <returns>Returns an instance of <see cref="DbDataSourceEnumerator"/></returns>
         public virtual DbDataSourceEnumerator GetDataSourceEnumerator()
         {
             //Return this back to the caller

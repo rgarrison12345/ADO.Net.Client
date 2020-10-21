@@ -52,9 +52,9 @@ namespace ADO.Net.Client.Core
         #endregion
         #region Utility Methods
         /// <summary>
-        /// Provides a mechanism for enumerating all available instances of database servers within the local network
+        /// Gets an instance of <see cref="DbDataSourceEnumerator"/>
         /// </summary>
-        /// <returns>Returns a new instance of <see cref="DbDataSourceEnumerator"/></returns>
+        /// <returns>Returns an instance of <see cref="DbDataSourceEnumerator"/></returns>
         DbDataSourceEnumerator GetDataSourceEnumerator();
         /// <summary>
         /// Gets a <see cref="DbCommandBuilder"/> based on the provider the <see cref="DbObjectFactory"/> is utilizing
