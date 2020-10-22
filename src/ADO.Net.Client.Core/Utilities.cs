@@ -93,7 +93,7 @@ namespace ADO.Net.Client.Core
             return Type.GetTypeCode(Enum.GetUnderlyingType(value.GetType()));
         }
         /// <summary>
-        /// Gets an instance of <see cref="PropertyInfo"/> where the <see cref="DbField.DatabaseFieldName"/> matches the passed in <paramref name="name"/>
+        /// Gets an instance of <see cref="PropertyInfo"/> where the <see cref="DbField.DatabaseFieldName"/> matches the passed in <paramref name="propertyName"/>
         /// or the <see cref="PropertyInfo"/> name matches the <paramref name="propertyName"/>
         /// </summary>
         /// <param name="matchUnderScores"><c>true</c> if columns named like User_ID should be mapped to property called UserID, <c>false</c> otherwise</param>
@@ -103,7 +103,7 @@ namespace ADO.Net.Client.Core
         public static PropertyInfo FindProperty(IEnumerable<PropertyInfo> properties, string propertyName,
             bool matchUnderScores)
         {
-            return properties.GetProperty(propertyName, matchUnderScores) ?? properties.GetPropertyInfoByDbField(propertyName);
+            return properties.GetProperty(propertyName, matchUnderScores) ?? properties.GetPropertyInfoByDbField(propertyName, matchUnderScores);
         }
         /// <summary>
         /// Gets an instance of <see cref="PropertyInfo"/>
@@ -114,32 +114,44 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns an instance of <see cref="PropertyInfo"/>, null if one cannot be found</returns>
         public static PropertyInfo GetProperty(this IEnumerable<PropertyInfo> properties, string propertyName, bool matchUnderscoreNames = false)
         {
-            PropertyInfo info = null;
-
             if (matchUnderscoreNames)
             {
                 propertyName = propertyName.Replace("_", "");
             }
 
-            info = properties.Where(x => string.Equals(x.Name, propertyName, StringComparison.Ordinal) == true).SingleOrDefault();
+            PropertyInfo info = properties.Where(x => string.Equals(x.Name, propertyName, StringComparison.Ordinal)).SingleOrDefault();
 
             if (info == null)
             {
                 //Get the property if it exists
-                info = properties.Where(x => string.Equals(x.Name, propertyName, StringComparison.OrdinalIgnoreCase) == true).SingleOrDefault();
+                info = properties.Where(x => string.Equals(x.Name, propertyName, StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
             }
 
             return info;
         }
         /// <summary>
-        /// Gets an instance of <see cref="PropertyInfo"/> where the <see cref="DbField.DatabaseFieldName"/> matches the passed in <paramref name="name"/>
+        /// Gets an instance of <see cref="PropertyInfo"/> where the <see cref="DbField.DatabaseFieldName"/> matches the passed in <paramref name="propertyName"/>
         /// </summary>
-        /// <param name="name">A property name as a value of <see cref="string"/></param>
+        /// <param name="matchUnderscores"><c>true</c> if columns named like User_ID should be mapped to property called UserID, <c>false</c> otherwise</param>
+        /// <param name="propertyName">A property name as a value of <see cref="string"/></param>
         /// <param name="infos">An instance of <see cref="IEnumerable{T}"/> of <see cref="PropertyInfo"/></param>
         /// <returns>Returns an instance of <see cref="PropertyInfo"/></returns>
-        public static PropertyInfo GetPropertyInfoByDbField(this IEnumerable<PropertyInfo> infos, string name)
+        public static PropertyInfo GetPropertyInfoByDbField(this IEnumerable<PropertyInfo> infos, string propertyName, bool matchUnderscores = false)
         {
-            return infos.Where(x => x.GetCustomAttributes(false).OfType<DbField>().Any(x => string.Equals(x.DatabaseFieldName, name, StringComparison.OrdinalIgnoreCase) == true)).FirstOrDefault();
+            if (matchUnderscores)
+            {
+                propertyName = propertyName.Replace("_", "");
+            }
+
+            PropertyInfo info = infos.Where(x => x.GetCustomAttributes(false).OfType<DbField>().Any(x => string.Equals(x.DatabaseFieldName, propertyName, StringComparison.Ordinal))).FirstOrDefault();
+
+            if (info == null)
+            {
+                //Get the property if it exists
+                info = infos.Where(x => x.GetCustomAttributes(false).OfType<DbField>().Any(x => string.Equals(x.DatabaseFieldName, propertyName, StringComparison.OrdinalIgnoreCase))).FirstOrDefault();
+            }
+
+            return info;
         }
         /// <summary>
         /// Determines whether this instance is an <see cref="IEnumerable"/>
