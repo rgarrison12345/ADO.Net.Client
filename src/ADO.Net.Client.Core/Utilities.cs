@@ -37,7 +37,7 @@ namespace ADO.Net.Client.Core
     /// </summary>
     public static class Utilities
     {
-        #region Helper Methods     
+        #region Helper Methods
         /// <summary>
         /// Gets the value of an <see cref="Enum"/> based on the <see cref="TypeCode"/>
         /// </summary>
@@ -91,6 +91,19 @@ namespace ADO.Net.Client.Core
         public static TypeCode GetEnumTypeCode(Enum value)
         {
             return Type.GetTypeCode(Enum.GetUnderlyingType(value.GetType()));
+        }
+        /// <summary>
+        /// Gets an instance of <see cref="PropertyInfo"/> where the <see cref="DbField.DatabaseFieldName"/> matches the passed in <paramref name="name"/>
+        /// or the <see cref="PropertyInfo"/> name matches the <paramref name="propertyName"/>
+        /// </summary>
+        /// <param name="matchUnderScores"><c>true</c> if columns named like User_ID should be mapped to property called UserID, <c>false</c> otherwise</param>
+        /// <param name="properties">An instance of <see cref="IEnumerable{T}"/> of <see cref="PropertyInfo"/></param>
+        /// <param name="propertyName">The name of a property as a <see cref="string"/> in the <paramref name="properties"/></param>
+        /// <returns>Returns an instance of <see cref="PropertyInfo"/>, null if one cannot be found</returns>
+        public static PropertyInfo FindProperty(IEnumerable<PropertyInfo> properties, string propertyName,
+            bool matchUnderScores)
+        {
+            return properties.GetProperty(propertyName, matchUnderScores) ?? properties.GetPropertyInfoByDbField(propertyName);
         }
         /// <summary>
         /// Gets an instance of <see cref="PropertyInfo"/>

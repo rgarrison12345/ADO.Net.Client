@@ -153,7 +153,7 @@ namespace ADO.Net.Client.Core
             for (int i = 0; i < record.FieldCount; i++)
             {
                 string name = record.GetName(i);
-                PropertyInfo info = writeableProperties.GetProperty(name, MatchUnderscoreNames) ?? writeableProperties.GetPropertyInfoByDbField(name);
+                PropertyInfo info = Utilities.FindProperty(writeableProperties, name, MatchUnderscoreNames);
 
                 //Check if a property could be found by name
                 if (info == null)
