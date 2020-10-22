@@ -133,7 +133,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
 
                 MultiResultReader multiReader = new MultiResultReader(_mockReader.Object, _mockMapper.Object);
                 PersonModel returnedModel = await multiReader.ReadObjectAsync<PersonModel>(source.Token);
-
+                
                 Assert.AreEqual(returnedModel, default(PersonModel));
 
                 //Verify the readers read method was called
@@ -142,11 +142,11 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             }
         }
         /// <summary>
-        /// Whens the next restul asynchronous is called should call reader next result asynchronous.
+        /// Whens the next result asynchronous is called should call reader next result asynchronous.
         /// </summary>
         [Test]
         [Category("MultiResultReader Async Tests")]
-        public async Task WhenNextRestulAsync_IsCalled_ShouldCall_ReaderNextResultAsync()
+        public async Task WhenNextResultAsync_IsCalled_ShouldCall_ReaderNextResultAsync()
         {
             int delay = _faker.Random.Int(0, 1000);
 

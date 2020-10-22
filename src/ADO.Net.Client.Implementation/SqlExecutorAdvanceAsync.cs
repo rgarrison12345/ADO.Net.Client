@@ -55,7 +55,7 @@ namespace ADO.Net.Client.Implementation
             }
 
             //Wrap this to automatically handle disposing of resources
-            using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult, token).ConfigureAwait(false))
+            await using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult, token).ConfigureAwait(false))
             {
                 //Keep reading through the results
                 while (await reader.ReadAsync(token).ConfigureAwait(false))
@@ -95,7 +95,7 @@ namespace ADO.Net.Client.Implementation
             List<T> returnList = new List<T>();
 
             //Wrap this to automatically handle disposing of resources
-            using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult, token).ConfigureAwait(false))
+            await using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult, token).ConfigureAwait(false))
             {
                 //Keep reading through the results
                 while (await reader.ReadAsync(token).ConfigureAwait(false))
@@ -135,7 +135,7 @@ namespace ADO.Net.Client.Implementation
             }
 
             //Wrap this to automatically handle disposing of resources
-            using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleRow, token).ConfigureAwait(false))
+            await using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleRow, token).ConfigureAwait(false))
             {
                 //Check if the reader has rows
                 if (reader.HasRows)
@@ -169,7 +169,7 @@ namespace ADO.Net.Client.Implementation
             }
 
             //Wrap this to automatically handle disposing of resources
-            using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult, token).ConfigureAwait(false))
+            await using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult, token).ConfigureAwait(false))
             {
                 //Check if the reader has rows first
                 if (reader.HasRows)
@@ -205,7 +205,7 @@ namespace ADO.Net.Client.Implementation
             }
 
             //Wrap this to automatically handle disposing of resources
-            using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult, token).ConfigureAwait(false))
+            await using (DbDataReader reader = await GetDbDataReaderAsync(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult, token).ConfigureAwait(false))
             {
                 return await _mapper.MapResultSetAsync<T>(reader, token).ConfigureAwait(false);
             }
@@ -230,7 +230,7 @@ namespace ADO.Net.Client.Implementation
             }
 
             //Wrap this in a using statement to handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
+            await using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
             {
                 if (shouldBePrepared)
                 {
@@ -261,7 +261,7 @@ namespace ADO.Net.Client.Implementation
             }
 
             //Wrap this in a using statement to handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
+            await using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
             {
                 if (shouldBePrepared)
                 {
@@ -313,7 +313,7 @@ namespace ADO.Net.Client.Implementation
             }
 
             //Wrap this in a using statement to automatically handle disposing of resources
-            using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
+            await using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
             {
                 if (shouldBePrepared)
                 {
