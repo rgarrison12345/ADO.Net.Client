@@ -14,6 +14,11 @@ These libraries are not tied to any given database providers driver.  This means
 your SQL and not on the code that you would write.  This also encourages you to write your SQL
 in a more standard fashion following the ANSI standard.
 
+### Solves 90% Use Cases
+
+These libraries acknowledge that all use case scenarios are unique
+and they attempt to solve the 90% use cases out there
+
 ### Lightweight
 
 This libraries make up a Micro-ORM, this is not a full blown framework like Entity.

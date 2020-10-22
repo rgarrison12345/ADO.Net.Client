@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.3.5.2
+
+* Updating to ADO.Net.Client.Core 1.3.6.1
+
 ### 1.3.5.1
 
 * Getxx and ExecuteNonQuery methods on [SqlExecutor](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/SqlExecutor.cs) are now virtual
