@@ -124,7 +124,7 @@ namespace ADO.Net.Client.Core.Tests
             PropertyInfo property = properties.GetPropertyInfoByDbField("employeetitle");
 
             Assert.IsNotNull(property);
-            Assert.That(property.Name == nameof(model.Title));
+            Assert.AreEqual(property.Name, nameof(model.Title));
         }
         /// <summary>
         /// Gets the property by name normal casing.
@@ -138,10 +138,38 @@ namespace ADO.Net.Client.Core.Tests
             PropertyInfo property = properties.GetPropertyInfoByDbField("EmployeeTitle");
 
             Assert.IsNotNull(property);
-            Assert.That(property.Name == nameof(model.Title));
+            Assert.AreEqual(property.Name, nameof(model.Title));
         }
         /// <summary>
-        /// Cannots the name of the get property by.
+        /// Gets the name of the property by.
+        /// </summary>
+        [Test]
+        public void GetPropertyByDbFieldNameUnderscores()
+        {
+            Employee model = new Employee();
+            PropertyInfo[] properties = typeof(Employee).GetProperties();
+
+            PropertyInfo property = properties.GetPropertyInfoByDbField("e_m_p_l_o_y_e_e_t_i_t_l_e_", true);
+
+            Assert.IsNotNull(property);
+            Assert.AreEqual(property.Name, nameof(model.Title));
+        }
+        /// <summary>
+        /// Gets the property by name normal casing.
+        /// </summary>
+        [Test]
+        public void GetPropertyWithUnderscores()
+        {
+            Employee model = new Employee();
+            PropertyInfo[] properties = typeof(Employee).GetProperties();
+
+            PropertyInfo property = properties.GetProperty("S_a_l_a_r_y", true);
+
+            Assert.IsNotNull(property);
+            Assert.AreEqual(property.Name, nameof(model.Salary));
+        }
+        /// <summary>
+        /// Cannot the name of the get property by name
         /// </summary>
         [Test]
         public void CannotGetPropertyByName()

@@ -237,7 +237,7 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsTrue(model.Salary == default);
         }
         [Test]
-        public void MapPropertyColumnNameHasSpaces()
+        public void MapPropertyColumnNameHasUnderscores()
         {
             DataMapper mapper = new DataMapper(true);
             decimal salary = _faker.Random.Decimal();

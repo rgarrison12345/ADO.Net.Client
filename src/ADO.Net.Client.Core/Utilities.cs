@@ -143,12 +143,12 @@ namespace ADO.Net.Client.Core
                 propertyName = propertyName.Replace("_", "");
             }
 
-            PropertyInfo info = infos.Where(x => x.GetCustomAttributes(false).OfType<DbField>().Any(x => string.Equals(x.DatabaseFieldName, propertyName, StringComparison.Ordinal))).FirstOrDefault();
+            PropertyInfo info = infos.Where(x => x.GetCustomAttributes(false).OfType<DbField>().Any(x => string.Equals(x.DatabaseFieldName, propertyName, StringComparison.Ordinal))).SingleOrDefault();
 
             if (info == null)
             {
                 //Get the property if it exists
-                info = infos.Where(x => x.GetCustomAttributes(false).OfType<DbField>().Any(x => string.Equals(x.DatabaseFieldName, propertyName, StringComparison.OrdinalIgnoreCase))).FirstOrDefault();
+                info = infos.Where(x => x.GetCustomAttributes(false).OfType<DbField>().Any(x => string.Equals(x.DatabaseFieldName, propertyName, StringComparison.OrdinalIgnoreCase))).SingleOrDefault();
             }
 
             return info;
