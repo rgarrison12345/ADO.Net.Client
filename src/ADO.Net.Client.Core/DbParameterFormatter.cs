@@ -58,7 +58,7 @@ namespace ADO.Net.Client.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="DbParameterFormatter"/> class.
         /// </summary>
-        /// <param name="nativeGuidSupport">if set to <c>true</c> [native unique identifier support].</param>
+        /// <param name="nativeGuidSupport">if set to <c>true</c> the database supports native guid format</param>
         /// <param name="parameterNamePrefix">The parameter name prefix.</param>
         public DbParameterFormatter(bool nativeGuidSupport = false, string parameterNamePrefix = "@")
         {
