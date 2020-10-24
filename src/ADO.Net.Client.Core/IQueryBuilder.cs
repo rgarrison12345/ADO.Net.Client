@@ -87,7 +87,7 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="parameterName">The name of the parameter to identify the parameter</param>
         /// <param name="value">The value of the parameter as an <see cref="object"/></param>
-        void SetParamaterValue(string parameterName, object value);
+        void SetParameterValue(string parameterName, object value);
         /// <summary>
         /// Adds an <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/> objects to the helpers underlying db parameter collection
         /// </summary>

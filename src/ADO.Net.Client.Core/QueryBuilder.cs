@@ -232,7 +232,7 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="parameterName">The name of the parameter to identify the parameter</param>
         /// <param name="value">The value of the parameter as an <see cref="object"/></param>
-        public void SetParamaterValue(string parameterName, object value)
+        public void SetParameterValue(string parameterName, object value)
         {
             //Get index of this parameter
             int index = _parameters.FindIndex(i => i.ParameterName == parameterName);
