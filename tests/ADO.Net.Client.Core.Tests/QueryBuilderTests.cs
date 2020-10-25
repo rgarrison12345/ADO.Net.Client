@@ -269,7 +269,7 @@ namespace ADO.Net.Client.Core.Tests
             CustomDbParameter parameter = new CustomDbParameter() { ParameterName = "@Param1", Value = _faker.Random.Int() };
 
             _builder.AddParameter(parameter);
-            _builder.SetParamaterValue(parameter.ParameterName, newValue);
+            _builder.SetParameterValue(parameter.ParameterName, newValue);
             DbParameter param = _builder.GetParameter(parameter.ParameterName);
 
             Assert.IsNotNull(_builder.Parameters);
