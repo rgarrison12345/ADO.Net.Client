@@ -165,11 +165,11 @@ namespace ADO.Net.Client.Core
             return (input as IEnumerable) != null && (input as string) == null && (input as byte[]) == null;
         }
         /// <summary>
-        /// Gets the type from value.
+        /// Gets an instance of <typeparamref name="T"/> from the <paramref name="value"/>
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value">The value.</param>
-        /// <returns></returns>
+        /// <typeparam name="T">The desired type to return</typeparam>
+        /// <param name="value">The value as a <see cref="object"/></param>
+        /// <returns>Returns a value as an instance of <typeparamref name="T" /></returns>
         public static T GetTypeFromValue<T>(object value)
         {
             // Handle nullable types
