@@ -79,7 +79,7 @@ namespace ADO.Net.Client.Core
             {
                 return DbType.Binary;
             }
-            if (info.PropertyType == typeof(DateTime))
+            if (info.PropertyType == typeof(DateTime) || info.PropertyType == typeof(DateTime?))
             {
                 //Check which date type to map to
                 if (Attribute.IsDefined(info, typeof(DateTime2), false))
@@ -89,63 +89,63 @@ namespace ADO.Net.Client.Core
 
                 return DbType.DateTime;
             }
-            if (info.PropertyType == typeof(DateTimeOffset))
+            if (info.PropertyType == typeof(DateTimeOffset) || info.PropertyType == typeof(DateTimeOffset?))
             {
                 return DbType.DateTimeOffset;
             }
-            if (info.PropertyType == typeof(TimeSpan))
+            if (info.PropertyType == typeof(TimeSpan) || info.PropertyType == typeof(TimeSpan?))
             {
                 return DbType.Time;
             }
-            if (info.PropertyType == typeof(float))
+            if (info.PropertyType == typeof(float) || info.PropertyType == typeof(float?))
             {
                 return DbType.Single;
             }
-            if (info.PropertyType == typeof(bool))
+            if (info.PropertyType == typeof(bool) || info.PropertyType == typeof(bool?))
             {
                 return DbType.Boolean;
             }
-            if (info.PropertyType == typeof(sbyte))
+            if (info.PropertyType == typeof(sbyte) || info.PropertyType == typeof(sbyte?))
             {
                 return DbType.SByte;
             }
-            if (info.PropertyType == typeof(byte))
+            if (info.PropertyType == typeof(byte) || info.PropertyType == typeof(byte?))
             {
                 return DbType.Byte;
             }
-            if (info.PropertyType == typeof(double))
+            if (info.PropertyType == typeof(double) || info.PropertyType == typeof(double?))
             {
                 return DbType.Double;
             }
-            if (info.PropertyType == typeof(decimal))
+            if (info.PropertyType == typeof(decimal) || info.PropertyType == typeof(decimal?))
             {
                 return DbType.Decimal;
             }
-            if (info.PropertyType == typeof(short))
+            if (info.PropertyType == typeof(short) || info.PropertyType == typeof(short?))
             {
                 return DbType.Int16;
             }
-            if (info.PropertyType == typeof(int))
+            if (info.PropertyType == typeof(int) || info.PropertyType == typeof(int?))
             {
                 return DbType.Int32;
             }
-            if (info.PropertyType == typeof(long))
+            if (info.PropertyType == typeof(long) || info.PropertyType == typeof(long?))
             {
                 return DbType.Int64;
             }
-            if (info.PropertyType == typeof(ushort))
+            if (info.PropertyType == typeof(ushort) || info.PropertyType == typeof(ushort?))
             {
                 return DbType.UInt16;
             }
-            if (info.PropertyType == typeof(uint))
+            if (info.PropertyType == typeof(uint) || info.PropertyType == typeof(uint?))
             {
                 return DbType.UInt32;
             }
-            if (info.PropertyType == typeof(ulong))
+            if (info.PropertyType == typeof(ulong) || info.PropertyType == typeof(ulong?))
             {
                 return DbType.UInt64;
             }
-            if (info.PropertyType == typeof(Guid))
+            if (info.PropertyType == typeof(Guid) || info.PropertyType == typeof(Guid?))
             {
                 if (HasNativeGuidSupport)
                 {
@@ -153,6 +153,15 @@ namespace ADO.Net.Client.Core
                 }
 
                 return DbType.String;
+            }
+            if (info.PropertyType == typeof(char) || info.PropertyType == typeof(char?))
+            {
+                if (Attribute.IsDefined(info, typeof(ANSIStringFixedLength), false))
+                {
+                    return DbType.AnsiStringFixedLength;
+                }
+
+                return DbType.StringFixedLength;
             }
             if (info.PropertyType == typeof(string))
             {
