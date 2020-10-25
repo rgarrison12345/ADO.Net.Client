@@ -102,7 +102,7 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsFalse(new byte[1].IsEnumerable());
         }
         /// <summary>
-        /// Cannots the name of the get property by.
+        /// Cannot the name of the get property by db field name
         /// </summary>
         [Test]
         public void CannotGetPropertyByDbFieldName()
@@ -139,6 +139,32 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsNotNull(property);
             Assert.AreEqual(property.Name, nameof(model.Title));
+        }
+        [Test]
+        public void CannotFindPropertyByName()
+        {
+            PropertyInfo[] properties = typeof(Employee).GetProperties();
+            PropertyInfo info = Utilities.FindProperty(properties, "adfasda");
+
+            Assert.IsNull(info);
+        }
+        [Test]
+        public void FindPropertyByName()
+        {
+            PropertyInfo[] properties = typeof(Employee).GetProperties();
+            PropertyInfo info = Utilities.FindProperty(properties, "Password");
+
+            Assert.IsNotNull(info);
+            Assert.AreEqual(info.Name, "Password");
+        }
+        [Test]
+        public void FindPropertyByDbFieldName()
+        {
+            PropertyInfo[] properties = typeof(Employee).GetProperties();
+            PropertyInfo info = Utilities.FindProperty(properties, "EmployeeTitle");
+
+            Assert.IsNotNull(info);
+            Assert.AreEqual(info.Name, "Title");
         }
         /// <summary>
         /// Gets the name of the property by.

@@ -101,7 +101,7 @@ namespace ADO.Net.Client.Core
         /// <param name="propertyName">The name of a property as a <see cref="string"/> in the <paramref name="properties"/></param>
         /// <returns>Returns an instance of <see cref="PropertyInfo"/>, null if one cannot be found</returns>
         public static PropertyInfo FindProperty(IEnumerable<PropertyInfo> properties, string propertyName,
-            bool matchUnderScores)
+            bool matchUnderScores = false)
         {
             return properties.GetProperty(propertyName, matchUnderScores) ?? properties.GetPropertyInfoByDbField(propertyName, matchUnderScores);
         }
