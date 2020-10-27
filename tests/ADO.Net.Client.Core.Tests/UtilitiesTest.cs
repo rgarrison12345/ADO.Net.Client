@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
+using Bogus;
 using System;
 using ADO.Net.Client.Tests.Common.Models;
 using ADO.Net.Client.Tests.Common.Enums;
@@ -38,6 +39,9 @@ namespace ADO.Net.Client.Core.Tests
     [TestFixture]
     public class UtilitiesTest
     {
+        #region Fields/Properties
+        private readonly Faker _faker = new Faker();
+        #endregion
         #region Tests
         [Test]
         public void ThrowsExceptionNotEnumGetEnumValue()
@@ -144,7 +148,7 @@ namespace ADO.Net.Client.Core.Tests
         public void CannotFindPropertyByName()
         {
             PropertyInfo[] properties = typeof(Employee).GetProperties();
-            PropertyInfo info = Utilities.FindProperty(properties, "adfasda");
+            PropertyInfo info = Utilities.FindProperty(properties, _faker.Random.AlphaNumeric(1));
 
             Assert.IsNull(info);
         }
@@ -201,7 +205,7 @@ namespace ADO.Net.Client.Core.Tests
         public void CannotGetPropertyByName()
         {
             PropertyInfo[] properties = typeof(Employee).GetProperties();
-            PropertyInfo property = properties.GetProperty("SomePropertyName");
+            PropertyInfo property = properties.GetProperty(_faker.Random.AlphaNumeric(1));
 
             Assert.IsNull(property);
         }
