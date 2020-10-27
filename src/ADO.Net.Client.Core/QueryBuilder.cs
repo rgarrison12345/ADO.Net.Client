@@ -61,7 +61,7 @@ namespace ADO.Net.Client.Core
         /// <param name="parameterBuilder">An instance of <see cref="IDbParameterBuilder"/></param>
         /// <param name="parameters">The database parameters associated with a query</param>
         protected QueryBuilder(IDbParameterBuilder parameterBuilder, IEnumerable<DbParameter> parameters) : this(parameterBuilder)
-        { 
+        {
             _parameters.AddRange(parameters);
         }
         #endregion
@@ -78,13 +78,13 @@ namespace ADO.Net.Client.Core
         {
             ISqlQuery query = QueryFactory.CreateSQLQuery(queryText, type, _parameters, commandTimeout, shouldBePrepared);
 
-            if(clearContents)
+            if (clearContents)
             {
                 _parameters.Clear();
             }
 
             return query;
-        }     
+        }
         /// <summary>
         /// Adds the passed in parameter to the <see cref="Parameters"/>
         /// </summary>
@@ -163,7 +163,7 @@ namespace ADO.Net.Client.Core
             //Check if this even has a name, caller be using a provider that doesn't support named parameters
             if (string.IsNullOrWhiteSpace(parameterName))
             {
-                throw new ArgumentException(nameof(parameterName) + "cannot be null or empty");
+                throw new ArgumentException(nameof(parameterName) + " cannot be null or empty");
             }
 
             //Return this back to the caller
@@ -181,7 +181,7 @@ namespace ADO.Net.Client.Core
         {
             if (parameter == null)
             {
-                throw new ArgumentNullException(nameof(parameter) + "cannot be null");
+                throw new ArgumentNullException(nameof(parameter) + " cannot be null");
             }
 
             //Return this back to the caller
