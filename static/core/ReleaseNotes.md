@@ -1,6 +1,14 @@
 Version History
 ===============
 
+### 1.3.6.2
+
+* [DbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterFormatter.cs) 
+MapDbType now respects nullable types for mapping
+* [Utilities](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/Utilities.cs) new function FindProperty
+that takes in IEnumerable of Propertyinfo and string
+and bool for matching on underscores
+
 ### 1.3.6.1
 
 * [DataMapper](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DataMapper.cs) methods are now virtual
