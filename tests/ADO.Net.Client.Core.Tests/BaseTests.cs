@@ -22,18 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 #endregion
 #region Using Statements
-using ADO.Net.Client.Annotations;
 using ADO.Net.Client.Tests.Common;
-using ADO.Net.Client.Tests.Common.Models;
 using Bogus;
-using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Linq;
-using System.Reflection;
 #endregion
 
 namespace ADO.Net.Client.Core.Tests
