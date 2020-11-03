@@ -4,6 +4,8 @@ Version History
 ### 1.3.6.2
 
 * [DbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterFormatter.cs) 
+now handles the char type
+* [DbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterFormatter.cs) 
 MapDbType now respects nullable types for mapping
 * [Utilities](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/Utilities.cs) new function FindProperty
 that takes in IEnumerable of Propertyinfo and string
