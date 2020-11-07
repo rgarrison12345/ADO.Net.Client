@@ -1,26 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;netcoreapp2.1;net461;net45;</TargetFrameworks>
-    <IsPackable>false</IsPackable>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)'!='netcoreapp2.1' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
-    <DefineConstants>ADVANCED_FEATURES</DefineConstants>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Bogus" Version="31.0.3" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
-    <PackageReference Include="Moq" Version="4.14.7" />
-    <PackageReference Include="NUnit" Version="3.12.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\ADO.Net.Client.Core\ADO.Net.Client.Core.csproj" />
-    <ProjectReference Include="..\ADO.Net.Client.Tests.Common\ADO.Net.Client.Tests.Common.csproj" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='net45' or '$(TargetFramework)'=='net461' or '$(TargetFramework)'=='netcoreapp2.1'">
-    <Compile Remove="DataRowTests.cs" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFrameworks>netcoreapp3.1;netcoreapp2.1;</TargetFrameworks>
+		<IsPackable>false</IsPackable>
+		<LangVersion>latest</LangVersion>
+		<AssemblyName>ADO.Net.Client.Core.Tests</AssemblyName>
+		<RootNamespace>ADO.Net.Client.Core.Tests</RootNamespace>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(TargetFramework)'!='netcoreapp2.1'">
+		<DefineConstants>ADVANCED_FEATURES</DefineConstants>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Bogus" Version="31.0.3" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+		<PackageReference Include="Moq" Version="4.14.7" />
+		<PackageReference Include="NUnit" Version="3.12.0" />
+		<PackageReference Include="NUnit3TestAdapter" Version="3.17.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\ADO.Net.Client.Core\ADO.Net.Client.Core.csproj" />
+		<ProjectReference Include="..\ADO.Net.Client.Tests.Common\ADO.Net.Client.Tests.Common.csproj" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)'=='netcoreapp2.1'">
+		<Compile Remove="DataRowTests.cs" />
+	</ItemGroup>
 </Project>

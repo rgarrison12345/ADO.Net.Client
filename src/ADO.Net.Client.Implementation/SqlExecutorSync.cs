@@ -212,7 +212,11 @@ namespace ADO.Net.Client.Implementation
                     }
                     else
                     {
+#if !NET40
                         returnList.Add(reader.GetFieldValue<T>(0));
+#else
+                        returnList.Add(Utilities.GetTypeFromValue<T>(reader.GetValue(0)));
+#endif
                     }
                 }
             }
@@ -244,7 +248,11 @@ namespace ADO.Net.Client.Implementation
                     }
                     else
                     {
+#if !NET40
                         yield return reader.GetFieldValue<T>(0);
+#else
+                        yield return Utilities.GetTypeFromValue<T>(reader.GetValue(0));
+#endif
                     }
                 }
             }

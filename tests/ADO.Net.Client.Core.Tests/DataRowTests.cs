@@ -23,7 +23,6 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Tests.Common;
-using Moq;
 using NUnit.Framework;
 using System.Data;
 using System.Data.Common;
@@ -40,6 +39,8 @@ namespace ADO.Net.Client.Core.Tests
     [Category("DataRowTests")]
     public class DataRowTests : BaseTests
     {
+        #region Fields/Properties
+        #endregion
         #region Setup/Teardown        
         /// <summary>
         /// Called when [time setup].
@@ -47,12 +48,12 @@ namespace ADO.Net.Client.Core.Tests
         [SetUp]
         public override void Setup()
         {
-            DbProviderFactories.RegisterFactory("ADO.Net.Client.Tests.Common", CustomDbProviderFactory.Instance);
+            DbProviderFactories.RegisterFactory(_commonNamespace, CustomDbProviderFactory.Instance);
 
             //For regular .NET framework the driver must be installed in the Global Assembly Cache
             DataTable table = DbProviderFactories.GetFactoryClasses();
             DataRow row = (from a in table.Rows.Cast<DataRow>()
-                           where a.ItemArray[2].ToString() == "ADO.Net.Client.Tests.Common"
+                           where a.ItemArray[2].ToString() == _commonNamespace
                            select a).FirstOrDefault();
             _factory = new DbObjectFactory(row);
         }

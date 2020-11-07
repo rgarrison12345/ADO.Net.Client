@@ -61,7 +61,7 @@ namespace ADO.Net.Client.Core
         }
         #endregion
         #region Mapper Methods
-#if !NET45
+#if !NET40 && !NET45
         /// <summary>
         /// Maps the result set one at a time by streaming the result from the server asynchronously
         /// </summary>
@@ -81,6 +81,7 @@ namespace ADO.Net.Client.Core
             yield break;
         }
 #endif
+#if !NET40
         /// <summary>
         /// Maps an entire result set in the <paramref name="reader"/>
         /// </summary>
@@ -101,6 +102,7 @@ namespace ADO.Net.Client.Core
 
             return returnList;
         }
+#endif
         /// <summary>
         /// Maps the result set one at a time by streaming the result from the server
         /// </summary>

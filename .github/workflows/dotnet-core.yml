@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, development ]
   pull_request:
     branches: [ master ]
 
@@ -18,6 +18,6 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --restore
+      run: dotnet build --configuration Release
     - name: Test
-      run: dotnet test --configuration Release --restore --verbosity normal
+      run: dotnet test --configuration Release --verbosity normal

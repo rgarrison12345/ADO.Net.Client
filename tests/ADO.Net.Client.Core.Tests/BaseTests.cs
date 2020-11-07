@@ -43,12 +43,13 @@ namespace ADO.Net.Client.Core.Tests
         private readonly Faker _faker = new Faker();
         private readonly string _connectionString = "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;";
         protected IDbObjectFactory _factory;
+        protected readonly string _commonNamespace = "ADO.Net.Client.Tests.Common";
         #endregion
         #region Setup/Teardown     
         public abstract void Setup();
         #endregion
         #region Basic Tests
-#if ADVANCED_FEATURES        
+#if ADVANCED_FEATURES
         /// <summary>
         /// Determines whether this instance [can create command builder].
         /// </summary>

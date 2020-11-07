@@ -56,7 +56,7 @@ namespace ADO.Net.Client.Core.Tests
         [Test]
         public void CanCreateDbFactoryFromProviderName()
         {
-            DbProviderFactory factory = DbObjectFactory.GetProviderFactory("ADO.Net.Client.Tests.Common");
+            DbProviderFactory factory = DbObjectFactory.GetProviderFactory(_commonNamespace);
 
             //Needs to be a mysql client factory
             Assert.IsNotNull(factory);

@@ -29,9 +29,14 @@ namespace ADO.Net.Client.Core
     /// <summary>
     /// The contract class for a ISqlExecutor based class
     /// </summary>
+#if !NET40
     /// <seealso cref="ISqlExecutorAsync"/>
+#endif
     /// <seealso cref="ISqlExecutorSync"/>
-    public interface ISqlExecutor : ISqlExecutorSync, ISqlExecutorAsync
+    public interface ISqlExecutor : ISqlExecutorSync
+#if !NET40
+        , ISqlExecutorAsync
+#endif
     {
         #region Fields/Properties
         #endregion
