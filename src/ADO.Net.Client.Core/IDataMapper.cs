@@ -44,7 +44,7 @@ namespace ADO.Net.Client.Core
         public bool MatchUnderscoreNames { get; }
         #endregion
         #region Utility Methods
-#if !NET45
+#if !NET40 && !NET45
         /// <summary>
         /// Maps the result set one at a time by streaming the result from the server asynchronously
         /// </summary>
@@ -54,6 +54,7 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns the instance of <typeparamref name="T"/> created from the passed in <paramref name="reader"/></returns>
         IAsyncEnumerable<T> MapResultSetStreamAsync<T>(DbDataReader reader, CancellationToken token = default) where T : class;
 #endif
+#if !NET40
         /// <summary>
         /// Maps an entire result set in the <paramref name="reader"/>
         /// </summary>
@@ -62,6 +63,7 @@ namespace ADO.Net.Client.Core
         /// <param name="reader">An instance of <see cref="DbDataReader"/> that contains a result set of records that needs to be mapped</param>
         /// <returns>Returns the instance of <typeparamref name="T"/> created from the passed in <paramref name="reader"/></returns>
         Task<IEnumerable<T>> MapResultSetAsync<T>(DbDataReader reader, CancellationToken token = default) where T : class;
+#endif
         /// <summary>
         /// Maps the result set one at a time by streaming the result from the server
         /// </summary>

@@ -29,10 +29,15 @@ namespace ADO.Net.Client.Core
     /// <summary>
     /// Contract class for an instance that reads records from a database result set
     /// </summary>
+#if !NET40
     /// <see cref="IMultiResultReaderAsync"/>
+#endif
     /// <see cref="IMultiResultReaderSync"/>
-    public interface IMultiResultReader : IMultiResultReaderSync, IMultiResultReaderAsync
+    public interface IMultiResultReader : IMultiResultReaderSync
+#if !NET40
+        , IMultiResultReaderAsync
+#endif
     {
-        
+
     }
 }

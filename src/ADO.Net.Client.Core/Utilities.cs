@@ -188,13 +188,11 @@ namespace ADO.Net.Client.Core
         /// Checks if the passed in type is a generic type that is nullable
         /// </summary>
         /// <param name="type">The .NET type to check for nullable</param>
-        /// <returns>Returns true if the passed in type is nullable, false otherwise</returns>
+        /// <returns>Returns <c>true</c> if the passed in type is nullable, <c>false</c> otherwise</returns>
         public static bool IsNullableGenericType(this Type type)
         {
-            TypeInfo info = type.GetTypeInfo();
-
             //Return this back to the caller
-            return (info.IsGenericType && info.GetGenericTypeDefinition() == typeof(Nullable<>));
+            return !type.IsGenericTypeDefinition && Nullable.GetUnderlyingType(type) != null;
         }
         #endregion
     }

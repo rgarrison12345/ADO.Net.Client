@@ -227,7 +227,7 @@ namespace ADO.Net.Client.Core
             //Nothing to return here
             return result;
         }
-#if !NET45
+#if !NET45 && !NET40
         /// <summary>
         /// Gets an initialized instance of a <see cref="DbParameter"/> object based on the specified provider for a fixed size parameter
         /// </summary>

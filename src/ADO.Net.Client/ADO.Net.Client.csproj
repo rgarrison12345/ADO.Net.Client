@@ -1,65 +1,68 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netstandard2.0;net461;net45;</TargetFrameworks>
-    <LangVersion>latest</LangVersion>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/rgarrison12345/ADO.Net.Client.git</RepositoryUrl>
-    <Version>1.3.5.3</Version>
-	  <PackageTags>micro-orm orm sql ado.net ado.net.client</PackageTags>
-    <Authors>Robert Garrison</Authors>
-    <Company>Robert Garrison</Company>
-    <Product>ADO.Net.Client</Product>
-    <Title>ADO.Net.Client</Title>
-    <PackageId>ADO.Net.Client</PackageId>
-    <Description>High level ADO.Net client library to agnostically query a relational database using a given ADO.Net driver</Description>
-    <PackageReleaseNotes>
-      Release Notes https://github.com/rgarrison12345/ADO.Net.Client/blob/master/static/client/ReleaseNotes.md
-    </PackageReleaseNotes>
-    <PackageIcon>icon.png</PackageIcon>
-    <IncludeSource>true</IncludeSource>
-    <IncludeSymbols>true</IncludeSymbols>
-    <AssemblyName>ADO.Net.Client</AssemblyName>
-    <RootNamespace>ADO.Net.Client</RootNamespace>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <DefineConstants>TRACE;</DefineConstants>
-    <Prefer32Bit>false</Prefer32Bit>
-    <Copyright>Copyright © Robert Garrison 2020</Copyright>
-    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <ContinuousIntegrationBuild>false</ContinuousIntegrationBuild>
-    <EmbedUntrackedSources>false</EmbedUntrackedSources>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>.\bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>.\bin\Release</OutputPath>
-    <DefineConstants>RELEASE;</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
-    <DefineConstants>ADVANCE_ASYNC;</DefineConstants>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Include="..\..\static\icon.png" Pack="true" PackagePath="icon.png" />
-    <None Include="..\..\README.md" Pack="true" PackagePath="README.md" />
-    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
-    <None Include="..\..\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)'=='Debug'">
-    <ProjectReference Include="..\ADO.Net.Client.Implementation\ADO.Net.Client.Implementation.csproj" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
-    <PackageReference Include="ADO.Net.Client.Implementation" Version="1.3.5.3" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.1;netstandard2.0;net461;net45;net40;</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/rgarrison12345/ADO.Net.Client.git</RepositoryUrl>
+		<Version>1.3.6</Version>
+		<PackageTags>micro-orm orm sql ado.net ado.net.client</PackageTags>
+		<Authors>Robert Garrison</Authors>
+		<Company>Robert Garrison</Company>
+		<Product>ADO.Net.Client</Product>
+		<Title>ADO.Net.Client</Title>
+		<PackageId>ADO.Net.Client</PackageId>
+		<Description>High level ADO.Net client library to agnostically query a relational database using a given ADO.Net driver</Description>
+		<PackageReleaseNotes>
+			Release Notes https://github.com/rgarrison12345/ADO.Net.Client/blob/master/static/client/ReleaseNotes.md
+		</PackageReleaseNotes>
+		<PackageIcon>icon.png</PackageIcon>
+		<IncludeSource>true</IncludeSource>
+		<IncludeSymbols>true</IncludeSymbols>
+		<AssemblyName>ADO.Net.Client</AssemblyName>
+		<RootNamespace>ADO.Net.Client</RootNamespace>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+		<DefineConstants>TRACE;</DefineConstants>
+		<Prefer32Bit>false</Prefer32Bit>
+		<Copyright>Copyright © Robert Garrison 2020</Copyright>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<ContinuousIntegrationBuild>false</ContinuousIntegrationBuild>
+		<EmbedUntrackedSources>false</EmbedUntrackedSources>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>.\bin\Debug</OutputPath>
+		<DefineConstants>DEBUG;</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<DebugSymbols>false</DebugSymbols>
+		<DebugType>pdbonly</DebugType>
+		<Optimize>true</Optimize>
+		<OutputPath>.\bin\Release</OutputPath>
+		<DefineConstants>RELEASE;</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
+		<DefineConstants>ADVANCE_ASYNC;</DefineConstants>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Include="..\..\static\icon.png" Pack="true" PackagePath="icon.png" />
+		<None Include="..\..\README.md" Pack="true" PackagePath="README.md" />
+		<None Include="..\..\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
+		<None Include="..\..\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)'=='net40'">
+		<Compile Remove="DbAsynchronousClient.cs"></Compile>
+	</ItemGroup>
+	<ItemGroup Condition="'$(Configuration)'=='Debug'">
+		<ProjectReference Include="..\ADO.Net.Client.Implementation\ADO.Net.Client.Implementation.csproj" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(Configuration)'=='Release'">
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+		<PackageReference Include="ADO.Net.Client.Implementation" Version="1.3.5.3" />
+	</ItemGroup>
 </Project>

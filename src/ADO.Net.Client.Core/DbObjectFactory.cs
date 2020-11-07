@@ -99,9 +99,9 @@ namespace ADO.Net.Client.Core
         /// <param name="connection">An instance of <see cref="DbConnection"/> </param>
         public DbObjectFactory(DbConnection connection)
         {
-#if !NETSTANDARD2_0
+#if !NETSTANDARD2_0 && !NET40
             _factory = DbProviderFactories.GetFactory(connection);
-#elif NETSTANDARD2_0
+#else
             //Get the assembly from the dbconnection type
             _factory = GetProviderFactory(connection.GetType().Assembly);
 #endif
@@ -277,7 +277,7 @@ namespace ADO.Net.Client.Core
         /// <exception cref="ArgumentException">Thrown when the passed in <paramref name="assembly"/> does not have a <see cref="DbProviderFactory"/> type</exception>
         public static DbProviderFactory GetProviderFactory(Assembly assembly)
         {
-            Type providerFactory = assembly.GetTypes().Where(x => x.GetTypeInfo().BaseType == typeof(DbProviderFactory)).FirstOrDefault();
+            Type providerFactory = assembly.GetTypes().Where(x => x.BaseType == typeof(DbProviderFactory)).FirstOrDefault();
 
             //There's no instance of client factory in this assembly
             if (providerFactory == null)

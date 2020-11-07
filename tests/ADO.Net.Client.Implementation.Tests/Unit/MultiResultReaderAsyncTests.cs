@@ -37,8 +37,8 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
     /// </summary>
     public partial class MultiResultReaderTests
     {
-        #region Tests
-#if ADVANCE_ASYNC       
+        #region Tests    
+#if ADVANCE_ASYNC
         /// <summary>
         /// 
         /// </summary>
@@ -69,7 +69,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
 
             _mockReader.Verify(x => x.CloseAsync(), Times.Once);
         }
-#endif        
+#endif
         /// <summary>
         /// Whens the read object is called should call reader read asynchronous.
         /// </summary>
