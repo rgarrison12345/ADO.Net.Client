@@ -1,6 +1,11 @@
 Version History
 ===============
 
+### 1.4.0
+
+* Updating to ADO.Net.Client.Core
+* Adding .Net 4.0 build
+
 ### 1.3.5.3
 
 * Updating to ADO.Net.Client.Core 1.3.6.2

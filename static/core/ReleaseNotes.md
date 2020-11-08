@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.4.0
+
+* Adding .Net 4.0 build
+
 ### 1.3.6.2
 
 * [DbParameterFormatter](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbParameterFormatter.cs) 
