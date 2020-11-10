@@ -5,7 +5,7 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
 		<RepositoryType>git</RepositoryType>
-		<Version>1.4.1</Version>
+		<Version>1.4.2</Version>
 		<PackageTags>micro-orm orm sql ado.net ado.net.client</PackageTags>
 		<Authors>Robert Garrison</Authors>
 		<Company>Robert Garrison</Company>
@@ -67,6 +67,9 @@
 				<DefineConstants>ADVANCED_FEATURES;ADVANCE_ASYNC;</DefineConstants>
 			</PropertyGroup>
 			<ItemGroup Condition="'$(TargetFramework)'!='netstandard2.1' and '$(TargetFramework)'!='net45'">
+				<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="5.0.0" />
+			</ItemGroup>
+			<ItemGroup Condition="'$(TargetFramework)'!='net45'">
 				<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
 			</ItemGroup>
 			<ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
