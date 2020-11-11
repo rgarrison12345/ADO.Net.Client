@@ -1,6 +1,10 @@
 Version History
 ===============
 
+### 1.4.1
+
+* Adding .Net 5.0 build
+
 ### 1.4.0
 
 * Adding .Net 4.0 build
