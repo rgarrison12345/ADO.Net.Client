@@ -66,11 +66,8 @@
 			<PropertyGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
 				<DefineConstants>ADVANCED_FEATURES;ADVANCE_ASYNC;</DefineConstants>
 			</PropertyGroup>
-			<ItemGroup Condition="'$(TargetFramework)'!='netstandard2.1' and '$(TargetFramework)'!='net45'">
+			<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net461'">
 				<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="5.0.0" />
-			</ItemGroup>
-			<ItemGroup Condition="'$(TargetFramework)'!='net45'">
-				<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
 			</ItemGroup>
 			<ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
 				<Compile Remove="ISqlExecutorAsync.cs" />

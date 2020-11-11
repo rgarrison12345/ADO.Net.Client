@@ -63,6 +63,6 @@
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)'=='Release'">
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
-		<PackageReference Include="ADO.Net.Client.Implementation" Version="1.4.0" />
+		<PackageReference Include="ADO.Net.Client.Implementation" Version="1.4.1" />
 	</ItemGroup>
 </Project>

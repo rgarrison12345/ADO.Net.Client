@@ -77,7 +77,7 @@
 		<ProjectReference Include="..\ADO.Net.Client.Core\ADO.Net.Client.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)'=='Release'">
-		<PackageReference Include="ADO.Net.Client.Core" Version="1.4.0" />
+		<PackageReference Include="ADO.Net.Client.Core" Version="1.4.2" />
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
 	</ItemGroup>
 </Project>
