@@ -1,13 +1,16 @@
 Version History
 ===============
 
-### 1.4.1
+### 1.4.2
 
 * Adding .Net 5.0 build
-
+* Updating to Microsoft.Bcl.AsyncInterfaces 5.0.0 for .net 4.6.1 and
+.net standard 2.0 builds
+ 
 ### 1.4.0
 
 * Adding .Net 4.0 build
+* Updating to ADO.Net.Client.Annotations 1.1.9.1
 
 ### 1.3.6.2
 
