@@ -79,9 +79,11 @@ namespace ADO.Net.Client.Tests
 #if ADVANCE_ASYNC
             //Verify the executor was called
             _executor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
+            _executor.VerifyNoOtherCalls();
 #else 
             //Verify the executor was called
             _executor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
+            _executor.VerifyNoOtherCalls();
 #endif
         }
         /// <summary>
@@ -122,9 +124,11 @@ namespace ADO.Net.Client.Tests
 #if ADVANCE_ASYNC
             //Verify the executor was called
             _executor.Verify(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
+            _executor.VerifyNoOtherCalls();
 #else 
             //Verify the executor was called
             _executor.Verify(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
+            _executor.VerifyNoOtherCalls();
 #endif
         }
         /// <summary>
@@ -162,9 +166,11 @@ namespace ADO.Net.Client.Tests
 #if ADVANCE_ASYNC
             //Verify the executor was called
             _executor.Verify(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
+            _executor.VerifyNoOtherCalls();
 #else
             //Verify the executor was called
             _executor.Verify(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
+            _executor.VerifyNoOtherCalls();
 #endif
         }
         /// <summary>
@@ -203,9 +209,11 @@ namespace ADO.Net.Client.Tests
 #if ADVANCE_ASYNC
             //Verify the executor was called
             _executor.Verify(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
+            _executor.VerifyNoOtherCalls();
 #else 
             //Verify the executor was called
             _executor.Verify(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
+            _executor.VerifyNoOtherCalls();
 #endif
         }
         /// <summary>
@@ -246,9 +254,11 @@ namespace ADO.Net.Client.Tests
 #if ADVANCE_ASYNC
             //Verify the executor was called
             _executor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
+            _executor.VerifyNoOtherCalls();
 #else 
             //Verify the executor was called
             _executor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
+            _executor.VerifyNoOtherCalls();
 #endif
         }
         /// <summary>
@@ -291,9 +301,11 @@ namespace ADO.Net.Client.Tests
 #if ADVANCE_ASYNC
             //Verify the executor was called
             _executor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, CancellationToken.None), Times.Once);
+            _executor.VerifyNoOtherCalls();
 #else 
             //Verify the executor was called
             _executor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, CancellationToken.None), Times.Once);
+            _executor.VerifyNoOtherCalls();
 #endif
         }
         #endregion
@@ -335,9 +347,11 @@ namespace ADO.Net.Client.Tests
 #if ADVANCE_ASYNC
             //Verify the executor was called
             _executor.Verify(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
+            _executor.VerifyNoOtherCalls();
 #else 
             //Verify the executor was called
             _executor.Verify(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
+            _executor.VerifyNoOtherCalls();
 #endif
         }
         #endregion

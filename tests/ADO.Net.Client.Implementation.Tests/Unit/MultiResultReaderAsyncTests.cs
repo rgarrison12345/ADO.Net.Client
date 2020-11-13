@@ -53,9 +53,10 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             await reader.DisposeAsync();
 
             _mockReader.Verify(x => x.CloseAsync(), Times.Once);
+            _mockReader.VerifyNoOtherCalls();
         }
         /// <summary>
-        /// Whens the close astnc is called should call reader close asynchronous.
+        /// Whens the close async is called should call reader close asynchronous.
         /// </summary>
         [Test]
         [Category("MultiResultReader Async Tests")]
@@ -68,6 +69,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             await reader.CloseAsync();
 
             _mockReader.Verify(x => x.CloseAsync(), Times.Once);
+            _mockReader.VerifyNoOtherCalls();
         }
 #endif
         /// <summary>
@@ -98,13 +100,15 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
                 PersonModel returnedModel = await multiReader.ReadObjectAsync<PersonModel>(source.Token);
 
                 Assert.IsNotNull(returnedModel);
-                Assert.IsTrue(returnedModel.DateOfBirth == expectedModel.DateOfBirth);
-                Assert.IsTrue(returnedModel.FirstName == expectedModel.FirstName);
-                Assert.IsTrue(returnedModel.LastName == expectedModel.LastName);
+                Assert.AreEqual(returnedModel.DateOfBirth, expectedModel.DateOfBirth);
+                Assert.AreEqual(returnedModel.FirstName, expectedModel.FirstName);
+                Assert.AreEqual(returnedModel.LastName, expectedModel.LastName);
 
                 //Verify the readers read method was called
                 _mockMapper.Verify(x => x.MapRecord<PersonModel>(_mockReader.Object), Times.Once);
+                _mockMapper.VerifyNoOtherCalls();
                 _mockReader.Verify(x => x.ReadAsync(source.Token), Times.Once);
+                _mockReader.VerifyNoOtherCalls();
             }
         }
         /// <summary>
@@ -114,7 +118,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         [Category("MultiResultReader Async Tests")]
         public async Task WhenReadObject_IsCalled_ShouldCall_ReaderReadAsyncfalse()
         {
-            int delay = _faker.Random.Int(0, 1000);
+            int delay = _faker.Random.Int(1, 1000);
 
             //Wrap in a using statement to dispose of resources automatically
             using (CancellationTokenSource source = new CancellationTokenSource(delay))
@@ -139,6 +143,8 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
                 //Verify the readers read method was called
                 _mockMapper.Verify(x => x.MapRecord<PersonModel>(_mockReader.Object), Times.Never);
                 _mockReader.Verify(x => x.ReadAsync(source.Token), Times.Once);
+                _mockMapper.VerifyNoOtherCalls();
+                _mockReader.VerifyNoOtherCalls();
             }
         }
         /// <summary>
@@ -165,6 +171,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
 
                 //Verify the readers read method was called
                 _mockReader.Verify(x => x.NextResultAsync(source.Token), Times.Once);
+                _mockReader.VerifyNoOtherCalls();
             }
         }
         #endregion

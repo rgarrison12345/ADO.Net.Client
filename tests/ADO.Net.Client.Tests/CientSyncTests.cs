@@ -61,6 +61,7 @@ namespace ADO.Net.Client.Tests
 
             //Verify the executor function was called
             _executor.Verify(x => x.GetScalarValuesStream<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+            _executor.VerifyNoOtherCalls();
         }
         /// <summary>
         /// Whens the get data object stream is called it should call SQL executor get data object stream.
@@ -83,6 +84,7 @@ namespace ADO.Net.Client.Tests
 
             //Verify the executor function was called
             _executor.Verify(x => x.GetDataObjectsStream<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+            _executor.VerifyNoOtherCalls();
         }
         /// <summary>
         /// Whens the get data set is called it should call SQL exectuor get data set.
@@ -101,6 +103,7 @@ namespace ADO.Net.Client.Tests
 
             //Verify the executor function was called
             _executor.Verify(x => x.GetDataSet(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+            _executor.VerifyNoOtherCalls();
         }
         /// <summary>
         /// Whens the get data table is called it should call SQL exectuor get data table.
@@ -119,6 +122,7 @@ namespace ADO.Net.Client.Tests
 
             //Verify the executor function was called
             _executor.Verify(x => x.GetDataTable(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+            _executor.VerifyNoOtherCalls();
         }
         /// <summary>
         /// Whens the get data objects is called it should call SQL exectuor get data objects.
@@ -137,6 +141,7 @@ namespace ADO.Net.Client.Tests
 
             //Verify the executor function was called
             _executor.Verify(x => x.GetDataObjects<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+            _executor.VerifyNoOtherCalls();
         }
         /// <summary>
         /// Whens the get data object is called it should call SQL exectuor get data object.
@@ -154,6 +159,7 @@ namespace ADO.Net.Client.Tests
 
             //Verify the executor function was called
             _executor.Verify(x => x.GetDataObject<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+            _executor.VerifyNoOtherCalls();
         }
         /// <summary>
         /// Whens the get reader is called it should call SQL executor get reader.
@@ -174,6 +180,7 @@ namespace ADO.Net.Client.Tests
 
             //Verify the executor was called
             _executor.Verify(x => x.GetDbDataReader(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior), Times.Once);
+            _executor.VerifyNoOtherCalls();
         }
         /// <summary>
         /// Whens the get scalar values is called it should call SQL executor get scalar values
@@ -195,6 +202,7 @@ namespace ADO.Net.Client.Tests
 
             //Verify the executor was called
             _executor.Verify(x => x.GetScalarValues<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+            _executor.VerifyNoOtherCalls();
         }
         /// <summary>
         /// Whens the get scalar is called it should call SQL executor get scalar.
@@ -211,6 +219,7 @@ namespace ADO.Net.Client.Tests
 
             //Verify the executor was called
             _executor.Verify(x => x.GetScalarValue<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+            _executor.VerifyNoOtherCalls();
         }
         /// <summary>
         /// Whens the get multi result reader is called it should call SQL executor get multi result reader.
@@ -229,6 +238,7 @@ namespace ADO.Net.Client.Tests
 
             //Verify the executor was called
             _executor.Verify(x => x.GetMultiResultReader(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+            _executor.VerifyNoOtherCalls();
         }
         #endregion
         #region Write Test Methods        
@@ -239,14 +249,19 @@ namespace ADO.Net.Client.Tests
         [Category("Synchronous Write Tests")]
         public void WhenExecuteNonQuery_IsCalled__ItShouldCallSqlExecutorExecuteNonQuery()
         {
+            int expectedRecords = _faker.Random.Int(1, 10);
+
             //Need to setup the reader function
-            _executor.Setup(x => x.ExecuteNonQuery(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(1).Verifiable();
+            _executor.Setup(x => x.ExecuteNonQuery(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared)).Returns(expectedRecords).Verifiable();
 
             //Make the call
-            int records = new DbClient(_executor.Object).ExecuteNonQuery(realQuery);
+            int returnedRecords = new DbClient(_executor.Object).ExecuteNonQuery(realQuery);
+
+            Assert.AreEqual(expectedRecords, returnedRecords);
 
             //Verify the executor was called
             _executor.Verify(x => x.ExecuteNonQuery(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared), Times.Once);
+            _executor.VerifyNoOtherCalls();
         }
         #endregion
         #region Helper Methods       

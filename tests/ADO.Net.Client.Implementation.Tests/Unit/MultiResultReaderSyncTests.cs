@@ -66,6 +66,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             reader.Dispose();
 
             _mockReader.Verify(x => x.Close(), Times.Once);
+            _mockReader.VerifyNoOtherCalls();
         }
         /// <summary>
         /// 
@@ -81,6 +82,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             reader.Close();
 
             _mockReader.Verify(x => x.Close(), Times.Once);
+            _mockReader.VerifyNoOtherCalls();
         }
         /// <summary>
         /// 
@@ -107,7 +109,9 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             Assert.AreEqual(returnedModel, default(PersonModel));
 
             _mockReader.Verify(x => x.Read(), Times.Once);
+            _mockReader.VerifyNoOtherCalls();
             _mockMapper.Verify(x => x.MapRecord<PersonModel>(_mockReader.Object), Times.Never);
+            _mockMapper.VerifyNoOtherCalls();
         }
         /// <summary>
         /// 
@@ -132,12 +136,14 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             PersonModel returnedModel = reader.ReadObject<PersonModel>();
 
             Assert.IsNotNull(returnedModel);
-            Assert.IsTrue(returnedModel.DateOfBirth == expectedModel.DateOfBirth);
-            Assert.IsTrue(returnedModel.FirstName == expectedModel.FirstName);
-            Assert.IsTrue(returnedModel.LastName == expectedModel.LastName);
+            Assert.AreEqual(returnedModel.DateOfBirth, expectedModel.DateOfBirth);
+            Assert.AreEqual(returnedModel.FirstName, expectedModel.FirstName);
+            Assert.AreEqual(returnedModel.LastName, expectedModel.LastName);
 
             _mockReader.Verify(x => x.Read(), Times.Once);
+            _mockReader.VerifyNoOtherCalls();
             _mockMapper.Verify(x => x.MapRecord<PersonModel>(_mockReader.Object), Times.Once);
+            _mockMapper.VerifyNoOtherCalls();
         }
         /// <summary>
         /// Whens the next result is called should call reader next result.
@@ -154,8 +160,10 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
 
             bool returned = reader.MoveToNextResult();
 
-            Assert.IsTrue(expected == returned);
+            Assert.AreEqual(expected, returned);
+
             _mockReader.Verify(x => x.NextResult(), Times.Once);
+            _mockReader.VerifyNoOtherCalls();
         }
         #endregion
     }
