@@ -18,6 +18,7 @@ Version History
 ### 1.3.5.2
 
 * Updating to ADO.Net.Client.Core 1.3.6.1
+* Using async dispose for .NET Standard 2.1+ builds where applicable
 
 ### 1.3.5.1
 
