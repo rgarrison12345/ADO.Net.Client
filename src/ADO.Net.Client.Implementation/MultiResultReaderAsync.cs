@@ -113,9 +113,6 @@ namespace ADO.Net.Client.Implementation
                 //Keep yielding results
                 yield return type;
             }
-
-            //Nothing to do here
-            yield break;
         }
 #endif
 #if ADVANCE_ASYNC

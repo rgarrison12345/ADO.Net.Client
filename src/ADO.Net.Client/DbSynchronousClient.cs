@@ -112,9 +112,6 @@ namespace ADO.Net.Client
             {
                 yield return type;
             }
-
-            //Nothing to do here
-            yield break;
         }
         /// <summary>
         /// Gets an instance of <see cref="IMultiResultReader" />
@@ -150,8 +147,6 @@ namespace ADO.Net.Client
             {
                 yield return type;
             }
-
-            yield break;
         }
         #endregion
         #region Data Modifications

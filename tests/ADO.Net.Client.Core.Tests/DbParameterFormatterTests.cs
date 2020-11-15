@@ -63,6 +63,9 @@ namespace ADO.Net.Client.Core.Tests
         }
         #endregion
         #region Tests
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("Constructors")]
         public void MapsNativeGuidParamPrefix()
@@ -339,6 +342,9 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.That(_formatter.MapParameterDirection(info) == ParameterDirection.InputOutput);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapDirection")]
         public void GetNoSetDirection()
@@ -347,6 +353,9 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.That(_formatter.MapParameterDirection(info) == ParameterDirection.InputOutput);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapValue")]
         public void GetValueNull()
@@ -355,6 +364,9 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsTrue(_formatter.MapParameterValue(i) == DBNull.Value);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapValue")]
         public void GetValue()
@@ -363,12 +375,18 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsTrue((int)_formatter.MapParameterValue(i) == i);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapValue")]
         public void GetsDbNullPropertyInfo()
         {
             Assert.AreEqual(_formatter.MapParameterValue(null, null), DBNull.Value);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapValue")]
         public void GetsNormalValuePropertyInfo()
@@ -377,6 +395,9 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.AreEqual(_formatter.MapParameterValue(model.DepartmentID, model.GetType().GetProperty(nameof(model.DepartmentID))), model.DepartmentID);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapName")]
         public void MapPropertyInfoName()
@@ -387,6 +408,9 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsTrue(parameterName == string.Concat(_formatter.ParameterNamePrefix, "loginCredential"));
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapName")]
         public void MapParameterNamePrefix()
@@ -395,6 +419,9 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsTrue(_formatter.MapParameterName(name) == name);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapName")]
         public void MapParameterNameNoPrefix()
@@ -403,6 +430,9 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsTrue(_formatter.MapParameterName(name) == string.Concat(_formatter.ParameterNamePrefix, name));
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapValue")]
         public void GetGuidString()
@@ -415,6 +445,9 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.AreEqual(formatter.MapParameterValue(model.EmployeeID, model.GetType().GetProperty(nameof(model.EmployeeID))), model.EmployeeID.ToString());
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapParameter")]
         public void MapNativeGuidProperty()
@@ -431,6 +464,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsTrue((Guid)parameter.Value == guid);
             Assert.IsTrue(parameter.Size == 0);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapParameter")]
         public void MapNonNativeGuidProperty()
@@ -447,6 +483,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsTrue((string)parameter.Value == guid.ToString());
             Assert.IsTrue(parameter.Size == 40);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapParameter")]
         public void StringFixedLengthCommonLength()
@@ -461,6 +500,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual((string)parameter.Value, value);
             Assert.AreEqual(parameter.DbType, DbType.StringFixedLength);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapParameter")]
         public void StringCommonLength()
@@ -475,6 +517,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual((string)parameter.Value, value);
             Assert.AreEqual(parameter.DbType, DbType.String);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapParameter")]
         public void AnsiStringFixedLengthCommonLength()
@@ -489,6 +534,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual((string)parameter.Value, value);
             Assert.AreEqual(parameter.DbType, DbType.AnsiStringFixedLength);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapParameter")]
         public void ANSIStringCommonLength()
@@ -503,6 +551,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual((string)parameter.Value, value);
             Assert.AreEqual(parameter.DbType, DbType.AnsiString);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapParameter")]
         public void StringFixedLengthBeyondCommonLength()
@@ -518,6 +569,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual((string)parameter.Value, value);
             Assert.AreEqual(parameter.DbType, DbType.StringFixedLength);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapParameter")]
         public void StringBeyondCommonLength()
@@ -533,6 +587,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual((string)parameter.Value, value);
             Assert.AreEqual(parameter.DbType, DbType.String);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapParameter")]
         public void AnsiStringFixedLengthBeyondCommonLength()
@@ -548,6 +605,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual((string)parameter.Value, value);
             Assert.AreEqual(parameter.DbType, DbType.AnsiStringFixedLength);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         [Category("MapParameter")]
         public void ANSIStringBeyondCommonLength()

@@ -77,8 +77,6 @@ namespace ADO.Net.Client.Core
                 //Return this object
                 yield return MapRecord<T>(reader);
             }
-
-            yield break;
         }
 #endif
 #if !NET40
@@ -117,8 +115,6 @@ namespace ADO.Net.Client.Core
                 //Return this object
                 yield return MapRecord<T>(reader);
             }
-
-            yield break;
         }
         /// <summary>
         /// Maps an entire result set in the <paramref name="reader"/>
@@ -149,7 +145,8 @@ namespace ADO.Net.Client.Core
         {
             //Get an instance of the object passed in
             T returnType = Activator.CreateInstance<T>();
-            IEnumerable<PropertyInfo> writeableProperties = returnType.GetType().GetProperties().Where(x => x.CanWrite).Where(x => Attribute.IsDefined(x, typeof(DbFieldIgnore), false) == false);
+            IEnumerable<PropertyInfo> writeableProperties = returnType.GetType().GetProperties().Where(x => x.CanWrite)
+                .Where(x => Attribute.IsDefined(x, typeof(DbFieldIgnore), false) == false);
 
             //Loop through all fields in this record
             for (int i = 0; i < record.FieldCount; i++)

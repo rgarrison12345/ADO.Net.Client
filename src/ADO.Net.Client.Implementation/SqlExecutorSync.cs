@@ -157,8 +157,6 @@ namespace ADO.Net.Client.Implementation
                     //Return this back to the caller
                     yield return type;
                 }
-
-                yield break;
             }
         }
         /// <summary>
@@ -256,8 +254,6 @@ namespace ADO.Net.Client.Implementation
                     }
                 }
             }
-
-            yield break;
         }
         /// <summary>
         /// Utility method for returning a scalar value from the database
