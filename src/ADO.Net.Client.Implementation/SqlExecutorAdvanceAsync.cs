@@ -71,8 +71,6 @@ namespace ADO.Net.Client.Implementation
                     }
                 }
             }
-
-            yield break;
         }
         /// <summary>
         /// Utility method for returning an <see cref="IEnumerable{T}"/> of scalar values from the database
@@ -181,9 +179,6 @@ namespace ADO.Net.Client.Implementation
                         yield return t;
                     }
                 }
-
-                //Nothing to do here
-                yield break;
             }
         }
         /// <summary>

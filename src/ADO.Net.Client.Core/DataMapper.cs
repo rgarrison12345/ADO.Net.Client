@@ -77,8 +77,6 @@ namespace ADO.Net.Client.Core
                 //Return this object
                 yield return MapRecord<T>(reader);
             }
-
-            yield break;
         }
 #endif
 #if !NET40
@@ -117,8 +115,6 @@ namespace ADO.Net.Client.Core
                 //Return this object
                 yield return MapRecord<T>(reader);
             }
-
-            yield break;
         }
         /// <summary>
         /// Maps an entire result set in the <paramref name="reader"/>

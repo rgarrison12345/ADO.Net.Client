@@ -225,9 +225,6 @@ namespace ADO.Net.Client
                 yield return type;
             }
 #endif
-
-            //Nothing to do here
-            yield break;
         }
         /// <summary>
         /// Gets an instance of <see cref="IAsyncEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine streamed from the server
@@ -257,9 +254,6 @@ namespace ADO.Net.Client
                 yield return type;
             }
 #endif
-
-            //Nothing to do here
-            yield break;
         }
 #endif
         #endregion

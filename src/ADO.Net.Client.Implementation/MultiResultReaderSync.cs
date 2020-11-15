@@ -43,9 +43,6 @@ namespace ADO.Net.Client.Implementation
                 //Keep yielding results
                 yield return type;
             }
-
-            //Nothing to do here
-            yield break;
         }
         /// <summary>
         /// Gets an entire <see cref="IEnumerable{T}"/> of <typeparamref name="T"/>
