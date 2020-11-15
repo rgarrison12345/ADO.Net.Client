@@ -101,6 +101,7 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsNotNull(param);
             Assert.IsInstanceOf(typeof(CustomDbParameter), param);
             _formatter.Verify(x => x.MapDbParameter(It.IsAny<DbParameter>(), value, info), Times.Once);
+            _formatter.VerifyNoOtherCalls();
         }
         /// <summary>
         /// 
@@ -118,6 +119,7 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(parameter.ParameterName, name);
             Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
             _formatter.Verify(x => x.MapParameterName(name), Times.Once);
+            _formatter.VerifyNoOtherCalls();
         }
         /// <summary>
         /// 
@@ -139,6 +141,7 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
             _formatter.Verify(x => x.MapParameterName(name), Times.Once);
             _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
+            _formatter.VerifyNoOtherCalls();
         }
         /// <summary>
         /// 
@@ -164,6 +167,7 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
             _formatter.Verify(x => x.MapParameterName(name), Times.Once);
             _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
+            _formatter.VerifyNoOtherCalls();
         }
         /// <summary>
         /// 
@@ -192,6 +196,7 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(value, parameter.Value);
             _formatter.Verify(x => x.MapParameterName(name), Times.Once);
             _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
+            _formatter.VerifyNoOtherCalls();
         }
 #if !NET45
         /// <summary>
@@ -221,6 +226,7 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(dbType, parameter.DbType);
             _formatter.Verify(x => x.MapParameterName(name), Times.Once);
             _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
+            _formatter.VerifyNoOtherCalls();
         }
 #endif
         #endregion

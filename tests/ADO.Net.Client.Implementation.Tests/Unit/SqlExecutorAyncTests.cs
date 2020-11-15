@@ -42,69 +42,65 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         public async Task WhenGetDbDataReaderAsync_IsCalled__ItShouldCallsDbObjectFactory_GetDbCommand()
         {
             CommandBehavior behavior = _faker.PickRandom<CommandBehavior>();
-            int delay = _faker.Random.Int(0, 1000);
 
-            //Wrap this in a using statement to automatically dispose of resources
-            using (CancellationTokenSource source = new CancellationTokenSource(delay))
-            {
 #if ADVANCE_ASYNC
-                DbDataReader returned = await _executor.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, source.Token);
+            DbDataReader returned = await _executor.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, default);
 #else
-                DbDataReader returned = await _executor.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, source.Token);
+            DbDataReader returned = await _executor.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, default);
 #endif
 
 #if ADVANCE_ASYNC
-                if (realQuery.ShouldBePrepared == true)
-                {
-                    _command.Verify(x => x.PrepareAsync(source.Token), Times.Once);
-                }
-                else
-                {
-                    _command.Verify(x => x.PrepareAsync(source.Token), Times.Never);
-                }   
+            if (realQuery.ShouldBePrepared == true)
+            {
+                _command.Verify(x => x.PrepareAsync(default), Times.Once);
+            }
+            else
+            {
+                _command.Verify(x => x.PrepareAsync(default), Times.Never);
+            }
+
+            _command.Verify(x => x.DisposeAsync(), Times.Once);
 #endif
 
-                //Verify the calls were made
-                _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
-            }
+            //Verify the calls were made
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
         }
         /// <summary>
-        /// When the get scalar value is called it should calls database object factory get database command.
+        /// When the get scalar value async is called it should calls database object factory get database command.
         /// </summary>
         [Test]
         public async Task WhenGetScalarValueAsync_IsCalled__ItShouldCallsDbObjectFactory_GetDbCommand()
         {
             string expected = _faker.Random.AlphaNumeric(30);
-            int delay = _faker.Random.Int(0, 1000);
 
-            //Wrap this in a using statement to automatically dispose of resources
-            using (CancellationTokenSource source = new CancellationTokenSource(delay))
-            {
-                _command.Setup(x => x.ExecuteScalarAsync(source.Token)).ReturnsAsync(expected);
+            _command.Setup(x => x.ExecuteScalarAsync(default)).ReturnsAsync(expected);
 
 #if ADVANCE_ASYNC
-                string returned = await _executor.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token);
+            string returned = await _executor.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, default);
 #else
-                string returned = await _executor.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token);
+            string returned = await _executor.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, default);
 #endif
 
 #if ADVANCE_ASYNC
-                if (realQuery.ShouldBePrepared == true)
-                {
-                    _command.Verify(x => x.PrepareAsync(source.Token), Times.Once);
-                }
-                else
-                {
-                    _command.Verify(x => x.PrepareAsync(source.Token), Times.Never);
-                }
+            if (realQuery.ShouldBePrepared == true)
+            {
+                _command.Verify(x => x.PrepareAsync(default), Times.Once);
+            }
+            else
+            {
+                _command.Verify(x => x.PrepareAsync(default), Times.Never);
+            }
+
+            _command.Verify(x => x.DisposeAsync(), Times.Once);
 #endif
 
-                Assert.AreEqual(expected, returned);
+            Assert.AreEqual(expected, returned);
 
-                //Verify the calls were made
-                _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
-                _command.Verify(x => x.ExecuteScalarAsync(source.Token), Times.Once);
-            }
+            //Verify the calls were made
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
+            _command.Verify(x => x.ExecuteScalarAsync(default), Times.Once);
+            _factory.VerifyNoOtherCalls();
+            _command.VerifyNoOtherCalls();
         }
         #endregion
         #region Write Test Methods                
@@ -115,36 +111,34 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         public async Task WhenExecuteNonQueryAsync_IsCalled__ItShouldCallsDbObjectFactory_GetDbCommand()
         {
             int expected = _faker.Random.Int();
-            int delay = _faker.Random.Int(0, 1000);
 
-            //Wrap this in a using statement to automatically dispose of resources
-            using (CancellationTokenSource source = new CancellationTokenSource(delay))
-            {
-                _command.Setup(x => x.ExecuteNonQueryAsync(source.Token)).ReturnsAsync(expected);
+            _command.Setup(x => x.ExecuteNonQueryAsync(default)).ReturnsAsync(expected);
 
 #if ADVANCE_ASYNC
-                int returned = await _executor.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, source.Token);
+            int returned = await _executor.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, default);
 #else
-                int returned = await _executor.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, source.Token);
+            int returned = await _executor.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, default);
 #endif
 
 #if ADVANCE_ASYNC
-                if (realQuery.ShouldBePrepared == true)
-                {
-                    _command.Verify(x => x.PrepareAsync(source.Token), Times.Once);
-                }
-                else
-                {
-                    _command.Verify(x => x.PrepareAsync(source.Token), Times.Never);
-                }
+            if (realQuery.ShouldBePrepared == true)
+            {
+                _command.Verify(x => x.PrepareAsync(default), Times.Once);
+            }
+            else
+            {
+                _command.Verify(x => x.PrepareAsync(default), Times.Never);
+            }
+
+            _command.Verify(x => x.DisposeAsync(), Times.Once);
 #endif
 
-                Assert.AreEqual(expected, returned);
+            Assert.AreEqual(expected, returned);
 
-                //Verify the calls were made
-                _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
-                _command.Verify(x => x.ExecuteNonQueryAsync(source.Token), Times.Once);
-            }
+            _command.Verify(x => x.ExecuteNonQueryAsync(default), Times.Once);
+            _command.VerifyNoOtherCalls();
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
+            _factory.VerifyNoOtherCalls();
         }
         #endregion
     }
