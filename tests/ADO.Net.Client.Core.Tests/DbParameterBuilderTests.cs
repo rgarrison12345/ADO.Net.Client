@@ -224,6 +224,8 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(precision ?? 0, parameter.Precision);
             Assert.AreEqual(direction, parameter.Direction);
             Assert.AreEqual(dbType, parameter.DbType);
+            Assert.AreEqual(name, parameter.ParameterName);
+            Assert.AreEqual(value, parameter.Value);
             _formatter.Verify(x => x.MapParameterName(name), Times.Once);
             _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
             _formatter.VerifyNoOtherCalls();
