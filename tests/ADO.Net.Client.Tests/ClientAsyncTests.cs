@@ -347,12 +347,12 @@ namespace ADO.Net.Client.Tests
 #if ADVANCE_ASYNC
             //Verify the executor was called
             _executor.Verify(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
-            _executor.VerifyNoOtherCalls();
 #else 
             //Verify the executor was called
             _executor.Verify(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
-            _executor.VerifyNoOtherCalls();
 #endif
+
+            _executor.VerifyNoOtherCalls();
         }
         #endregion
         #region Helper Methods     
