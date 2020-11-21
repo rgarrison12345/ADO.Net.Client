@@ -19,6 +19,7 @@ jobs:
       run: dotnet build -c Release
   net50:
     runs-on: windows-latest
+    steps:
     - uses: actions/checkout@v2
     - name: Setup Build
       uses: actions/setup-dotnet@v1
