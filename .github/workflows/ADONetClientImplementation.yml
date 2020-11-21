@@ -1,4 +1,4 @@
-name: Build ADO.Net.Client.Core
+name: Build ADO.Net.Client.Implementation
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
     - name: Build
       run: dotnet build -c Release
     - name: Test
-      run: dotnet test -c Release -f net5.0 tests\ADO.Net.Client.Core.Tests\ADO.Net.Client.Core.Tests.csproj --no-build
+      run: dotnet test -c Release -f net5.0 tests\ADO.Net.Client.Implementation.Tests\ADO.Net.Client.Implementation.Tests.csproj --no-build
   netCoreApp31:
     runs-on: windows-latest
     steps:
@@ -40,7 +40,7 @@ jobs:
     - name: Build
       run: dotnet build -c Release
     - name: Test
-      run: dotnet test -c Release -f netcoreapp3.1 tests\ADO.Net.Client.Core.Tests\ADO.Net.Client.Core.Tests.csproj --no-build
+      run: dotnet test -c Release -f netcoreapp3.1 tests\ADO.Net.Client.Implementation.Tests\ADO.Net.Client.Implementation.Tests.csproj --no-build
   netCoreApp21:
     runs-on: windows-latest
     steps:
@@ -52,4 +52,4 @@ jobs:
     - name: Build
       run: dotnet build -c Release
     - name: Test
-      run: dotnet test -c Release -f netcoreapp2.1 tests\ADO.Net.Client.Core.Tests\ADO.Net.Client.Core.Tests.csproj --no-build
+      run: dotnet test -c Release -f netcoreapp2.1 tests\ADO.Net.Client.Implementation.Tests\ADO.Net.Client.Implementation.Tests.csproj --no-build
