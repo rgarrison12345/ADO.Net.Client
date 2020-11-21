@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build 5.0:
+  build net50:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -19,7 +19,7 @@ jobs:
       run: dotnet build -c Release
     - name: Test
       run: dotnet test -c Release -f net5.0 tests\ADO.Net.Client.Core.Tests\ADO.Net.Client.Core.Tests.csproj --no-build
-  build netCoreApp3.1:
+  build netCoreApp31:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -31,7 +31,7 @@ jobs:
       run: dotnet build -c Release
     - name: Test
       run: dotnet test -c Release -f netcoreapp3.1 tests\ADO.Net.Client.Core.Tests\ADO.Net.Client.Core.Tests.csproj --no-build
-  build netCoreApp2.1:
+  build netCoreApp21:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
