@@ -28,7 +28,7 @@ jobs:
     - name: Build
       run: dotnet build -c Release
     - name: Test
-      run: dotnet test -c Release -f net5.0 tests\ADO.Net.Client.Implementation.Tests\ADO.Net.Client.Implementation.Tests.csproj --no-build
+      run: dotnet test -c Release -f net50 tests\ADO.Net.Client.Implementation.Tests\ADO.Net.Client.Implementation.Tests.csproj --no-build
   netCoreApp31:
     runs-on: windows-latest
     steps:
