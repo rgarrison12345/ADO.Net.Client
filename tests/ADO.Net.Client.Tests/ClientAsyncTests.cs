@@ -79,12 +79,12 @@ namespace ADO.Net.Client.Tests
 #if ADVANCE_ASYNC
             //Verify the executor was called
             _executor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
-            _executor.VerifyNoOtherCalls();
 #else 
             //Verify the executor was called
             _executor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
-            _executor.VerifyNoOtherCalls();
 #endif
+
+            _executor.VerifyNoOtherCalls();
         }
         /// <summary>
         /// Whens the get data objects asynchronous is called it should throw operation cancelled exception.
@@ -124,12 +124,12 @@ namespace ADO.Net.Client.Tests
 #if ADVANCE_ASYNC
             //Verify the executor was called
             _executor.Verify(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
-            _executor.VerifyNoOtherCalls();
 #else 
             //Verify the executor was called
             _executor.Verify(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
-            _executor.VerifyNoOtherCalls();
 #endif
+
+            _executor.VerifyNoOtherCalls();
         }
         /// <summary>
         /// Whens the get data object asynchronous is called it should throw operation cancelled.
@@ -166,12 +166,12 @@ namespace ADO.Net.Client.Tests
 #if ADVANCE_ASYNC
             //Verify the executor was called
             _executor.Verify(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
-            _executor.VerifyNoOtherCalls();
 #else
             //Verify the executor was called
             _executor.Verify(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
-            _executor.VerifyNoOtherCalls();
 #endif
+
+            _executor.VerifyNoOtherCalls();
         }
         /// <summary>
         /// Whens the get scalar values asynchronous is called it should throw operation canceled exception.
@@ -209,12 +209,12 @@ namespace ADO.Net.Client.Tests
 #if ADVANCE_ASYNC
             //Verify the executor was called
             _executor.Verify(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
-            _executor.VerifyNoOtherCalls();
 #else 
             //Verify the executor was called
             _executor.Verify(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
-            _executor.VerifyNoOtherCalls();
 #endif
+
+            _executor.VerifyNoOtherCalls();
         }
         /// <summary>
         /// Whens the get scalar value asynchronous is called it should throw operation canceled exception.
@@ -254,12 +254,12 @@ namespace ADO.Net.Client.Tests
 #if ADVANCE_ASYNC
             //Verify the executor was called
             _executor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
-            _executor.VerifyNoOtherCalls();
 #else 
             //Verify the executor was called
             _executor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None), Times.Once);
-            _executor.VerifyNoOtherCalls();
 #endif
+
+            _executor.VerifyNoOtherCalls();
         }
         /// <summary>
         /// Whens the get database data reader asynchronous is called it should throw operation canceled exception.
@@ -301,12 +301,12 @@ namespace ADO.Net.Client.Tests
 #if ADVANCE_ASYNC
             //Verify the executor was called
             _executor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, CancellationToken.None), Times.Once);
-            _executor.VerifyNoOtherCalls();
 #else 
             //Verify the executor was called
             _executor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, CancellationToken.None), Times.Once);
-            _executor.VerifyNoOtherCalls();
 #endif
+
+            _executor.VerifyNoOtherCalls();
         }
         #endregion
         #region Write Test Methods        
