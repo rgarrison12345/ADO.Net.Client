@@ -1,4 +1,4 @@
-name: Build ADO.Net.Client.Core
+name: Build ADO.Net.Client
 
 on:
   push:
