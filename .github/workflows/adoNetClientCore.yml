@@ -1,0 +1,45 @@
+name: Build
+
+on:
+  push:
+    branches: [ master, development ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build 5.0:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Build
+      uses: actions/setup-dotnet@v1
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build -c Release
+    - name: Test
+      run: dotnet test -c Release -f net5.0 tests\ADO.Net.Client.Core.Tests\ADO.Net.Client.Core.Tests.csproj --no-build
+  build netCoreApp3.1:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Build
+      uses: actions/setup-dotnet@v1
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build -c Release
+    - name: Test
+      run: dotnet test -c Release -f netcoreapp3.1 tests\ADO.Net.Client.Core.Tests\ADO.Net.Client.Core.Tests.csproj --no-build
+  build netCoreApp2.1:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Build
+      uses: actions/setup-dotnet@v1
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build -c Release
+    - name: Test
+      run: dotnet test -c Release -f netcoreapp2.1 tests\ADO.Net.Client.Core.Tests\ADO.Net.Client.Core.Tests.csproj --no-build
