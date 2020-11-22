@@ -81,7 +81,8 @@ These libraries are licensed under the [MIT License](LICENSE.md) and may be free
 
 The goals of this project are:
 
-* **.NET Standard support:** It must run on the full .NET Framework and all platforms supported by .NET Core.
+* **.NET Standard support:** It must run on the full .NET Framework 
+and all platforms supported by .NET Core and beyond.
 * **Async:** All operations must be truly asynchronous whenever possible.
 * **Lightweight:** Only the core of ADO.NET is implemented, not EF or Designer types.
 * **Managed:** Managed code only, no native code.
