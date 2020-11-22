@@ -63,7 +63,15 @@ improves the throughput of a web server that performs database operations.
 
 #### IAsyncEnumerable Support
 
-This library is capable of returning a typed object as an async enumerable on read operations.  The IAsyncEnumerable interface was introduced in .NET Core 3.1 and C# 8.  This feature is available in .NET 4.6.1 and .NETStandard builds.
+This library is capable of returning a typed object as an async enumerable 
+on read operations.  The IAsyncEnumerable interface was introduced in 
+.NET Core 3.1 and C# 8.  This feature is available starting in .NET 4.6.1 
+and .NETStandard builds.
+
+#### IAsyncDisposable Support
+
+.NET Standard2.1 and .NET5.0+ builds dispose of resources asynchronously
+where applicable
 
 ### Licensing
 
