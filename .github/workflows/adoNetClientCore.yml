@@ -3,8 +3,12 @@ name: Build ADO.Net.Client.Core
 on:
   push:
     branches: [ master, development ]
+    paths-ignore:
+    - 'static/**'
   pull_request:
     branches: [ master ]
+    paths-ignore:
+    - 'static/**'
 
 jobs:
   build:
