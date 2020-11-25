@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net50;netcoreapp3.1;netcoreapp2.1;</TargetFrameworks>
+    <TargetFrameworks>net50;netcoreapp3.1;netcoreapp2.1;net461;net45;</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <LangVersion>latest</LangVersion>
     <AssemblyName>ADO.Net.Client.Implementation.Tests</AssemblyName>
     <RootNamespace>ADO.Net.Client.Implementation.Tests</RootNamespace>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)'!='netcoreapp2.1'">
+  <PropertyGroup Condition="'$(TargetFramework)' != 'netcoreapp2.1' and '$(TargetFramework)' != 'net461' and '$(TargetFramework)' != 'net45'">
     <DefineConstants>ADVANCE_ASYNC</DefineConstants>
   </PropertyGroup>
   <ItemGroup>

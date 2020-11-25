@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net50;netcoreapp3.1;netcoreapp2.1;</TargetFrameworks>
+		<TargetFrameworks>net50;netcoreapp3.1;netcoreapp2.1;net461;net45;</TargetFrameworks>
 		<IsPackable>false</IsPackable>
 		<LangVersion>latest</LangVersion>
 		<AssemblyName>ADO.Net.Client.Core.Tests</AssemblyName>
 		<RootNamespace>ADO.Net.Client.Core.Tests</RootNamespace>
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(TargetFramework)'!='netcoreapp2.1'">
+	<PropertyGroup Condition="'$(TargetFramework)' != 'netcoreapp2.1' and '$(TargetFramework)' != 'net461' and '$(TargetFramework)' != 'net45'">
 		<DefineConstants>ADVANCED_FEATURES</DefineConstants>
 	</PropertyGroup>
 	<ItemGroup>
@@ -24,7 +24,7 @@
 		<ProjectReference Include="..\..\src\ADO.Net.Client.Core\ADO.Net.Client.Core.csproj" />
 		<ProjectReference Include="..\ADO.Net.Client.Tests.Common\ADO.Net.Client.Tests.Common.csproj" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)'=='netcoreapp2.1'">
-		<Compile Remove="DataRowTests.cs" />
-	</ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net45' or '$(TargetFramework)'=='net461' or '$(TargetFramework)'=='netcoreapp2.1'">
+    <Compile Remove="DataRowTests.cs" />
+  </ItemGroup>
 </Project>

@@ -11,16 +11,6 @@ on:
     - 'static/**'
 
 jobs:
-  build:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup Build
-      uses: actions/setup-dotnet@v1
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build -c Release
   net50:
     runs-on: windows-latest
     steps:
@@ -57,3 +47,27 @@ jobs:
       run: dotnet build -c Release
     - name: Test
       run: dotnet test -c Release -f netcoreapp2.1 tests\ADO.Net.Client.Core.Tests\ADO.Net.Client.Core.Tests.csproj --no-build
+  net461:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Build
+      uses: actions/setup-dotnet@v1
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build -c Release
+    - name: Test
+      run: dotnet test -c Release -f net461 tests\ADO.Net.Client.Core.Tests\ADO.Net.Client.Core.Tests.csproj --no-build
+  net45:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Build
+      uses: actions/setup-dotnet@v1
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build -c Release
+    - name: Test
+      run: dotnet test -c Release -f net45 tests\ADO.Net.Client.Core.Tests\ADO.Net.Client.Core.Tests.csproj --no-build
