@@ -1,6 +1,14 @@
 Version History
 ===============
 
+### 1.1.9.2
+
+* Adding .NET 5.0 build
+
+### 1.1.9.1
+
+* Adding .NET 4.0 build
+
 ### 1.1.7
 
 * [AutoIncrement](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/AutoIncrement.cs) missing AttributeUsage on the class to declare it is for properties
