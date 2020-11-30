@@ -7,7 +7,7 @@ Questions on Stack Overflow should be tagged [`ADO.Net.Client`](https://stackove
 
 ### .NET Standard Support
 
-This library supports .NET Framework 4.5+ and .NET Standard2.0+
+This library supports .NET Framework 4.0+ and .NET Standard2.0+
 
 ### Database Agnostic
 
