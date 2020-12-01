@@ -1,12 +1,13 @@
 # ADO.Net.Client
 These libraries are a very thin wrapper around a given [ADO.NET](https://msdn.microsoft.com/en-us/library/e80y5yhx.aspx) client driver.
 These libraries are capable of working with any ADO.Net compatible driver, meaining they are database agnostic.  There are three libraries that operate at different levels of the ADO.Net workflow, discussed below in the nuget packages section. 
+Questions on Stack Overflow should be tagged [`ADO.Net.Client`](https://stackoverflow.com/questions/tagged/ADO.Net.Client)
 
 ## Why Use This Library?
 
 ### .NET Standard Support
 
-This library supports .NET Framework 4.5+ and .NET Standard2.0+
+This library supports .NET Framework 4.0+ and .NET Standard2.0+
 
 ### Database Agnostic
 
