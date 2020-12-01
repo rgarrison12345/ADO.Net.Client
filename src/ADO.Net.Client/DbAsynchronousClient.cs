@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Core;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -41,6 +42,7 @@ namespace ADO.Net.Client
         /// <summary>
         /// Gets an instance of <see cref="DataTable"/> asynchronously
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <param name="query">SQL query to use to build a <see cref="DataTable"/></param>
         /// <returns>Returns a <see cref="Task{T}"/> of <see cref="DataTable"/></returns>
@@ -62,6 +64,7 @@ namespace ADO.Net.Client
         /// <summary>
         /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <typeparam name="T">An instance of the type caller wants create from query passed into procedure</typeparam>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
@@ -87,6 +90,7 @@ namespace ADO.Net.Client
         /// <summary>
         /// Gets an instance of <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
@@ -110,6 +114,7 @@ namespace ADO.Net.Client
         /// <summary>
         /// Utility method for returning a <see cref="Task{DbDataReader}"/> object created from the passed in query
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <param name="behavior">Provides a description of the results of the query and its effect on the database.  Defaults to <see cref="CommandBehavior.Default"/></param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
@@ -133,6 +138,7 @@ namespace ADO.Net.Client
         /// <summary>
         /// Utility method for returning a <see cref="Task{T}"/> value from the database
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
@@ -156,6 +162,7 @@ namespace ADO.Net.Client
         /// <summary>
         /// Gets an instance of <see cref="IMultiResultReader" />
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>
@@ -178,6 +185,7 @@ namespace ADO.Net.Client
         /// <summary>
         /// Gets an instance of <see cref="IEnumerable{T}"/> of scalar values
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
@@ -200,6 +208,7 @@ namespace ADO.Net.Client
         /// <summary>
         /// Gets an instance of <see cref="IAsyncEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine streamed from the server
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
@@ -229,6 +238,7 @@ namespace ADO.Net.Client
         /// <summary>
         /// Gets an instance of <see cref="IAsyncEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine streamed from the server
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
@@ -261,6 +271,7 @@ namespace ADO.Net.Client
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <param name="query">An instance of <see cref="ISqlQuery"/> used to query a data store</param>
         /// <returns>Returns the number of rows affected by the passed in <paramref name="query"/></returns>
