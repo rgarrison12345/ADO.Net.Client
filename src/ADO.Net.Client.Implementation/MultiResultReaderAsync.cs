@@ -39,6 +39,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Gets an entire <see cref="IEnumerable{T}"/> of <typeparamref name="T"/> asynchronously
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Returns an instance of <see cref="IEnumerable{T}"/> as an entire collection of <typeparamref name="T"/></returns>
@@ -56,6 +57,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Gets a single instance of <typeparamref name="T"/> asynchronously
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Gets an instance of <typeparamref name="T"/></returns>
@@ -78,7 +80,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Moves to next result set in the underlying data set asynchronously
         /// </summary>
-        /// <exception cref="OperationCanceledException"></exception>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Returns <c>true</c> if there's another result set in the data set <c>false</c> otherwise</returns>
         public virtual async Task<bool> MoveToNextResultAsync(CancellationToken token = default)
@@ -96,6 +98,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Gets an <see cref="IAsyncEnumerable{T}"/> based on the <typeparamref name="T"/> streamed from the server asynchronously
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <typeparam name="T">An instance of the type the caller wants create from the query passed into procedure</typeparam>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Returns an instance of <see cref="IAsyncEnumerable{T}"/></returns>

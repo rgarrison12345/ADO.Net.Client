@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Core;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -39,6 +40,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Utility method for returning an <see cref="IAsyncEnumerable{T}"/> of scalar values streamed from the database
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
@@ -75,6 +77,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Utility method for returning an <see cref="IEnumerable{T}"/> of scalar values from the database
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
@@ -115,6 +118,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Gets an instance of the <typeparamref name="T"/> parameter object that creates an object based on the query passed into the routine
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
@@ -151,6 +155,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Gets an <see cref="IAsyncEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
@@ -184,6 +189,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Gets a <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
@@ -208,6 +214,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Utility method for returning a <see cref="Task"/> of <see cref="DbDataReader"/>
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="behavior">Provides a description of the results of the query and its effect on the database.  Defaults to <see cref="CommandBehavior.Default"/></param>
@@ -239,6 +246,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Utility method for returning a <see cref="Task"/> of the <typeparamref name="T"/> value from the database
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an errors</param>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
@@ -270,6 +278,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Utility method for returning an instance of <see cref="IMultiResultReader"/> asynchronously
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
@@ -292,6 +301,7 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure without a transaction
         /// </summary>
+        /// <exception cref="OperationCanceledException">Thrown in a thread upon cancellation of an operation that the thread was executing</exception>
         /// <param name="shouldBePrepared">Indicates if the current <paramref name="query"/> needs to be prepared (or compiled) version of the command on the data source.</param>
         /// <param name="commandTimeout">The wait time in seconds before terminating the attempt to execute a command and generating an error</param>
         /// <param name="token">Propagates notification that operations should be canceled</param>
