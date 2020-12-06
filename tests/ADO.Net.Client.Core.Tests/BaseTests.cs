@@ -28,6 +28,10 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+#if NET40 || NET45 || NET461
+using System.Security;
+using System.Security.Permissions;
+#endif
 #endregion
 
 namespace ADO.Net.Client.Core.Tests
@@ -272,6 +276,20 @@ namespace ADO.Net.Client.Core.Tests
             Assert.IsNotNull(parameter);
             Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
         }
+#if NET40 || NET45 || NET461
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void CreateCodeAccessPermission()
+        {
+            PermissionState state = _faker.PickRandom<PermissionState>();
+            CodeAccessPermission permission = _factory.CreatePermission(state);
+
+            Assert.IsNotNull(permission);
+            Assert.IsInstanceOf(typeof(CustomDbCodePermission), permission);
+        }
+#endif
         #endregion
     }
 }

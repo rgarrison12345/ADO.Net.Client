@@ -9,6 +9,9 @@
   <PropertyGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
     <DefineConstants>ADVANCED_FEATURES</DefineConstants>
   </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
+    <Compile Remove="CustomDbAccessPermission.cs" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\ADO.Net.Client.Annotations\ADO.Net.Client.Annotations.csproj" />
   </ItemGroup>

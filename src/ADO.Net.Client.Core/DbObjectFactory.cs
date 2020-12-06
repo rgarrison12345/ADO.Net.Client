@@ -28,6 +28,10 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Reflection;
+#if NET40 || NET45 || NET461
+using System.Security;
+using System.Security.Permissions;
+#endif
 #endregion
 
 namespace ADO.Net.Client.Core
@@ -118,6 +122,17 @@ namespace ADO.Net.Client.Core
 #endif
         #endregion
         #region Utility Methods
+#if NET40 || NET45 || NET461
+        /// <summary>
+        /// Returns a new instance of the provider's class that implements the provider's version of the <see cref="CodeAccessPermission"/>
+        /// </summary>
+        /// <param name="state">An instance of <see cref="PermissionState"/></param>
+        /// <returns>Returns an instance of <see cref="CodeAccessPermission"/></returns>
+        public virtual CodeAccessPermission CreatePermission(PermissionState state)
+        {
+            return _factory.CreatePermission(state);
+        }
+#endif
         /// <summary>
         /// Gets an instance of <see cref="DbDataSourceEnumerator"/>
         /// </summary>
