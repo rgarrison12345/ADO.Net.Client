@@ -23,6 +23,10 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using System.Data.Common;
+#if NET40 || NET45 || NET461
+using System.Security;
+using System.Security.Permissions;
+#endif
 #endregion
 
 namespace ADO.Net.Client.Tests.Common
@@ -76,6 +80,12 @@ namespace ADO.Net.Client.Tests.Common
         {
             return new CustomDbParameter();
         }
+#if NET40 || NET45 || NET461
+        public override CodeAccessPermission CreatePermission(PermissionState state)
+        {
+            return new CustomDbCodePermission();
+        }
+#endif
         #endregion
     }
 }
