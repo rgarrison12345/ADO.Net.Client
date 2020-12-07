@@ -6,7 +6,7 @@
 		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/rgarrison12345/ADO.Net.Client.git</RepositoryUrl>
-		<Version>1.4.1</Version>
+		<Version>1.4.1.1</Version>
 		<PackageTags>micro-orm orm sql ado.net ado.net.client</PackageTags>
 		<Authors>Robert Garrison</Authors>
 		<Company>Robert Garrison</Company>
@@ -63,6 +63,6 @@
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)'=='Release'">
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
-		<PackageReference Include="ADO.Net.Client.Implementation" Version="1.4.1" />
+		<PackageReference Include="ADO.Net.Client.Implementation" Version="1.4.1.1" />
 	</ItemGroup>
 </Project>
