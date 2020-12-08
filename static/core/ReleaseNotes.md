@@ -1,6 +1,13 @@
 Version History
 ===============
 
+### 1.4.2.1
+
+* Updating to ADO.Net.Client.Annotations 1.1.9.2
+* [DbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbObjectFactory.cs) 
+and [IDbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbObjectFactory.cs) have new method CreatePermission
+for .NET 4.0, 4.5, 4.6.1 builds
+
 ### 1.4.2
 
 * Adding .Net 5.0 build
