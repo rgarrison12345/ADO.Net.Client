@@ -26,7 +26,7 @@ using ADO.Net.Client.Core;
 using System;
 using System.Data;
 using System.Data.Common;
-#if !NET45 && !NET461 && !NETSTANDARD2_0
+#if ADVANCE_ASYNC
 using System.Threading;
 using System.Threading.Tasks;
 #endif
