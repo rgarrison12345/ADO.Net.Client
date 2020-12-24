@@ -53,7 +53,7 @@ Version History
   * [AnsiStringFixedLength](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/ANSIStringFixedLength.cs)
     * Signifies data type is equivelant of char
   * [StringFixedLength](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Annotations/StringFixedLength.cs)
-    * Signifies data type is equivelant of ncar
+    * Signifies data type is equivelant of nchar
 ### 1.0.0
 
 * Initial release, this is a data annotation library to help annotate data types that have an ambiguous match of DbType.  Items such as String and DateTime can match several DbType values.
