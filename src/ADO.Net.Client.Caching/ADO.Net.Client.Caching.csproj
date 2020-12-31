@@ -1,0 +1,62 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net50;netstandard2.1;netstandard2.0;net461;net45;net40;</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/rgarrison12345/ADO.Net.Client.git</RepositoryUrl>
+		<Version>1.0.0</Version>
+		<PackageTags>micro-orm orm sql ado.net ado.net.client caching</PackageTags>
+		<Authors>Robert Garrison</Authors>
+		<Company>Robert Garrison</Company>
+		<Product>ADO.Net.Client.Caching</Product>
+		<Title>ADO.Net.Client.Caching</Title>
+		<PackageId>ADO.Net.Client.Caching</PackageId>
+		<Description>High level ADO.Net client library to agnostically query a relational database using a given ADO.Net driver</Description>
+		<PackageReleaseNotes>
+			Release Notes https://github.com/rgarrison12345/ADO.Net.Client/blob/master/static/client/ReleaseNotes.md
+		</PackageReleaseNotes>
+		<PackageIcon>icon.png</PackageIcon>
+		<IncludeSource>true</IncludeSource>
+		<IncludeSymbols>true</IncludeSymbols>
+		<AssemblyName>ADO.Net.Client.Caching</AssemblyName>
+		<RootNamespace>ADO.Net.Client.Caching</RootNamespace>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+		<DefineConstants>TRACE;</DefineConstants>
+		<Prefer32Bit>false</Prefer32Bit>
+		<Copyright>Copyright © Robert Garrison 2020</Copyright>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<ContinuousIntegrationBuild>false</ContinuousIntegrationBuild>
+		<EmbedUntrackedSources>false</EmbedUntrackedSources>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Include="..\..\static\icon.png" Pack="true" PackagePath="icon.png" />
+		<None Include="..\..\README.md" Pack="true" PackagePath="README.md" />
+		<None Include="..\..\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
+		<None Include="..\..\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
+	</ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>.\bin\Debug</OutputPath>
+		<DefineConstants>DEBUG;</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<DebugSymbols>false</DebugSymbols>
+		<DebugType>pdbonly</DebugType>
+		<Optimize>true</Optimize>
+		<OutputPath>.\bin\Release</OutputPath>
+		<DefineConstants>RELEASE;</DefineConstants>
+	</PropertyGroup>
+	<ItemGroup Condition="'$(Configuration)'=='Debug'">
+		<ProjectReference Include="..\ADO.Net.Client\ADO.Net.Client.csproj" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(Configuration)'=='Release'">
+		<PackageReference Include="ADO.Net.Client" Version="1.4.2.1" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+	</ItemGroup>
+</Project>

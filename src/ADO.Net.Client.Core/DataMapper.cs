@@ -146,7 +146,7 @@ namespace ADO.Net.Client.Core
             //Get an instance of the object passed in
             T returnType = Activator.CreateInstance<T>();
             IEnumerable<PropertyInfo> writeableProperties = returnType.GetType().GetProperties().Where(x => x.CanWrite)
-                .Where(x => Attribute.IsDefined(x, typeof(DbFieldIgnore), false) == false);
+                .Where(x => !Attribute.IsDefined(x, typeof(DbFieldIgnore), false));
 
             //Loop through all fields in this record
             for (int i = 0; i < record.FieldCount; i++)
