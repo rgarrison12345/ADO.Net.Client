@@ -208,7 +208,7 @@ namespace ADO.Net.Client.Core
 
                     //We only want properties where we can read a value, and are not an ignored property
                     IEnumerable<PropertyInfo> properties = type.GetProperties().Where(p => p.CanRead)
-                    .Where(x => Attribute.IsDefined(x, typeof(IgnoreParameter)) == false);
+                    .Where(x => !Attribute.IsDefined(x, typeof(IgnoreParameter)));
 
                     //Loop through each property
                     foreach (PropertyInfo prop in properties)
