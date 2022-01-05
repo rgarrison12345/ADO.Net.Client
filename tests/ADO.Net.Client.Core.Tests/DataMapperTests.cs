@@ -171,6 +171,9 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.AreEqual(type, model.PhoneType);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         public void MapNullableWithValue()
         {
@@ -184,6 +187,9 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.AreEqual(managerID, model.ManagerID);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         public void MapNullableWithNullValue()
         { 
@@ -196,6 +202,9 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsNull(model.ManagerID);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         public void MapDbFieldNull()
         {
@@ -208,6 +217,9 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsTrue(model.Title == "SoftwareDeveloper");
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         public void MapDbField()
         {
@@ -222,6 +234,9 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsTrue(model.Salary == earnings);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         public void MapNonExistentProperty()
         {
@@ -236,6 +251,9 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsTrue(model.Salary == default);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         public void MapPropertyColumnNameHasUnderscores()
         {
@@ -251,16 +269,25 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsTrue(model.Salary == salary);
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [Test]
         public void MapFullEmployeeModel()
         {
             bool active = _faker.Random.Bool();
             int departmentID = _faker.Random.Int();
             string phoneNumber = _faker.Phone.PhoneNumber();
+            string userName = _faker.Person.FullName;
             decimal salary = _faker.Random.Decimal();
             Guid managerID = _faker.Random.Guid();
-            DateTime hireDate = _faker.Date.Soon();
+            DateTime recordCreated = _faker.Date.Soon();
             PhoneType phoneType = _faker.PickRandom<PhoneType>();
+
+#if NET6_0_OR_GREATER
+            TimeOnly lunchTime = _faker.Date.SoonTimeOnly();
+            DateOnly hireDate = _faker.Date.SoonDateOnly();
+#endif
 
             List<KeyValuePair<string, object>> kvp = new List<KeyValuePair<string, object>>()
             {
@@ -270,19 +297,33 @@ namespace ADO.Net.Client.Core.Tests
                 new KeyValuePair<string, object>("Active", active),
                 new KeyValuePair<string, object>("DepartmentID", departmentID),
                 new KeyValuePair<string, object>("PhoneNumber", phoneNumber),
-                new KeyValuePair<string, object>("HireDate", hireDate)
+                new KeyValuePair<string, object>("RecordCreated", recordCreated),
+                new KeyValuePair<string, object>("UserName", userName),
+                new KeyValuePair<string, object>("IgnoreField", _faker.Random.Decimal())
             };
+
+#if NET6_0_OR_GREATER
+            kvp.Add(new KeyValuePair<string, object>("HireDate", hireDate));
+            kvp.Add(new KeyValuePair<string, object>("LunchTime", lunchTime));
+#endif
 
             CustomDataRecord record = new CustomDataRecord(kvp);
             Employee model = _mapper.MapRecord<Employee>(record);
 
             Assert.AreEqual(active, model.Active);
             Assert.AreEqual(salary, model.Salary);
-            Assert.AreEqual(hireDate, model.HireDate);
+            Assert.AreEqual(recordCreated, model.RecordCreated);
             Assert.AreEqual(departmentID, model.DepartmentID);
             Assert.AreEqual(managerID, model.ManagerID);
             Assert.AreEqual(phoneNumber, model.PhoneNumber);
             Assert.AreEqual(phoneType, model.PhoneType);
+            Assert.AreEqual(userName, model.UserName);
+            Assert.AreEqual(model.IgnoreField, 0m);
+
+#if NET6_0_OR_GREATER
+            Assert.AreEqual(hireDate, model.HireDate);
+            Assert.AreEqual(lunchTime, model.LunchTime);
+#endif
         }
         #endregion
     }

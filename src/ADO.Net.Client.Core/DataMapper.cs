@@ -29,9 +29,7 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Reflection;
-#if !NET45
 using System.Runtime.CompilerServices;
-#endif
 using System.Threading;
 using System.Threading.Tasks;
 #endregion
@@ -61,7 +59,6 @@ namespace ADO.Net.Client.Core
         }
         #endregion
         #region Mapper Methods
-#if !NET40 && !NET45
         /// <summary>
         /// Maps the result set one at a time by streaming the result from the server asynchronously
         /// </summary>
@@ -78,8 +75,6 @@ namespace ADO.Net.Client.Core
                 yield return MapRecord<T>(reader);
             }
         }
-#endif
-#if !NET40
         /// <summary>
         /// Maps an entire result set in the <paramref name="reader"/>
         /// </summary>
@@ -100,7 +95,6 @@ namespace ADO.Net.Client.Core
 
             return returnList;
         }
-#endif
         /// <summary>
         /// Maps the result set one at a time by streaming the result from the server
         /// </summary>

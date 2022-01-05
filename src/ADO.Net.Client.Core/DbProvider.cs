@@ -38,7 +38,6 @@ namespace ADO.Net.Client.Core
     public abstract class DbProvider : IDbProvider
     {
         #region Data Retrieval        
-#if !NET40
         /// <summary>
         /// Utility method for returning a <see cref="Task{Object}"/> value from the database
         /// </summary>
@@ -95,7 +94,6 @@ namespace ADO.Net.Client.Core
         /// Or the default value of <typeparamref name="T"/> if there are no search results
         /// </returns>
         public abstract Task<T> GetDataObjectAsync<T>(ISqlQuery query, CancellationToken token = default) where T : class;
-#if !NET45
         /// <summary>
         /// Gets an <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine streame from the server
         /// </summary>
@@ -112,8 +110,6 @@ namespace ADO.Net.Client.Core
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Returns a <see cref="IAsyncEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
         public abstract IAsyncEnumerable<T> GetScalarValuesStreamAsync<T>(ISqlQuery query, CancellationToken token = default);
-#endif
-#endif
         /// <summary>
         /// Gets a single instance of <typeparamref name="T"/> based on the <paramref name="query"/> passed into the routine
         /// </summary>
@@ -193,7 +189,6 @@ namespace ADO.Net.Client.Core
         /// <param name="query">An instance of <see cref="ISqlQuery"/> used to query a data store</param>
         /// <returns>Returns the amount of records affected by the passed in <paramref name="query"/></returns>
         public abstract int ExecuteNonQuery(ISqlQuery query);
-#if !NET40
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure
         /// </summary>
@@ -201,7 +196,6 @@ namespace ADO.Net.Client.Core
         /// <param name="query">An instance of <see cref="ISqlQuery"/> used to query a data store</param>
         /// <returns>Returns the number of rows affected by the passed in <paramref name="query"/></returns>
         public abstract Task<int> ExecuteNonQueryAsync(ISqlQuery query, CancellationToken token = default);
-#endif
         #endregion
     }
 }

@@ -30,7 +30,7 @@ using System.Reflection;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class the defines the behavior of a <see cref="DbParameter"/> formatter class
+    /// Contract the defines the behavior of a <see cref="DbParameter"/> formatter class
     /// </summary>
     public interface IDbParameterFormatter
     {

@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net50;netstandard2.1;netstandard2.0;net461;net45;net40;</TargetFrameworks>
+		<TargetFrameworks>net6.0;net5.0;netstandard2.1;netstandard2.0;net461;</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
 		<RepositoryType>git</RepositoryType>
-		<Version>1.4.2.1</Version>
+		<Version>1.4.3</Version>
 		<PackageTags>micro-orm orm sql ado.net ado.net.client</PackageTags>
 		<Authors>Robert Garrison</Authors>
 		<Company>Robert Garrison</Company>
@@ -14,9 +14,7 @@
 		<PackageId>ADO.Net.Client.Core</PackageId>
 		<Description>Core functionality API objects for ADO.Net.Client based libraries</Description>
 		<RepositoryUrl>https://github.com/rgarrison12345/ADO.Net.Client.git</RepositoryUrl>
-		<PackageReleaseNotes>
-			Release Notes https://github.com/rgarrison12345/ADO.Net.Client/blob/master/static/core/ReleaseNotes.md
-		</PackageReleaseNotes>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>icon.png</PackageIcon>
 		<IncludeSource>true</IncludeSource>
 		<IncludeSymbols>true</IncludeSymbols>
@@ -26,7 +24,7 @@
 		<NeutralLanguage>en-us</NeutralLanguage>
 		<DefineConstants>TRACE;</DefineConstants>
 		<Prefer32Bit>false</Prefer32Bit>
-		<Copyright>Copyright © Robert Garrison 2020</Copyright>
+		<Copyright>Copyright © Robert Garrison 2022</Copyright>
 		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -35,7 +33,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<None Include="..\..\static\icon.png" Pack="true" PackagePath="icon.png" />
-		<None Include="..\..\README.md" Pack="true" PackagePath="README.md" />
+		<None Include="..\..\static\core\ReleaseNotes.md" Pack="true" PackagePath="README.md" />
 		<None Include="..\..\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
 		<None Include="..\..\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
 	</ItemGroup>
@@ -53,35 +51,20 @@
 		<OutputPath>.\bin\Release</OutputPath>
 		<DefineConstants>RELEASE;</DefineConstants>
 	</PropertyGroup>
-	<Choose>
-		<When Condition="'$(TargetFramework)'=='net40'">
-			<ItemGroup>
-				<Compile Remove="IMultiResultReaderAsync.cs" />
-				<Compile Remove="ISqlExecutorAdvanceAsync.cs" />
-				<Compile Remove="ISqlExecutorAsync.cs" />
-				<Compile Remove="IAsynchronousClient.cs" />
-			</ItemGroup>
-		</When>
-		<Otherwise>
-			<PropertyGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
-				<DefineConstants>ADVANCED_FEATURES;ADVANCE_ASYNC;</DefineConstants>
-			</PropertyGroup>
-			<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net461'">
-				<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="5.0.0" />
-			</ItemGroup>
-			<ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
-				<Compile Remove="ISqlExecutorAsync.cs" />
-			</ItemGroup>
-			<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net461' or '$(TargetFramework)'=='net45'">
-				<Compile Remove="ISqlExecutorAdvanceAsync.cs" />
-			</ItemGroup>
-		</Otherwise>
-	</Choose>
+	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net461'">
+		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461'">
+		<Compile Remove="ISqlExecutorAsync.cs" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net461'">
+		<Compile Remove="ISqlExecutorAdvanceAsync.cs" />
+	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)'=='Debug'">
 		<ProjectReference Include="..\ADO.Net.Client.Annotations\ADO.Net.Client.Annotations.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)'=='Release'">
-		<PackageReference Include="ADO.Net.Client.Annotations" Version="1.1.9.2" />
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+		<PackageReference Include="ADO.Net.Client.Annotations" Version="1.2.0" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
 	</ItemGroup>
 </Project>

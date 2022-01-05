@@ -81,7 +81,6 @@ namespace ADO.Net.Client.Core
         /// <param name="paramDirection">The direction of the parameter, defaults to <see cref="ParameterDirection.Input"/></param>
         /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
         DbParameter CreateParameter(string parameterName, object parameterValue, DbType dataType, int? size = null, ParameterDirection paramDirection = ParameterDirection.Input);
-#if !NET45 && !NET40
         /// <summary>
         /// Gets an initialized instance of a <see cref="DbParameter"/> for a fixed size parameter
         /// </summary>
@@ -93,7 +92,6 @@ namespace ADO.Net.Client.Core
         /// <param name="paramDirection">The direction of the parameter, defaults to <see cref="ParameterDirection.Input"/></param>
         /// <returns>Returns an instance of <see cref="DbParameter"/> object with information passed into procedure</returns>
         DbParameter CreateParameter(string parameterName, object parameterValue, DbType dataType, byte? scale = null, byte? precision = null, ParameterDirection paramDirection = ParameterDirection.Input);
-#endif
         #endregion
     }
 }

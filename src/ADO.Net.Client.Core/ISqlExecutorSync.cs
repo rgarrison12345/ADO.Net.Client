@@ -30,7 +30,7 @@ using System.Data.Common;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class that defines syncrhonous operations against a database
+    /// Contract that defines syncrhonous operations against a database
     /// </summary>
     public interface ISqlExecutorSync
     {

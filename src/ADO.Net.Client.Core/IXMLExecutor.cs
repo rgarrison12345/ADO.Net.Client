@@ -30,7 +30,7 @@ using System.Xml;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class that defines how a class that can execute sql queries should return xml from the database
+    /// Contract that defines how a class that can execute sql queries should return xml from the database
     /// </summary>
     public interface IXMLExecutor
     {

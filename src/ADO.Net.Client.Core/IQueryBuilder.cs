@@ -29,7 +29,7 @@ using System.Data.Common;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class that builds out queries to be executed against a database
+    /// Contract that builds out queries to be executed against a database
     /// </summary>
     public interface IQueryBuilder
     {

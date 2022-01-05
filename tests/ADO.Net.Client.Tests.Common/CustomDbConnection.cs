@@ -67,12 +67,22 @@ namespace ADO.Net.Client.Tests.Common
         {
             return new CustomDbTransaction(this, isolationLevel);
         }
-#if !NET45 && !NET461 && !NETSTANDARD2_0
+#if !NET461 && !NETSTANDARD2_0
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="isolationLevel"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         protected override ValueTask<DbTransaction> BeginDbTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken)
         {
             return new ValueTask<DbTransaction>(new CustomDbTransaction(this, isolationLevel));
         }
 #endif
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         protected override DbCommand CreateDbCommand()
         {
             return new CustomDbCommand();

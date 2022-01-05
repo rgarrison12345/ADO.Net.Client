@@ -31,15 +31,14 @@ using System.Threading.Tasks;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class for a reader that performs asynchronous read operations against a database
+    /// Contract for a reader that performs asynchronous read operations against a database
     /// </summary>
     public interface IMultiResultReaderAsync
-#if ADVANCED_FEATURES
+#if !NET461 && !NETSTANDARD2_0
         : IAsyncDisposable
 #endif
     {
         #region Utility Methods
-#if !NET45
         /// <summary>
         /// Gets an <see cref="IAsyncEnumerable{T}"/> based on the <typeparamref name="T"/> streamed from the server asynchronously
         /// </summary>
@@ -47,7 +46,6 @@ namespace ADO.Net.Client.Core
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Returns an instance of <see cref="IAsyncEnumerable{T}"/></returns>
         IAsyncEnumerable<T> ReadObjectsStreamAsync<T>(CancellationToken token = default) where T : class;
-#endif
         /// <summary>
         /// Gets an entire <see cref="IEnumerable{T}"/> of <typeparamref name="T"/> asynchronously
         /// </summary>
@@ -68,7 +66,7 @@ namespace ADO.Net.Client.Core
         /// <param name="token">Structure that propagates a notification that an operation should be cancelled</param>
         /// <returns>Returns <c>true</c> if there's another result set in the data set <c>false</c> otherwise</returns>
         Task<bool> MoveToNextResultAsync(CancellationToken token = default);
-#if ADVANCED_FEATURES
+#if !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Closes the underlying reader object that reads records from the database asynchronously
         /// </summary>

@@ -32,7 +32,7 @@ using System.Threading.Tasks;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class that defines asynchronous operations against a database
+    /// Contract that defines asynchronous operations against a database
     /// </summary>
     public interface ISqlExecutorAsync
     {

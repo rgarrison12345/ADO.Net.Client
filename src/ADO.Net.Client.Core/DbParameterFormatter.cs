@@ -182,6 +182,18 @@ namespace ADO.Net.Client.Core
                 return DbType.String;
             }
 
+#if NET6_0_OR_GREATER
+            if(info.PropertyType == typeof(TimeOnly) || info.PropertyType == typeof(TimeOnly?))
+            {
+                return DbType.Time;
+            }
+
+            if (info.PropertyType == typeof(DateOnly) || info.PropertyType == typeof(DateOnly?))
+            {
+                return DbType.Date;
+            }
+#endif
+
             if (info.PropertyType == typeof(Enum))
             {
 

@@ -27,16 +27,11 @@ SOFTWARE.*/
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class for all DbProvider based classes
+    /// Contract for all DbProvider based classes
     /// </summary>
     /// <seealso cref="ISynchronousClient"/>
-#if !NET40
     /// <seealso cref="IAsynchronousClient"/>
-#endif
-    public interface IDbProvider : ISynchronousClient
-#if !NET40
-    , IAsynchronousClient
-#endif
+    public interface IDbProvider : ISynchronousClient, IAsynchronousClient
     {
 
     }

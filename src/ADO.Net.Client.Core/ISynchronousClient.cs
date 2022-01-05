@@ -30,7 +30,7 @@ using System.Data.Common;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class that defines synchronous operations to be performed against a data store
+    /// Contract that defines synchronous operations to be performed against a data store
     /// </summary>
     public interface ISynchronousClient
     {

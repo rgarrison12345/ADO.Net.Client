@@ -28,7 +28,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-#if NET40 || NET45 || NET461
+#if NET461
 using System.Security;
 using System.Security.Permissions;
 #endif
@@ -39,21 +39,28 @@ namespace ADO.Net.Client.Core.Tests
     /// <summary>
     /// Base test class
     /// </summary>
-    [TestFixture]
-    [Category("Basic Tests")]
     public abstract class BaseTests
     {
         #region Fields/Properties
         private readonly Faker _faker = new Faker();
         private readonly string _connectionString = "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;";
+        /// <summary>
+        /// 
+        /// </summary>
         protected IDbObjectFactory _factory;
+        /// <summary>
+        /// 
+        /// </summary>
         protected readonly string _commonNamespace = "ADO.Net.Client.Tests.Common";
         #endregion
         #region Setup/Teardown     
+        /// <summary>
+        /// 
+        /// </summary>
         public abstract void Setup();
         #endregion
         #region Basic Tests
-#if ADVANCED_FEATURES
+#if !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Determines whether this instance [can create command builder].
         /// </summary>
@@ -273,10 +280,10 @@ namespace ADO.Net.Client.Core.Tests
         {
             DbParameter parameter = _factory.GetDbParameter();
 
-            Assert.IsNotNull(parameter);
+            Assert.NotNull(parameter);
             Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
         }
-#if NET40 || NET45 || NET461
+#if NET461
         /// <summary>
         /// 
         /// </summary>

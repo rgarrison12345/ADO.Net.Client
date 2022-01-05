@@ -23,7 +23,6 @@ SOFTWARE.*/
 #endregion
 #region Using Statements
 using ADO.Net.Client.Tests.Common;
-using Moq;
 using NUnit.Framework;
 #endregion
 

@@ -45,10 +45,8 @@ namespace ADO.Net.Client.Tests.Common
         public override string SourceColumn { get => throw new System.NotImplementedException(); set => throw new NotImplementedException(); }
         public override bool SourceColumnNullMapping { get => throw new System.NotImplementedException(); set => throw new NotImplementedException(); }
         public override object Value { get; set; }
-#if !NET45
         public override byte Precision { get; set; }
         public override byte Scale { get ; set; }
-#endif
 #endregion
         public override void ResetDbType()
         {

@@ -73,7 +73,12 @@ namespace ADO.Net.Client.Core.Tests
         [Category("Parameters")]
         public void ContainsParameterFalse()
         {
-            CustomDbParameter param = new CustomDbParameter() { ParameterName = "Param", Value = _faker.Random.Int(), DbType = DbType.Int32 };
+            var param = new CustomDbParameter() 
+            { 
+                ParameterName = "Param", 
+                Value = _faker.Random.Int(), 
+                DbType = DbType.Int32 
+            };
 
             _builder.AddParameter(param);
 
@@ -86,7 +91,12 @@ namespace ADO.Net.Client.Core.Tests
         [Category("Parameters")]
         public void ContainsParameterTrue()
         {
-            CustomDbParameter param = new CustomDbParameter() { ParameterName = "Param", Value = _faker.Random.Int(), DbType = DbType.Int32 };
+            var param = new CustomDbParameter() 
+            { 
+                ParameterName = "Param", 
+                Value = _faker.Random.Int(), 
+                DbType = DbType.Int32 
+            };
 
             _builder.AddParameter(param);
 
@@ -99,7 +109,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("Parameters")]
         public void ContainsParameterNameFalse()
         {
-            List<DbParameter> parameters = new List<DbParameter>()
+            var parameters = new List<DbParameter>()
             {
                 new CustomDbParameter() { ParameterName = "@Param3" },
                 new CustomDbParameter() { ParameterName = "@Param2" },
@@ -117,7 +127,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("Parameters")]
         public void ContainsParameterNameTrue()
         {
-            List<DbParameter> parameters = new List<DbParameter>()
+            var parameters = new List<DbParameter>()
             {
                 new CustomDbParameter() { ParameterName = "@Param3" },
                 new CustomDbParameter() { ParameterName = "@Param2" },
@@ -137,7 +147,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("Parameters")]
         public void RejectsDuplicateParameterName()
         {
-            CustomDbParameter parameter = new CustomDbParameter() { ParameterName = "@Param1" };
+            var parameter = new CustomDbParameter() { ParameterName = "@Param1" };
 
             _builder.AddParameter(parameter);
 
@@ -150,7 +160,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("Parameters")]
         public void RejectsDuplicateParameterNamesInEnumerable()
         {
-            List<CustomDbParameter> parameters = new List<CustomDbParameter>()
+            var parameters = new List<CustomDbParameter>()
             {
                 new CustomDbParameter() { ParameterName = "@Param1" },
                 new CustomDbParameter() { ParameterName = "@Param2" },
@@ -166,8 +176,8 @@ namespace ADO.Net.Client.Core.Tests
         [Category("Parameters")]
         public void RejectsDuplicateParameterNames()
         {
-            CustomDbParameter parameter = new CustomDbParameter() { ParameterName = "@Param1" };
-            List<CustomDbParameter> parameters = new List<CustomDbParameter>()
+            var parameter = new CustomDbParameter() { ParameterName = "@Param1" };
+            var parameters = new List<CustomDbParameter>()
             {
                 new CustomDbParameter() { ParameterName = "@Param3" },
                 new CustomDbParameter() { ParameterName = "@Param2" },
@@ -185,7 +195,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("Parameters")]
         public void CanClearParameters()
         {
-            List<DbParameter> parameters = new List<DbParameter>()
+            var parameters = new List<DbParameter>()
             {
                 new CustomDbParameter() { ParameterName = "Param1" },
                 new CustomDbParameter() { ParameterName = "Param2" },
@@ -209,7 +219,11 @@ namespace ADO.Net.Client.Core.Tests
         [Category("Parameters")]
         public void CanFindParameterByName()
         {
-            CustomDbParameter parameter = new CustomDbParameter() { ParameterName = "@Param1", Value = _faker.Random.Int()};
+            var parameter = new CustomDbParameter() 
+            { 
+                ParameterName = "@Param1", 
+                Value = _faker.Random.Int()
+            };
 
             _builder.AddParameter(parameter);
 
@@ -228,7 +242,11 @@ namespace ADO.Net.Client.Core.Tests
         [Category("Parameters")]
         public void CanRemoveParameterByName()
         {
-            CustomDbParameter parameter = new CustomDbParameter() { ParameterName = "@Param1", Value = _faker.Random.Int() };
+            var parameter = new CustomDbParameter() 
+            { 
+                ParameterName = "@Param1", 
+                Value = _faker.Random.Int() 
+            };
 
             _builder.AddParameter(parameter);
 
@@ -245,8 +263,16 @@ namespace ADO.Net.Client.Core.Tests
         [Category("Parameters")]
         public void CanReplaceParameterByName()
         {
-            CustomDbParameter parameter = new CustomDbParameter() { ParameterName = "@Param1", Value = _faker.Random.Int() };
-            CustomDbParameter newParam = new CustomDbParameter() { ParameterName="@Param2", Value = _faker.Random.Int() };
+            var parameter = new CustomDbParameter() 
+            { 
+                ParameterName = "@Param1", 
+                Value = _faker.Random.Int() 
+            };
+            var newParam = new CustomDbParameter()
+            {
+                ParameterName="@Param2", 
+                Value = _faker.Random.Int() 
+            };
             
             _builder.AddParameter(parameter);
 
@@ -266,7 +292,11 @@ namespace ADO.Net.Client.Core.Tests
         public void CanSetParameterValueByName()
         {
             int newValue = _faker.Random.Int();
-            CustomDbParameter parameter = new CustomDbParameter() { ParameterName = "@Param1", Value = _faker.Random.Int() };
+            var parameter = new CustomDbParameter() 
+            { 
+                ParameterName = "@Param1", 
+                Value = _faker.Random.Int() 
+            };
 
             _builder.AddParameter(parameter);
             _builder.SetParameterValue(parameter.ParameterName, newValue);

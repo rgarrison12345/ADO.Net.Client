@@ -24,14 +24,16 @@ SOFTWARE.*/
 #region Using Statements
 using System.Data;
 using System.Data.Common;
+#if !NET461 && !NETSTANDARD2_0
 using System.Threading;
 using System.Threading.Tasks;
+#endif
 #endregion
 
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class for managing a database connection
+    /// Contract for managing a database connection
     /// </summary>
     public interface IConnectionManager
     {
@@ -70,7 +72,7 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <param name="level">Specifies the transaction locking behavior for the <see cref="Connection"/></param>
         void StartTransaction(IsolationLevel level);
-#if ADVANCE_ASYNC               
+#if !NET461 && !NETSTANDARD2_0           
         /// <summary>
         /// Starts a database transaction asynchronously with the specified <paramref name="level"/>
         /// </summary>

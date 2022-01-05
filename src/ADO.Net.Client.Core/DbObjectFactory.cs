@@ -54,7 +54,13 @@ namespace ADO.Net.Client.Core
         /// </summary>
         protected readonly DbProviderFactory _factory;
 
-#if ADVANCED_FEATURES
+#if NET6_0_OR_GREATER
+        /// <summary>
+        /// Whether or not this instance is capable of creating a <see cref="DbBatch"/>
+        /// </summary>
+        public bool CanCreateBatch => _factory.CanCreateBatch;
+#endif
+#if !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Whether or not this instance is capable of creating a <see cref="DbDataAdapter"/>
         /// </summary>
@@ -103,7 +109,7 @@ namespace ADO.Net.Client.Core
         /// <param name="connection">An instance of <see cref="DbConnection"/> </param>
         public DbObjectFactory(DbConnection connection)
         {
-#if !NETSTANDARD2_0 && !NET40
+#if !NETSTANDARD2_0
             _factory = DbProviderFactories.GetFactory(connection);
 #else
             //Get the assembly from the dbconnection type
@@ -122,7 +128,25 @@ namespace ADO.Net.Client.Core
 #endif
         #endregion
         #region Utility Methods
-#if NET40 || NET45 || NET461
+#if NET6_0_OR_GREATER
+        /// <summary>
+        /// Gets a <see cref="DbBatch"/> based off the provider passed into class
+        /// </summary>
+        /// <returns>Returns an instance of <see cref="DbBatch"/></returns>
+        public virtual DbBatch GetDbBatch()
+        {
+            return _factory.CreateBatch();
+        }
+        /// <summary>
+        /// Gets a <see cref="DbBatchCommand"/> based off the provider passed into class
+        /// </summary>
+        /// <returns>Returns an instance of <see cref="DbBatchCommand"/></returns>
+        public virtual DbBatchCommand GetDbBatchCommand()
+        {
+            return _factory.CreateBatchCommand();
+        }
+#endif
+#if NET461
         /// <summary>
         /// Returns a new instance of the provider's class that implements the provider's version of the <see cref="CodeAccessPermission"/>
         /// </summary>

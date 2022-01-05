@@ -41,7 +41,7 @@ namespace ADO.Net.Client.Core.Tests
     {
         #region Fields/Properties
         private DbParameterFormatter _formatter;
-        private readonly Faker _faker;
+        private readonly Faker _faker = new Faker();
         #endregion
         #region Constructors        
         /// <summary>
@@ -49,7 +49,7 @@ namespace ADO.Net.Client.Core.Tests
         /// </summary>
         public DbParameterFormatterTests()
         {
-            _faker = new Faker();
+
         }
         #endregion
         #region Setup/Teardown        
@@ -73,7 +73,7 @@ namespace ADO.Net.Client.Core.Tests
             bool nativeGuid = _faker.Random.Bool();
             string prefix = _faker.Random.AlphaNumeric(1);
 
-            DbParameterFormatter formatter = new DbParameterFormatter(nativeGuid, prefix);
+            var formatter = new DbParameterFormatter(nativeGuid, prefix);
 
             Assert.IsTrue(formatter.HasNativeGuidSupport == nativeGuid);
             Assert.IsTrue(formatter.ParameterNamePrefix == prefix);
@@ -92,9 +92,9 @@ namespace ADO.Net.Client.Core.Tests
         /// </summary>
         [Test]
         [Category("DbType")]
-        public void MapsTimeCorrectly()
+        public void MapsTimeSpanCorrectly()
         {
-            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Time))) == DbType.Time);
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.TimeSpan))) == DbType.Time);
         }
         /// <summary>
         /// 
@@ -283,7 +283,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsNativeGuidCorrectly()
         {
-            DbParameterFormatter formatter = new DbParameterFormatter(true);
+            var formatter = new DbParameterFormatter(true);
 
             Assert.That(formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Guid))) == DbType.Guid);
         }
@@ -294,10 +294,30 @@ namespace ADO.Net.Client.Core.Tests
         [Category("DbType")]
         public void MapsNonNativeGuidCorrectly()
         {
-            DbParameterFormatter formatter = new DbParameterFormatter(false);
+            var formatter = new DbParameterFormatter(false);
 
             Assert.That(formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Guid))) == DbType.String);
         }
+#if NET6_0_OR_GREATER
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsDateOnlyCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Date))) == DbType.Date);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        [Category("DbType")]
+        public void MapsTimeOnlyCorrectly()
+        {
+            Assert.That(_formatter.MapDbType(typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.Time))) == DbType.Time);
+        }
+#endif
         /// <summary>
         /// Getses the return value direction.
         /// </summary>
@@ -437,8 +457,8 @@ namespace ADO.Net.Client.Core.Tests
         [Category("MapValue")]
         public void GetGuidString()
         {
-            DbParameterFormatter formatter = new DbParameterFormatter(false);
-            Employee model = new Employee()
+            var formatter = new DbParameterFormatter(false);
+            var model = new Employee()
             {
                 EmployeeID= Guid.NewGuid()
             };
@@ -453,8 +473,8 @@ namespace ADO.Net.Client.Core.Tests
         public void MapNativeGuidProperty()
         {
             Guid guid = _faker.Random.Guid();
-            DbParameterFormatter formatter = new DbParameterFormatter(true);
-            CustomDbParameter parameter = new CustomDbParameter();
+            var formatter = new DbParameterFormatter(true);
+            var parameter = new CustomDbParameter();
             PropertyInfo info = typeof(Employee).GetProperty(nameof(Employee.EmployeeID));
 
             formatter.MapDbParameter(parameter, guid, info);
@@ -472,8 +492,8 @@ namespace ADO.Net.Client.Core.Tests
         public void MapNonNativeGuidProperty()
         {
             Guid guid = _faker.Random.Guid();
-            DbParameterFormatter formatter = new DbParameterFormatter(false);
-            CustomDbParameter parameter = new CustomDbParameter();
+            var formatter = new DbParameterFormatter(false);
+            var parameter = new CustomDbParameter();
             PropertyInfo info = typeof(Employee).GetProperty(nameof(Employee.EmployeeID));
 
             formatter.MapDbParameter(parameter, guid, info);
@@ -490,7 +510,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("MapParameter")]
         public void StringFixedLengthCommonLength()
         {
-            CustomDbParameter parameter = new CustomDbParameter();
+            var parameter = new CustomDbParameter();
             PropertyInfo info = typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.StringFixedLength));
             string value = _faker.Random.String(_faker.Random.Int(0, 3999));
 
@@ -507,7 +527,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("MapParameter")]
         public void StringCommonLength()
         {
-            CustomDbParameter parameter = new CustomDbParameter();
+            var parameter = new CustomDbParameter();
             PropertyInfo info = typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.NormalString));
             string value = _faker.Random.String(_faker.Random.Int(0, 3999));
 
@@ -524,7 +544,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("MapParameter")]
         public void AnsiStringFixedLengthCommonLength()
         {
-            CustomDbParameter parameter = new CustomDbParameter();
+            var parameter = new CustomDbParameter();
             PropertyInfo info = typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.AnsiStringFixedLength));
             string value = _faker.Random.String(_faker.Random.Int(0, 3999));
 
@@ -541,7 +561,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("MapParameter")]
         public void ANSIStringCommonLength()
         {
-            CustomDbParameter parameter = new CustomDbParameter();
+            var parameter = new CustomDbParameter();
             PropertyInfo info = typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.AnsiString));
             string value = _faker.Random.String(_faker.Random.Int(0, 3999));
 
@@ -558,7 +578,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("MapParameter")]
         public void StringFixedLengthBeyondCommonLength()
         {
-            CustomDbParameter parameter = new CustomDbParameter();
+            var parameter = new CustomDbParameter();
             PropertyInfo info = typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.StringFixedLength));
             string value = _faker.Random.String(4001);
 
@@ -576,7 +596,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("MapParameter")]
         public void StringBeyondCommonLength()
         {
-            CustomDbParameter parameter = new CustomDbParameter();
+            var parameter = new CustomDbParameter();
             PropertyInfo info = typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.NormalString));
             string value = _faker.Random.String(4001);
 
@@ -594,7 +614,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("MapParameter")]
         public void AnsiStringFixedLengthBeyondCommonLength()
         {
-            CustomDbParameter parameter = new CustomDbParameter();
+            var parameter = new CustomDbParameter();
             PropertyInfo info = typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.AnsiStringFixedLength));
             string value = _faker.Random.String(4001);
 
@@ -612,7 +632,7 @@ namespace ADO.Net.Client.Core.Tests
         [Category("MapParameter")]
         public void ANSIStringBeyondCommonLength()
         {
-            CustomDbParameter parameter = new CustomDbParameter();
+            var parameter = new CustomDbParameter();
             PropertyInfo info = typeof(DbTypeModel).GetProperty(nameof(DbTypeModel.AnsiString));
             string value = _faker.Random.String(4001);
 

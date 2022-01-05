@@ -100,6 +100,7 @@ namespace ADO.Net.Client.Core.Tests
 
             Assert.IsNotNull(param);
             Assert.IsInstanceOf(typeof(CustomDbParameter), param);
+
             _formatter.Verify(x => x.MapDbParameter(It.IsAny<DbParameter>(), value, info), Times.Once);
             _formatter.VerifyNoOtherCalls();
         }
@@ -111,14 +112,15 @@ namespace ADO.Net.Client.Core.Tests
         {
             string name = $"@{_faker.Random.AlphaNumeric(30)}";
 
-            _formatter.Setup(x => x.MapParameterName(name)).Returns(name).Verifiable();
+            _formatter.Setup(x => x.MapParameterName(name)).Returns(name);
 
             DbParameter parameter = _builder.CreateParameter(name);
 
             Assert.IsNotNull(parameter);
             Assert.AreEqual(parameter.ParameterName, name);
             Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
-            _formatter.Verify(x => x.MapParameterName(name), Times.Once);
+
+            _formatter.Verify(x => x.MapParameterName(name), Times.Exactly(1));
             _formatter.VerifyNoOtherCalls();
         }
         /// <summary>
@@ -130,8 +132,8 @@ namespace ADO.Net.Client.Core.Tests
             string name = $"@{_faker.Random.AlphaNumeric(30)}";
             int value = _faker.Random.Int();
 
-            _formatter.Setup(x => x.MapParameterName(name)).Returns(name).Verifiable();
-            _formatter.Setup(x => x.MapParameterValue(value)).Returns(value).Verifiable();
+            _formatter.Setup(x => x.MapParameterName(name)).Returns(name);
+            _formatter.Setup(x => x.MapParameterValue(value)).Returns(value);
 
             DbParameter parameter = _builder.CreateParameter(name, value);
 
@@ -139,8 +141,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(parameter.ParameterName, name);
             Assert.AreEqual(parameter.Value, value);
             Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
-            _formatter.Verify(x => x.MapParameterName(name), Times.Once);
-            _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
+
+            _formatter.Verify(x => x.MapParameterName(name), Times.Exactly(1));
+            _formatter.Verify(x => x.MapParameterValue(value), Times.Exactly(1));
             _formatter.VerifyNoOtherCalls();
         }
         /// <summary>
@@ -154,8 +157,8 @@ namespace ADO.Net.Client.Core.Tests
             DbType type = _faker.PickRandom<DbType>();
             ParameterDirection direction = _faker.PickRandom<ParameterDirection>();
 
-            _formatter.Setup(x => x.MapParameterName(name)).Returns(name).Verifiable();
-            _formatter.Setup(x => x.MapParameterValue(value)).Returns(value).Verifiable();
+            _formatter.Setup(x => x.MapParameterName(name)).Returns(name);
+            _formatter.Setup(x => x.MapParameterValue(value)).Returns(value);
 
             DbParameter parameter = _builder.CreateParameter(name, value, type, direction);
 
@@ -165,8 +168,9 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(parameter.DbType, type);
             Assert.AreEqual(parameter.Direction, direction);
             Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
-            _formatter.Verify(x => x.MapParameterName(name), Times.Once);
-            _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
+
+            _formatter.Verify(x => x.MapParameterName(name), Times.Exactly(1));
+            _formatter.Verify(x => x.MapParameterValue(value), Times.Exactly(1));
             _formatter.VerifyNoOtherCalls();
         }
         /// <summary>
@@ -183,8 +187,8 @@ namespace ADO.Net.Client.Core.Tests
             DbType dbType = _faker.PickRandom<DbType>();
             ParameterDirection direction = _faker.PickRandom<ParameterDirection>();
 
-            _formatter.Setup(x => x.MapParameterValue(value)).Returns(value).Verifiable();
-            _formatter.Setup(x => x.MapParameterName(name)).Returns(name).Verifiable();
+            _formatter.Setup(x => x.MapParameterValue(value)).Returns(value);
+            _formatter.Setup(x => x.MapParameterName(name)).Returns(name);
             DbParameter parameter = _builder.CreateParameter(name, value, dbType, size, direction);
 
             Assert.IsNotNull(parameter);
@@ -194,11 +198,11 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(dbType, parameter.DbType);
             Assert.AreEqual(name, parameter.ParameterName);
             Assert.AreEqual(value, parameter.Value);
-            _formatter.Verify(x => x.MapParameterName(name), Times.Once);
-            _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
+
+            _formatter.Verify(x => x.MapParameterName(name), Times.Exactly(1));
+            _formatter.Verify(x => x.MapParameterValue(value), Times.Exactly(1));
             _formatter.VerifyNoOtherCalls();
         }
-#if !NET45
         /// <summary>
         /// 
         /// </summary>
@@ -214,8 +218,8 @@ namespace ADO.Net.Client.Core.Tests
             DbType dbType = _faker.PickRandom<DbType>();
             ParameterDirection direction = _faker.PickRandom<ParameterDirection>();
 
-            _formatter.Setup(x => x.MapParameterValue(value)).Returns(value).Verifiable();
-            _formatter.Setup(x => x.MapParameterName(name)).Returns(name).Verifiable();
+            _formatter.Setup(x => x.MapParameterValue(value)).Returns(value);
+            _formatter.Setup(x => x.MapParameterName(name)).Returns(name);
             DbParameter parameter = _builder.CreateParameter(name, value, dbType, scale, precision, direction);
 
             Assert.IsNotNull(parameter);
@@ -226,11 +230,11 @@ namespace ADO.Net.Client.Core.Tests
             Assert.AreEqual(dbType, parameter.DbType);
             Assert.AreEqual(name, parameter.ParameterName);
             Assert.AreEqual(value, parameter.Value);
-            _formatter.Verify(x => x.MapParameterName(name), Times.Once);
-            _formatter.Verify(x => x.MapParameterValue(value), Times.Once);
+
+            _formatter.Verify(x => x.MapParameterName(name), Times.Exactly(1));
+            _formatter.Verify(x => x.MapParameterValue(value), Times.Exactly(1));
             _formatter.VerifyNoOtherCalls();
         }
-#endif
         #endregion
     }
 }

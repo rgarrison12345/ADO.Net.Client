@@ -29,7 +29,7 @@ using System.Collections.Generic;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class for a reader that performs synchronous read operations against a database
+    /// Contract for a reader that performs synchronous read operations against a database
     /// </summary>
     public interface IMultiResultReaderSync : IDisposable
     {

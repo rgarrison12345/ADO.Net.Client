@@ -28,7 +28,7 @@ using System.Collections.Generic;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class to modify/retrieve values in a connection string
+    /// Contract to modify/retrieve values in a connection string
     /// </summary>
     public interface IConnectionStringUtility
     {

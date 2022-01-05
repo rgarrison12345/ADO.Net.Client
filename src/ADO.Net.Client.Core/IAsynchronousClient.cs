@@ -32,12 +32,11 @@ using System.Threading.Tasks;
 namespace ADO.Net.Client.Core
 {
     /// <summary>
-    /// Contract class that defines asynchronous operations to be performed against a data store
+    /// Contract that defines asynchronous operations to be performed against a data store
     /// </summary>
     public interface IAsynchronousClient
     {
         #region Data Retrieval
-#if !NET45
         /// <summary>
         /// Gets an <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine streame from the server
         /// </summary>
@@ -54,7 +53,6 @@ namespace ADO.Net.Client.Core
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Returns a <see cref="IAsyncEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
         IAsyncEnumerable<T> GetScalarValuesStreamAsync<T>(ISqlQuery query, CancellationToken token = default);
-#endif
         /// <summary>
         /// Gets an instance of <see cref="DataTable"/> asynchronously
         /// </summary>

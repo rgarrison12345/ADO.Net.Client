@@ -1,6 +1,15 @@
 Version History
 ===============
 
+### 1.4.3
+
+* Adding build for .NET 6.0
+* Removing builds for .NET 4.0 and 4.5
+* [DbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbObjectFactory.cs) 
+and [IDbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbObjectFactory.cs) have new methods
+CreateDbBatch and CreateDbBatchCommand
+and CanCreateBatch Property for .NET 6.0 build
+
 ### 1.4.2.1
 
 * Updating to ADO.Net.Client.Annotations 1.1.9.2
