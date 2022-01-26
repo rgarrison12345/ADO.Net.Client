@@ -1,9 +1,17 @@
 Version History
 ===============
 
+### 1.4.4
+
+* Adding [IConnectionManager](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IConnectionManager.cs) as a getter property to the following objects
+  * [DbProvider](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbProvider.cs)
+  * [IDbProvider](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbProvider.cs)
+  * [ISqlExecutor](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/ISqlExecutor.cs)
+   
 ### 1.4.3
 
 * Adding build for .NET 6.0
+* Updating to Microsoft.Bcl.AsyncInterfaces 6.0.0
 * Removing builds for .NET 4.0 and 4.5
 * [DbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbObjectFactory.cs) 
 and [IDbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbObjectFactory.cs) have new methods
