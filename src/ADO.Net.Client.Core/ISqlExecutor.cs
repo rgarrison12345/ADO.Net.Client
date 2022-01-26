@@ -34,6 +34,10 @@ namespace ADO.Net.Client.Core
     public interface ISqlExecutor : ISqlExecutorSync, ISqlExecutorAsync
     {
         #region Fields/Properties
+        /// <summary>
+        /// An instance of <see cref="IConnectionManager"/>
+        /// </summary>
+        public IConnectionManager ConnectionManager { get; }
         #endregion
     }
 }

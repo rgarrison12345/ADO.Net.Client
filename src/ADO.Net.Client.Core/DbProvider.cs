@@ -37,9 +37,15 @@ namespace ADO.Net.Client.Core
     /// <seealso cref="IDbProvider" />
     public abstract class DbProvider : IDbProvider
     {
+        #region Fields/Properties
+        /// <summary>
+        /// An instance of <see cref="IConnectionManager"/>
+        /// </summary>
+        public abstract IConnectionManager ConnectionManager { get; }
+        #endregion
         #region Data Retrieval        
         /// <summary>
-        /// Utility method for returning a <see cref="Task{Object}"/> value from the database
+        /// Utility method for returning a <see cref="Task{T}"/> value from the database
         /// </summary>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
@@ -47,7 +53,7 @@ namespace ADO.Net.Client.Core
         /// <returns>Returns the value of the first column as <see cref="Task{T}"/></returns>
         public abstract Task<T> GetScalarValueAsync<T>(ISqlQuery query, CancellationToken token = default);
         /// <summary>
-        /// Utility method for returning a <see cref="Task{IEnumerable}"/> value from the database
+        /// Utility method for returning a <see cref="Task{T}"/> value from the database
         /// </summary>
         /// <typeparam name="T">An instance of the type caller wants create from the query passed into procedure</typeparam>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>

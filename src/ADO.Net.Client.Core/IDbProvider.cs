@@ -33,6 +33,11 @@ namespace ADO.Net.Client.Core
     /// <seealso cref="IAsynchronousClient"/>
     public interface IDbProvider : ISynchronousClient, IAsynchronousClient
     {
-
+        #region Fields/Properties
+        /// <summary>
+        /// An instance of <see cref="IConnectionManager"/>
+        /// </summary>
+        public IConnectionManager ConnectionManager { get; }
+        #endregion
     }
 }
