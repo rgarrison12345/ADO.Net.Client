@@ -1,6 +1,11 @@
 Version History
 ===============
 
+### 1.4.3
+
+* Updating to ADO.Net.Client.Implementation 1.4.3
+* Adding ConnectionManager property to [DbClient](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client/DbClient.cs)
+
 ### 1.4.1.1
 
 * Updating to ADO.Net.Client.Implementation 1.4.1.

@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net50;netstandard2.1;netstandard2.0;net461;net45;net40;</TargetFrameworks>
+		<TargetFrameworks>net6.0;net5.0;netstandard2.1;netstandard2.0;net461;</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/rgarrison12345/ADO.Net.Client.git</RepositoryUrl>
-		<Version>1.4.1.1</Version>
+		<Version>1.4.3</Version>
 		<PackageTags>micro-orm orm sql ado.net ado.net.client</PackageTags>
 		<Authors>Robert Garrison</Authors>
 		<Company>Robert Garrison</Company>
@@ -25,7 +25,8 @@
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 		<DefineConstants>TRACE;</DefineConstants>
 		<Prefer32Bit>false</Prefer32Bit>
-		<Copyright>Copyright © Robert Garrison 2020</Copyright>
+		<Copyright>Copyright © Robert Garrison 2022</Copyright>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -46,23 +47,17 @@
 		<OutputPath>.\bin\Release</OutputPath>
 		<DefineConstants>RELEASE;</DefineConstants>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461' and '$(TargetFramework)'!='net45'">
-		<DefineConstants>ADVANCE_ASYNC;</DefineConstants>
-	</PropertyGroup>
 	<ItemGroup>
 		<None Include="..\..\static\icon.png" Pack="true" PackagePath="icon.png" />
-		<None Include="..\..\README.md" Pack="true" PackagePath="README.md" />
+		<None Include="..\..\static\client\ReleaseNotes.md" Pack="true" PackagePath="README.md" />
 		<None Include="..\..\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
 		<None Include="..\..\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)'=='net40'">
-		<Compile Remove="DbAsynchronousClient.cs"></Compile>
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)'=='Debug'">
 		<ProjectReference Include="..\ADO.Net.Client.Implementation\ADO.Net.Client.Implementation.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)'=='Release'">
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
-		<PackageReference Include="ADO.Net.Client.Implementation" Version="1.4.1.1" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+		<PackageReference Include="ADO.Net.Client.Implementation" Version="1.4.3" />
 	</ItemGroup>
 </Project>

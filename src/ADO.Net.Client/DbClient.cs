@@ -41,6 +41,11 @@ namespace ADO.Net.Client
     {
         #region Fields/Properties
         private readonly ISqlExecutor _executor;
+
+        /// <summary>
+        /// An instance of <see cref="IConnectionManager"/>
+        /// </summary>
+        public override IConnectionManager ConnectionManager => _executor.ConnectionManager;
         #endregion
         #region Constructors    
         /// <summary>
