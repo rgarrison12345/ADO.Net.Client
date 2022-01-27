@@ -1,22 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net50;netcoreapp3.1;netcoreapp2.1;net461;net45;</TargetFrameworks>
+    <TargetFrameworks>net6.0;net5.0;netcoreapp3.1;netcoreapp2.1;net461;</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <LangVersion>latest</LangVersion>
     <AssemblyName>ADO.Net.Client.Implementation.Tests</AssemblyName>
     <RootNamespace>ADO.Net.Client.Implementation.Tests</RootNamespace>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' != 'netcoreapp2.1' and '$(TargetFramework)' != 'net461' and '$(TargetFramework)' != 'net45'">
-    <DefineConstants>ADVANCE_ASYNC</DefineConstants>
-  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Bogus" Version="33.1.1" />
-    <PackageReference Include="Moq" Version="4.16.1" />
-    <PackageReference Include="MySqlConnector" Version="1.3.12" />
+    <PackageReference Include="MySqlConnector" Version="2.1.4" />
     <PackageReference Include="nunit" Version="3.13.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.0.0">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.2.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -24,8 +19,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\ADO.Net.Client.Implementation\ADO.Net.Client.Implementation.csproj" />
     <ProjectReference Include="..\ADO.Net.Client.Tests.Common\ADO.Net.Client.Tests.Common.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Integration\" />
   </ItemGroup>
 </Project>

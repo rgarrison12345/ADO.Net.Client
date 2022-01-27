@@ -1,6 +1,18 @@
 Version History
 ===============
 
+### 1.4.3
+
+* Updating to ADO.Net.Client.Core 1.4.4
+* Adding [IConnectionManager](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IConnectionManager.cs) as a getter property to the following objects
+  to [SqlExecutor](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Implementation/SqlExecutor.cs)
+
+### 1.4.2
+
+* Removing .NET 4.0, 4.5 builds
+* Adding .NET 6.0 build
+* Updating to ADO.Net.Client.Core 1.4.3
+
 ### 1.4.1.1
 
 * Updating to ADO.Net.Client.Core 1.4.2.1

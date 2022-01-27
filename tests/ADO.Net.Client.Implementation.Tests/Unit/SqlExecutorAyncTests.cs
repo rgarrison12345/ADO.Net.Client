@@ -26,7 +26,6 @@ using Moq;
 using NUnit.Framework;
 using System.Data;
 using System.Data.Common;
-using System.Threading;
 using System.Threading.Tasks;
 #endregion
 
@@ -43,27 +42,31 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         {
             CommandBehavior behavior = _faker.PickRandom<CommandBehavior>();
 
-#if ADVANCE_ASYNC
-            DbDataReader returned = await _executor.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, default);
+#if !NET461 && !NETCOREAPP2_1
+            DbDataReader returned = await _executor.GetDbDataReaderAsync(realQuery.QueryText, 
+                realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, default);
 #else
-            DbDataReader returned = await _executor.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, default);
+            DbDataReader returned = await _executor.GetDbDataReaderAsync(realQuery.QueryText, 
+                realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, default);
 #endif
 
-#if ADVANCE_ASYNC
+#if !NET461 && !NETCOREAPP2_1
             if (realQuery.ShouldBePrepared == true)
             {
-                _command.Verify(x => x.PrepareAsync(default), Times.Once);
+                _command.Verify(x => x.PrepareAsync(default), Times.Exactly(1));
             }
             else
             {
                 _command.Verify(x => x.PrepareAsync(default), Times.Never);
             }
 
-            _command.Verify(x => x.DisposeAsync(), Times.Once);
+            _command.Verify(x => x.DisposeAsync(), Times.Exactly(1));
 #endif
 
             //Verify the calls were made
-            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, 
+                _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, 
+                _manager.Object.Transaction), Times.Exactly(1));
         }
         /// <summary>
         /// When the get scalar value async is called it should calls database object factory get database command.
@@ -75,30 +78,34 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
 
             _command.Setup(x => x.ExecuteScalarAsync(default)).ReturnsAsync(expected);
 
-#if ADVANCE_ASYNC
-            string returned = await _executor.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, default);
+#if !NET461 && !NETCOREAPP2_1
+            string returned = await _executor.GetScalarValueAsync<string>(realQuery.QueryText, 
+                realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, default);
 #else
-            string returned = await _executor.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, default);
+            string returned = await _executor.GetScalarValueAsync<string>(realQuery.QueryText, 
+                realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, default);
 #endif
 
-#if ADVANCE_ASYNC
+#if !NET461 && !NETCOREAPP2_1
             if (realQuery.ShouldBePrepared == true)
             {
-                _command.Verify(x => x.PrepareAsync(default), Times.Once);
+                _command.Verify(x => x.PrepareAsync(default), Times.Exactly(1));
             }
             else
             {
                 _command.Verify(x => x.PrepareAsync(default), Times.Never);
             }
 
-            _command.Verify(x => x.DisposeAsync(), Times.Once);
+            _command.Verify(x => x.DisposeAsync(), Times.Exactly(1));
 #endif
 
             Assert.AreEqual(expected, returned);
 
             //Verify the calls were made
-            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
-            _command.Verify(x => x.ExecuteScalarAsync(default), Times.Once);
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, 
+                _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, 
+                _manager.Object.Transaction), Times.Once);
+            _command.Verify(x => x.ExecuteScalarAsync(default), Times.Exactly(1));
         }
         #endregion
         #region Write Test Methods                
@@ -112,16 +119,18 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
 
             _command.Setup(x => x.ExecuteNonQueryAsync(default)).ReturnsAsync(expected);
 
-#if ADVANCE_ASYNC
-            int returned = await _executor.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, default);
+#if !NET461 && !NETCOREAPP2_1
+            int returned = await _executor.ExecuteNonQueryAsync(realQuery.QueryText, 
+                realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, default);
 #else
-            int returned = await _executor.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, default);
+            int returned = await _executor.ExecuteNonQueryAsync(realQuery.QueryText, 
+                realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, default);
 #endif
 
-#if ADVANCE_ASYNC
+#if !NET461 && !NETCOREAPP2_1
             if (realQuery.ShouldBePrepared == true)
             {
-                _command.Verify(x => x.PrepareAsync(default), Times.Once);
+                _command.Verify(x => x.PrepareAsync(default), Times.Exactly(1));
             }
             else
             {
@@ -133,8 +142,10 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
 
             Assert.AreEqual(expected, returned);
 
-            _command.Verify(x => x.ExecuteNonQueryAsync(default), Times.Once);
-            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
+            _command.Verify(x => x.ExecuteNonQueryAsync(default), Times.Exactly(1));
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, 
+                _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, 
+                _manager.Object.Transaction), Times.Exactly(1));
         }
         #endregion
     }

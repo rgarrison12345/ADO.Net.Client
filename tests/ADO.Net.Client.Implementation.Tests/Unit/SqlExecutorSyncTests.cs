@@ -42,11 +42,13 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             CommandBehavior behavior = _faker.PickRandom<CommandBehavior>();
 
             //Make the call
-            DbDataReader reader = _executor.GetDbDataReader(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior);
+            DbDataReader reader = _executor.GetDbDataReader(realQuery.QueryText, 
+                realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, 
+                realQuery.ShouldBePrepared, behavior);
 
             if (realQuery.ShouldBePrepared == true)
             {
-                _command.Verify(x => x.Prepare(), Times.Once);
+                _command.Verify(x => x.Prepare(), Times.Exactly(1));
             }
             else
             {
@@ -54,7 +56,9 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             }
 
             //Verify the calls were made
-            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, 
+                _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, 
+                _manager.Object.Transaction), Times.Exactly(1));
         }
         /// <summary>
         /// When the get scalar value is called it should calls database object factory get database command.
@@ -67,11 +71,13 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             _command.Setup(x => x.ExecuteScalar()).Returns(expected);
 
             //Make the call
-            string returned = _executor.GetScalarValue<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared);
+            string returned = _executor.GetScalarValue<string>(realQuery.QueryText, 
+                realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, 
+                realQuery.ShouldBePrepared);
 
             if (realQuery.ShouldBePrepared == true)
             {
-                _command.Verify(x => x.Prepare(), Times.Once);
+                _command.Verify(x => x.Prepare(), Times.Exactly(1));
             }
             else
             {
@@ -81,8 +87,10 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             Assert.IsTrue(expected == returned);
 
             //Verify the calls were made
-            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
-            _command.Verify(x => x.ExecuteScalar(), Times.Once);
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, 
+                _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, 
+                _manager.Object.Transaction), Times.Exactly(1));
+            _command.Verify(x => x.ExecuteScalar(), Times.Exactly(1));
         }
         #endregion
         #region Write Test Methods                
@@ -97,11 +105,12 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             _command.Setup(x => x.ExecuteNonQuery()).Returns(expected);
 
             //Make the call
-            int returned = _executor.ExecuteNonQuery(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared);
+            int returned = _executor.ExecuteNonQuery(realQuery.QueryText, realQuery.QueryType, 
+                realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared);
 
             if (realQuery.ShouldBePrepared == true)
             {
-                _command.Verify(x => x.Prepare(), Times.Once);
+                _command.Verify(x => x.Prepare(), Times.Exactly(1));
             }
             else
             {
@@ -111,8 +120,10 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             Assert.IsTrue(expected == returned);
 
             //Verify the calls were made
-            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, _manager.Object.Transaction), Times.Once);
-            _command.Verify(x => x.ExecuteNonQuery(), Times.Once);
+            _factory.Verify(x => x.GetDbCommand(realQuery.QueryType, realQuery.QueryText, 
+                _manager.Object.Connection, realQuery.Parameters, realQuery.CommandTimeout, 
+                _manager.Object.Transaction), Times.Exactly(1));
+            _command.Verify(x => x.ExecuteNonQuery(), Times.Exactly(1));
         }
         #endregion
     }

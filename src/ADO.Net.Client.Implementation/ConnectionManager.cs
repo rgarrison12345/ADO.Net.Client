@@ -26,7 +26,7 @@ using ADO.Net.Client.Core;
 using System;
 using System.Data;
 using System.Data.Common;
-#if ADVANCE_ASYNC
+#if !NET461 && !NETSTANDARD2_0
 using System.Threading;
 using System.Threading.Tasks;
 #endif
@@ -81,7 +81,7 @@ namespace ADO.Net.Client.Implementation
         /// </summary>
         /// <param name="connection">An instance of <see cref="DbConnection"/> to replace the existing <see cref="Connection"/> with</param>
         /// <exception cref="InvalidOperationException">Thrown when the existing <see cref="Connection"/> is <see cref="ConnectionState.Open"/></exception>
-        public void ReplaceConnection(DbConnection connection)
+        public virtual void ReplaceConnection(DbConnection connection)
         {
             if (Connection.State == ConnectionState.Open)
             {
@@ -94,7 +94,7 @@ namespace ADO.Net.Client.Implementation
         /// Starts a database transaction
         /// </summary>
         /// <exception cref="InvalidOperationException">Thrown when the existing <see cref="Connection"/> is not <see cref="ConnectionState.Open"/></exception>
-        public void StartTransaction()
+        public virtual void StartTransaction()
         {
             if (Connection.State != ConnectionState.Open)
             {
@@ -108,7 +108,7 @@ namespace ADO.Net.Client.Implementation
         /// </summary>
         /// <param name="level">Specifies the transaction locking behavior for the <see cref="Connection"/></param>
         /// <exception cref="InvalidOperationException">Thrown when the existing <see cref="Connection"/> is not <see cref="ConnectionState.Open"/></exception>
-        public void StartTransaction(IsolationLevel level)
+        public virtual void StartTransaction(IsolationLevel level)
         {
             if (Connection.State != ConnectionState.Open)
             {
@@ -120,18 +120,18 @@ namespace ADO.Net.Client.Implementation
         /// <summary>
         /// Clears the current <see cref="DbTransaction"/>
         /// </summary>
-        public void ClearTransaction()
+        public virtual void ClearTransaction()
         {
             Transaction = null;
         }
-#if ADVANCE_ASYNC
+#if !NET461 && !NETSTANDARD2_0
         /// <summary>
         /// Starts a database transaction asynchronously with the specified <paramref name="level"/>
         /// </summary>
         /// <param name="level">Specifies the transaction locking behavior for the <see cref="Connection"/></param>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <exception cref="InvalidOperationException">Thrown when the existing <see cref="Connection"/> is not <see cref="ConnectionState.Open"/></exception>
-        public async Task StartTransactionAsync(IsolationLevel level, CancellationToken token = default)
+        public virtual async Task StartTransactionAsync(IsolationLevel level, CancellationToken token = default)
         {
             if (Connection.State != ConnectionState.Open)
             {
@@ -145,7 +145,7 @@ namespace ADO.Net.Client.Implementation
         /// </summary>
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <exception cref="InvalidOperationException">Thrown when the existing <see cref="Connection"/> is not <see cref="ConnectionState.Open"/></exception>
-        public async Task StartTransactionAsync(CancellationToken token = default)
+        public virtual async Task StartTransactionAsync(CancellationToken token = default)
         {
             if (Connection.State != ConnectionState.Open)
             {

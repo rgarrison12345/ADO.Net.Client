@@ -42,6 +42,11 @@ namespace ADO.Net.Client.Implementation
         private readonly IDataMapper _mapper;
         private readonly IDbObjectFactory _factory;
         private readonly IConnectionManager _manager;
+
+        /// <summary>
+        /// An instance of <see cref="IConnectionManager"/>
+        /// </summary>
+        public IConnectionManager ConnectionManager => _manager;
         #endregion
         #region Constructors           
         /// <summary>

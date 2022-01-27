@@ -24,9 +24,7 @@ SOFTWARE.*/
 #region Using Statements
 using System;
 using System.Collections.Generic;
-#if !NET45
 using System.Runtime.CompilerServices;
-#endif
 using System.Threading;
 using System.Threading.Tasks;
 #endregion
@@ -46,10 +44,7 @@ namespace ADO.Net.Client.Implementation
         public virtual async Task<IEnumerable<T>> ReadObjectsAsync<T>(CancellationToken token = default) where T : class
         {
             //Check if caller has canceled the token
-            if (token.IsCancellationRequested)
-            {
-                token.ThrowIfCancellationRequested();
-            }
+            token.ThrowIfCancellationRequested();
 
             //Keep looping through each object in enumerator
             return await _mapper.MapResultSetAsync<T>(_reader, token).ConfigureAwait(false);
@@ -64,10 +59,7 @@ namespace ADO.Net.Client.Implementation
         public virtual async Task<T> ReadObjectAsync<T>(CancellationToken token = default) where T : class
         {
             //Check if caller has canceled the token
-            if (token.IsCancellationRequested)
-            {
-                token.ThrowIfCancellationRequested();
-            }
+            token.ThrowIfCancellationRequested();
 
             //Move to the next record if possible
             if (!await _reader.ReadAsync(token).ConfigureAwait(false))
@@ -86,15 +78,11 @@ namespace ADO.Net.Client.Implementation
         public virtual async Task<bool> MoveToNextResultAsync(CancellationToken token = default)
         {
             //Check if caller has canceled the token
-            if (token.IsCancellationRequested)
-            {
-                token.ThrowIfCancellationRequested();
-            }
+            token.ThrowIfCancellationRequested();
 
             //Move to next result set
             return await _reader.NextResultAsync(token).ConfigureAwait(false);
         }
-#if !NET45
         /// <summary>
         /// Gets an <see cref="IAsyncEnumerable{T}"/> based on the <typeparamref name="T"/> streamed from the server asynchronously
         /// </summary>
@@ -105,10 +93,7 @@ namespace ADO.Net.Client.Implementation
         public virtual async IAsyncEnumerable<T> ReadObjectsStreamAsync<T>([EnumeratorCancellation] CancellationToken token = default) where T : class
         {
             //Check if caller has canceled the token
-            if (token.IsCancellationRequested)
-            {
-                token.ThrowIfCancellationRequested();
-            }
+            token.ThrowIfCancellationRequested();
 
             //Keep looping through each object in enumerator
             await foreach (T type in _mapper.MapResultSetStreamAsync<T>(_reader, token).ConfigureAwait(false))
@@ -117,8 +102,9 @@ namespace ADO.Net.Client.Implementation
                 yield return type;
             }
         }
-#endif
-#if ADVANCE_ASYNC
+        #endregion
+#if !NET461 && !NETSTANDARD2_0
+        #region IDisposableAsync Support 
         /// <summary>
         /// Closes the underlying reader object that reads records from the database asynchronously
         /// </summary>
@@ -126,10 +112,6 @@ namespace ADO.Net.Client.Implementation
         {
             await _reader.CloseAsync().ConfigureAwait(false);
         }
-#endif
-        #endregion
-#if ADVANCE_ASYNC
-        #region IDisposableAsync Support 
         /// <summary>
         /// Disposes the asynchronous.
         /// </summary>

@@ -53,7 +53,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
 
             await reader.DisposeAsync();
 
-            _mockReader.Verify(x => x.CloseAsync(), Times.Once);
+            _mockReader.Verify(x => x.CloseAsync(), Times.Exactly(1));
             _mockReader.VerifyNoOtherCalls();
         }
         /// <summary>
@@ -69,7 +69,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
 
             await reader.CloseAsync();
 
-            _mockReader.Verify(x => x.CloseAsync(), Times.Once);
+            _mockReader.Verify(x => x.CloseAsync(), Times.Exactly(1));
             _mockReader.VerifyNoOtherCalls();
         }
 #endif
@@ -101,9 +101,9 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             Assert.AreEqual(returnedModel.LastName, expectedModel.LastName);
 
             //Verify the readers read method was called
-            _mockMapper.Verify(x => x.MapRecord<PersonModel>(_mockReader.Object), Times.Once);
+            _mockMapper.Verify(x => x.MapRecord<PersonModel>(_mockReader.Object), Times.Exactly(1));
             _mockMapper.VerifyNoOtherCalls();
-            _mockReader.Verify(x => x.ReadAsync(CancellationToken.None), Times.Once);
+            _mockReader.Verify(x => x.ReadAsync(CancellationToken.None), Times.Exactly(1));
             _mockReader.VerifyNoOtherCalls();
         }
         /// <summary>
@@ -132,7 +132,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
 
             //Verify the readers read method was called
             _mockMapper.Verify(x => x.MapRecord<PersonModel>(_mockReader.Object), Times.Never);
-            _mockReader.Verify(x => x.ReadAsync(CancellationToken.None), Times.Once);
+            _mockReader.Verify(x => x.ReadAsync(CancellationToken.None), Times.Exactly(1));
             _mockMapper.VerifyNoOtherCalls();
             _mockReader.VerifyNoOtherCalls();
         }
@@ -169,7 +169,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             Assert.IsTrue(expected == returned);
 
             //Verify the readers read method was called
-            _mockReader.Verify(x => x.NextResultAsync(CancellationToken.None), Times.Once);
+            _mockReader.Verify(x => x.NextResultAsync(CancellationToken.None), Times.Exactly(1));
             _mockReader.VerifyNoOtherCalls();
         }
         /// <summary>

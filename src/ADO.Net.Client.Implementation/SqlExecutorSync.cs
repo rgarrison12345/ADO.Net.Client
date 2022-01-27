@@ -42,7 +42,8 @@ namespace ADO.Net.Client.Implementation
         /// <param name="parameters">The parameters that are associated with a database query</param>
         /// <param name="query">SQL query to use to build a <see cref="DataSet"/></param>
         /// <returns>Returns an instance of <see cref="DataSet"/> based on the <paramref name="query"/> passed into the routine</returns>
-        public virtual DataSet GetDataSet(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false)
+        public virtual DataSet GetDataSet(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, 
+            int commandTimeout = 30, bool shouldBePrepared = false)
         {
             //Wrap this automatically to dispose of resources
             using (DbDataAdapter adap = _factory.GetDbDataAdapter())
@@ -76,7 +77,8 @@ namespace ADO.Net.Client.Implementation
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">SQL query to use to build a result set</param>
         /// <returns>Returns an instance of <see cref="DataTable"/></returns>
-        public virtual DataTable GetDataTable(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false)
+        public virtual DataTable GetDataTable(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, 
+            int commandTimeout = 30, bool shouldBePrepared = false)
         {
             //Return this back to the caller
             using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared))
@@ -100,7 +102,8 @@ namespace ADO.Net.Client.Implementation
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="parameters">The database parameters associated with a database query</param>
         /// <returns>Returns an instance of the <typeparamref name="T"/> based on the fields in the passed in query.  Returns the default value for the <typeparamref name="T"/> if a record is not found</returns>
-        public virtual T GetDataObject<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false) where T : class
+        public virtual T GetDataObject<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, 
+            int commandTimeout = 30, bool shouldBePrepared = false) where T : class
         {
             //Wrap this to automatically handle disposing of resources
             using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleRow))
@@ -128,7 +131,8 @@ namespace ADO.Net.Client.Implementation
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="parameters">The database parameters associated with a query</param>
         /// <returns>Returns an <see cref="IEnumerable{T}"/> based on the results of the passed in <paramref name="query"/></returns>
-        public virtual IEnumerable<T> GetDataObjects<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false) where T : class
+        public virtual IEnumerable<T> GetDataObjects<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, 
+            int commandTimeout = 30, bool shouldBePrepared = false) where T : class
         {
             //Wrap this to automatically handle disposing of resources
             using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult))
@@ -169,7 +173,8 @@ namespace ADO.Net.Client.Implementation
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns an instance of <see cref="DbDataReader"/> object, the caller is responsible for handling closing the DataReader</returns>
-        public virtual DbDataReader GetDbDataReader(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false, CommandBehavior behavior = CommandBehavior.CloseConnection)
+        public virtual DbDataReader GetDbDataReader(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, 
+            int commandTimeout = 30, bool shouldBePrepared = false, CommandBehavior behavior = CommandBehavior.CloseConnection)
         {
             //Wrap this in a using statement to handle disposing of resources
             using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
@@ -194,7 +199,8 @@ namespace ADO.Net.Client.Implementation
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
         /// <returns>Returns an <see cref="IEnumerable{T}"/> of the value of the first column in the result set as an instance of <typeparamref name="T"/></returns>
-        public virtual IEnumerable<T> GetScalarValues<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false)
+        public virtual IEnumerable<T> GetScalarValues<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, 
+            int commandTimeout = 30, bool shouldBePrepared = false)
         {
             List<T> returnList = new List<T>();
 
@@ -210,11 +216,7 @@ namespace ADO.Net.Client.Implementation
                     }
                     else
                     {
-#if !NET40
                         returnList.Add(reader.GetFieldValue<T>(0));
-#else
-                        returnList.Add(Utilities.GetTypeFromValue<T>(reader.GetValue(0)));
-#endif
                     }
                 }
             }
@@ -231,7 +233,8 @@ namespace ADO.Net.Client.Implementation
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
         /// <returns>Returns an <see cref="IEnumerable{T}"/> of the value of the first column in the result set as an instance of <typeparamref name="T"/></returns>
-        public virtual IEnumerable<T> GetScalarValuesStream<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false)
+        public virtual IEnumerable<T> GetScalarValuesStream<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, 
+            int commandTimeout = 30, bool shouldBePrepared = false)
         {
             //Wrap this to automatically handle disposing of resources
             using (DbDataReader reader = GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared, CommandBehavior.SingleResult))
@@ -246,11 +249,7 @@ namespace ADO.Net.Client.Implementation
                     }
                     else
                     {
-#if !NET40
                         yield return reader.GetFieldValue<T>(0);
-#else
-                        yield return Utilities.GetTypeFromValue<T>(reader.GetValue(0));
-#endif
                     }
                 }
             }
@@ -265,7 +264,8 @@ namespace ADO.Net.Client.Implementation
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <typeparam name="T">The data type to return from data value returned from the query</typeparam>
         /// <returns>Returns the value of the first column in the first row as an instance of <typeparamref name="T"/></returns>
-        public virtual T GetScalarValue<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false)
+        public virtual T GetScalarValue<T>(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, 
+            int commandTimeout = 30, bool shouldBePrepared = false)
         {
             //Wrap this in a using statement to handle disposing of resources
             using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))
@@ -289,7 +289,8 @@ namespace ADO.Net.Client.Implementation
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>An instance of <see cref="IMultiResultReader"/> object</returns>
-        public virtual IMultiResultReader GetMultiResultReader(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false)
+        public virtual IMultiResultReader GetMultiResultReader(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, 
+            int commandTimeout = 30, bool shouldBePrepared = false)
         {
             return new MultiResultReader(GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared), _mapper);
         }
@@ -304,7 +305,8 @@ namespace ADO.Net.Client.Implementation
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns the number of rows affected by this query</returns>
-        public virtual int ExecuteNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, bool shouldBePrepared = false)
+        public virtual int ExecuteNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, 
+            int commandTimeout = 30, bool shouldBePrepared = false)
         {
             //Wrap this in a using statement to automatically handle disposing of resources
             using (DbCommand command = _factory.GetDbCommand(queryCommandType, query, _manager.Connection, parameters, commandTimeout, _manager.Transaction))

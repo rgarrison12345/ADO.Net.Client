@@ -121,7 +121,6 @@ namespace ADO.Net.Client.Implementation.Tests
         /// Throwses the invalid operation transaction start isolation level.
         /// </summary>
         [Test]
-
         public void ThrowsInvalidOperationTransactionStartIsolationLevel()
         {
             ConnectionState state = _faker.PickRandom(ConnectionState.Closed, ConnectionState.Broken, ConnectionState.Connecting, ConnectionState.Executing, ConnectionState.Fetching);
@@ -130,7 +129,7 @@ namespace ADO.Net.Client.Implementation.Tests
 
             Assert.Throws<InvalidOperationException>(() => manager.StartTransaction(level));
         }
-#if !NET45 && !NET461 && !NETCOREAPP2_1
+#if !NET461 && !NETCOREAPP2_1
         /// <summary>
         /// Throwses the invalid operation transaction start asynx.
         /// </summary>
@@ -163,7 +162,7 @@ namespace ADO.Net.Client.Implementation.Tests
         /// Throwses the invalid operation transaction start asynx.
         /// </summary>
         [Test]
-        public async Task ThrowsInvalidOperationTransactionStartAsync()
+        public void ThrowsInvalidOperationTransactionStartAsync()
         {
             ConnectionState state = _faker.PickRandom(ConnectionState.Closed, ConnectionState.Broken, ConnectionState.Connecting, ConnectionState.Executing, ConnectionState.Fetching);
             ConnectionManager manager = new ConnectionManager(new CustomDbConnection(state));
@@ -174,8 +173,7 @@ namespace ADO.Net.Client.Implementation.Tests
         /// Throwses the invalid operation transaction start isolation level asynchronous.
         /// </summary>
         [Test]
-
-        public async Task ThrowsInvalidOperationTransactionStartIsolationLevelAsync()
+        public void ThrowsInvalidOperationTransactionStartIsolationLevelAsync()
         {
             ConnectionState state = _faker.PickRandom(ConnectionState.Closed, ConnectionState.Broken, ConnectionState.Connecting, ConnectionState.Executing, ConnectionState.Fetching);
             IsolationLevel level = _faker.PickRandom<IsolationLevel>();

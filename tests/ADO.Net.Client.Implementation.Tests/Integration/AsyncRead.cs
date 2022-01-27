@@ -63,7 +63,6 @@ namespace ADO.Net.Client.Implementation.Tests.Integration
 
             Assert.IsTrue(employees.Count() == expectedRead);
         }
-#if !NET45
         /// <summary>
         /// Gets the data object asynchronous.
         /// </summary>
@@ -84,7 +83,6 @@ namespace ADO.Net.Client.Implementation.Tests.Integration
 
             Assert.IsTrue(employees.Count == expectedRead);
         }
-#endif
         #endregion
     }
 }
