@@ -28,10 +28,6 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-#if NET461
-using System.Security;
-using System.Security.Permissions;
-#endif
 #endregion
 
 namespace ADO.Net.Client.Core.Tests
@@ -60,7 +56,20 @@ namespace ADO.Net.Client.Core.Tests
         public abstract void Setup();
         #endregion
         #region Basic Tests
-#if !NET461 && !NETSTANDARD2_0
+#if NET7_0_OR_GREATER
+        /// <summary>
+        /// 
+        /// </summary>
+        [Test]
+        public void CreateDbDataSource()
+        {
+            DbDataSource dataSource = _factory.GetDbDataSource(string.Empty);
+
+            Assert.IsNotNull(dataSource);
+            Assert.IsInstanceOf(typeof(CustomDbDataSource), dataSource);
+        }
+#endif
+#if !NET462 && !NETSTANDARD2_0
         /// <summary>
         /// Determines whether this instance [can create command builder].
         /// </summary>
@@ -283,20 +292,6 @@ namespace ADO.Net.Client.Core.Tests
             Assert.NotNull(parameter);
             Assert.IsInstanceOf(typeof(CustomDbParameter), parameter);
         }
-#if NET461
-        /// <summary>
-        /// 
-        /// </summary>
-        [Test]
-        public void CreateCodeAccessPermission()
-        {
-            PermissionState state = _faker.PickRandom<PermissionState>();
-            CodeAccessPermission permission = _factory.CreatePermission(state);
-
-            Assert.IsNotNull(permission);
-            Assert.IsInstanceOf(typeof(CustomDbCodePermission), permission);
-        }
-#endif
         #endregion
     }
 }

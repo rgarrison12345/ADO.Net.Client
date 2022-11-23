@@ -1,6 +1,15 @@
 Version History
 ===============
 
+### 1.4.5
+
+* Adding support for NET 7.0
+* Removing support for .NET 4.6.1, bumping to .NET 4.6.2
+* Updating to Microsoft.Bcl.AsyncInterfaces 7.0.0
+* [DbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/DbObjectFactory.cs) 
+and [IDbObjectFactory](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IDbObjectFactory.cs) have new methods
+CreateDbDataSource for .NET 7.0 build
+
 ### 1.4.4
 
 * Adding [IConnectionManager](https://github.com/rgarrison12345/ADO.Net.Client/blob/master/src/ADO.Net.Client.Core/IConnectionManager.cs) as a getter property to the following objects

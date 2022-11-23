@@ -67,7 +67,7 @@ namespace ADO.Net.Client.Tests.Common
         {
             return new CustomDbTransaction(this, isolationLevel);
         }
-#if !NET461 && !NETSTANDARD2_0
+#if !NET462 && !NETSTANDARD2_0
         /// <summary>
         /// 
         /// </summary>

@@ -25,10 +25,6 @@ SOFTWARE.*/
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-#if NET461
-using System.Security;
-using System.Security.Permissions;
-#endif
 #endregion
 
 namespace ADO.Net.Client.Core
@@ -43,7 +39,7 @@ namespace ADO.Net.Client.Core
         /// Whether or not the passed in provider is capable of creating a <see cref="DbDataSourceEnumerator"/>
         /// </summary>
         bool CanCreateDataSourceEnumerator { get; }
-#if !NET461 && !NETSTANDARD2_0
+#if !NET462 && !NETSTANDARD2_0
         /// <summary>
         /// Whether or not this instance is capable of creating a <see cref="DbDataAdapter"/>
         /// </summary>
@@ -61,6 +57,14 @@ namespace ADO.Net.Client.Core
 #endif
         #endregion
         #region Utility Methods
+#if NET7_0_OR_GREATER
+        /// <summary>
+        /// Gets a <see cref="DbDataSource"/> based off the provider passed into class
+        /// </summary>
+        /// <param name="connectionString">The connection string associated with the data source</param>
+        /// <returns>An instance of <see cref="DbDataSource"/></returns>
+        DbDataSource GetDbDataSource(string connectionString);
+#endif
 #if NET6_0_OR_GREATER
         /// <summary>
         /// Gets a <see cref="DbBatch"/> based off the provider passed into class
@@ -72,14 +76,6 @@ namespace ADO.Net.Client.Core
         /// </summary>
         /// <returns>Returns an instance of <see cref="DbBatchCommand"/></returns>
         DbBatchCommand GetDbBatchCommand();
-#endif
-#if NET461
-        /// <summary>
-        /// Returns a new instance of the provider's class that implements the provider's version of the <see cref="CodeAccessPermission"/>
-        /// </summary>
-        /// <param name="state">An instance of <see cref="PermissionState"/></param>
-        /// <returns>Returns an instance of <see cref="CodeAccessPermission"/></returns>
-        CodeAccessPermission CreatePermission(PermissionState state);
 #endif
         /// <summary>
         /// Gets an instance of <see cref="DbDataSourceEnumerator"/>

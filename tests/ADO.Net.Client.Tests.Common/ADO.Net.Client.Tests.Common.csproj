@@ -1,20 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;netstandard2.1;netstandard2.0;net461;</TargetFrameworks>
+		<TargetFrameworks>net7.0;net6.0;netstandard2.1;netstandard2.0;net462;</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<AssemblyName>ADO.Net.Client.Tests.Common</AssemblyName>
 		<RootNamespace>ADO.Net.Client.Tests.Common</RootNamespace>
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461'">
+	<PropertyGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net462'">
 		<DefineConstants>ADVANCED_FEATURES</DefineConstants>
 	</PropertyGroup>
-	<ItemGroup Condition="'$(TargetFramework)'!='net461'">
-		<Compile Remove="CustomDbAccessPermission.cs" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Bogus" Version="34.0.1" />
-		<PackageReference Include="Moq" Version="4.16.1" />
+	<ItemGroup Condition="'$(TargetFramework)'!='net7.0'">
+		<Compile Remove="CustomDbDataSource.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\ADO.Net.Client.Annotations\ADO.Net.Client.Annotations.csproj" />

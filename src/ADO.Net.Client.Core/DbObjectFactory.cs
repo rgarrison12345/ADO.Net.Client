@@ -1,6 +1,6 @@
 ﻿#region Licenses
 /*MIT License
-Copyright(c) 2020
+Copyright(c) 2022
 Robert Garrison
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -28,10 +28,6 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Reflection;
-#if NET40 || NET45 || NET461
-using System.Security;
-using System.Security.Permissions;
-#endif
 #endregion
 
 namespace ADO.Net.Client.Core
@@ -55,24 +51,16 @@ namespace ADO.Net.Client.Core
         protected readonly DbProviderFactory _factory;
 
 #if NET6_0_OR_GREATER
-        /// <summary>
-        /// Whether or not this instance is capable of creating a <see cref="DbBatch"/>
-        /// </summary>
+        /// <inheritdoc cref="IDbObjectFactory.CanCreateBatch"/>
         public bool CanCreateBatch => _factory.CanCreateBatch;
 #endif
-#if !NET461 && !NETSTANDARD2_0
-        /// <summary>
-        /// Whether or not this instance is capable of creating a <see cref="DbDataAdapter"/>
-        /// </summary>
+#if !NET462 && !NETSTANDARD2_0
+        /// <inheritdoc cref="IDbObjectFactory.CanCreateDataAdapter"/>
         public bool CanCreateDataAdapter => _factory.CanCreateDataAdapter;
-        /// <summary>
-        /// Whether or not this instance is capable of creating a <see cref="DbCommandBuilder"/>
-        /// </summary>
+        /// <inheritdoc cref="IDbObjectFactory.CanCreateCommandBuilder"/>
         public bool CanCreateCommandBuilder => _factory.CanCreateCommandBuilder;
 #endif
-        /// <summary>
-        /// Whether or not this instance is capable of creating a <see cref="DbDataSourceEnumerator"/>
-        /// </summary>
+        /// <inheritdoc cref="IDbObjectFactory.CanCreateDataSourceEnumerator"/>
         public bool CanCreateDataSourceEnumerator => _factory.CanCreateDataSourceEnumerator;
         #endregion
         #region Constructors
@@ -128,81 +116,50 @@ namespace ADO.Net.Client.Core
 #endif
         #endregion
         #region Utility Methods
+#if NET7_0_OR_GREATER
+        /// <inheritdoc cref="IDbObjectFactory.GetDbDataSource(string)"/>
+        public virtual DbDataSource GetDbDataSource(string connectionString)
+        {
+            return _factory.CreateDataSource(connectionString);
+        }
+#endif
 #if NET6_0_OR_GREATER
-        /// <summary>
-        /// Gets a <see cref="DbBatch"/> based off the provider passed into class
-        /// </summary>
-        /// <returns>Returns an instance of <see cref="DbBatch"/></returns>
+        /// <inheritdoc cref="IDbObjectFactory.GetDbBatch"/>
         public virtual DbBatch GetDbBatch()
         {
             return _factory.CreateBatch();
         }
-        /// <summary>
-        /// Gets a <see cref="DbBatchCommand"/> based off the provider passed into class
-        /// </summary>
-        /// <returns>Returns an instance of <see cref="DbBatchCommand"/></returns>
+        /// <inheritdoc cref="IDbObjectFactory.GetDbBatchCommand"/>
         public virtual DbBatchCommand GetDbBatchCommand()
         {
             return _factory.CreateBatchCommand();
         }
 #endif
-#if NET461
-        /// <summary>
-        /// Returns a new instance of the provider's class that implements the provider's version of the <see cref="CodeAccessPermission"/>
-        /// </summary>
-        /// <param name="state">An instance of <see cref="PermissionState"/></param>
-        /// <returns>Returns an instance of <see cref="CodeAccessPermission"/></returns>
-        public virtual CodeAccessPermission CreatePermission(PermissionState state)
-        {
-            return _factory.CreatePermission(state);
-        }
-#endif
-        /// <summary>
-        /// Gets an instance of <see cref="DbDataSourceEnumerator"/>
-        /// </summary>
-        /// <returns>Returns an instance of <see cref="DbDataSourceEnumerator"/></returns>
+        /// <inheritdoc cref="IDbObjectFactory.GetDataSourceEnumerator"/>
         public virtual DbDataSourceEnumerator GetDataSourceEnumerator()
         {
             //Return this back to the caller
             return _factory.CreateDataSourceEnumerator();
         }
-        /// <summary>
-        /// Gets a <see cref="DbDataAdapter"/> based on the provider the <see cref="DbObjectFactory"/> is utilizing
-        /// </summary>
-        /// <returns>Returns an instance of <see cref="DbDataAdapter"/></returns>
+        /// <inheritdoc cref="IDbObjectFactory.GetDbDataAdapter"/>
         public virtual DbDataAdapter GetDbDataAdapter()
         {
             //Return this back to the caller
             return _factory.CreateDataAdapter();
         }
-        /// <summary>
-        /// Gets a <see cref="DbCommandBuilder"/> based on the provider the <see cref="DbObjectFactory"/> is utilizing
-        /// </summary>
-        /// <returns>Returns an instance of <see cref="DbCommandBuilder"/></returns>
+        /// <inheritdoc cref="IDbObjectFactory.GetDbCommandBuilder"/>
         public virtual DbCommandBuilder GetDbCommandBuilder()
         {
             //Return this back to the caller
             return _factory.CreateCommandBuilder();
         }
-        /// <summary>
-        /// Gets a <see cref="DbConnectionStringBuilder"/> based off the provider passed into class
-        /// </summary>
-        /// <returns>Returns a <see cref="DbConnectionStringBuilder"/> based off of target .NET framework data provider</returns>
+        /// <inheritdoc cref="IDbObjectFactory.GetDbConnectionStringBuilder"/>
         public virtual DbConnectionStringBuilder GetDbConnectionStringBuilder()
         {
             //Return this back to the caller
             return _factory.CreateConnectionStringBuilder();
         }
-        /// <summary>
-        /// Gets an instance of a formatted <see cref="DbCommand"/> object based on the specified provider
-        /// </summary>
-        /// <param name="transaction">An instance of <see cref="DbTransaction"/></param>
-        /// <param name="commandTimeout">Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.</param>
-        /// <param name="connection">An instance of <see cref="DbConnection"/></param>
-        /// <param name="parameters">The list of <see cref="IEnumerable{T}"/> of <see cref="DbParameter"/> associated with the <paramref name="query"/></param>
-        /// <param name="query">The SQL command text or name of stored procedure to execute against the data store</param>
-        /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
-        /// <returns>Returns an instance of <see cref="DbCommand"/> object based off the provider passed into the class</returns>
+        /// <inheritdoc cref="IDbObjectFactory.GetDbCommand(CommandType, string, DbConnection, IEnumerable{DbParameter}, int, DbTransaction)"/>
         public virtual DbCommand GetDbCommand(CommandType queryCommandType, string query, DbConnection connection, IEnumerable<DbParameter> parameters = null, int commandTimeout = 30, DbTransaction transaction = null)
         {
             //Get the DbCommand object
@@ -219,13 +176,7 @@ namespace ADO.Net.Client.Core
             //Return this back to the caller
             return dCommand;
         }
-        /// <summary>
-        /// Gets an instance of a formatted <see cref="DbCommand"/> object based on the specified provider
-        /// </summary>
-        /// <param name="commandTimeout">Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.</param>
-        /// <param name="connection">Represents a connection to a database</param>
-        /// <param name="transact">An instance of a <see cref="DbTransaction"/> object</param>
-        /// <returns>Returns an instance of <see cref="DbCommand"/> object based off the provider passed into the class</returns>
+        ///<inheritdoc cref="IDbObjectFactory.GetDbCommand(DbConnection, DbTransaction, int)"/>
         public virtual DbCommand GetDbCommand(DbConnection connection, DbTransaction transact, int commandTimeout)
         {
             //Get the DbCommand object
@@ -236,12 +187,7 @@ namespace ADO.Net.Client.Core
             //Return this back to the caller
             return dCommand;
         }
-        /// <summary>
-        /// Gets an instance of a formatted <see cref="DbCommand"/> object based on the specified provider
-        /// </summary>
-        /// <param name="commandTimeout">Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.</param>
-        /// <param name="connection">Represents a connection to a database</param>
-        /// <returns>Returns an instance of <see cref="DbCommand"/> object based off the provider passed into the class</returns>
+        /// <inheritdoc cref="IDbObjectFactory.GetDbCommand(DbConnection, DbTransaction, int)"/>
         public virtual DbCommand GetDbCommand(DbConnection connection, int commandTimeout)
         {
             //Get the DbCommand object
@@ -252,11 +198,7 @@ namespace ADO.Net.Client.Core
             //Return this back to the caller
             return dCommand;
         }
-        /// <summary>
-        /// Gets an instance of <see cref="DbCommand"/> object
-        /// </summary>
-        /// <param name="commandTimeout">Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.</param>
-        /// <returns>Returns an instance of <see cref="DbCommand"/> object</returns>
+        /// <inheritdoc cref="IDbObjectFactory.GetDbCommand(int)"/>
         public virtual DbCommand GetDbCommand(int commandTimeout)
         {
             DbCommand command = GetDbCommand();
@@ -266,10 +208,7 @@ namespace ADO.Net.Client.Core
             //Return this back to the caller
             return command;
         }
-        /// <summary>
-        /// Gets an instance of <see cref="DbCommand"/> object
-        /// </summary>
-        /// <returns>Returns an instance of <see cref="DbCommand"/> object</returns>
+        /// <inheritdoc cref="IDbObjectFactory.GetDbCommand()"/>
         public virtual DbCommand GetDbCommand()
         {
             DbCommand command = _factory.CreateCommand();
@@ -280,19 +219,13 @@ namespace ADO.Net.Client.Core
             //Return this back to the caller
             return command;
         }
-        /// <summary>
-        /// Instantiates a new instance of the <see cref="DbConnection"/> object based on the specified provider
-        /// </summary>
-        /// <returns>Returns a new instance of the <see cref="DbConnection"/> object based on the specified provider</returns>
+        /// <inheritdoc cref="IDbObjectFactory.GetDbConnection"/>
         public virtual DbConnection GetDbConnection()
         {
             //Return this back to the caller
             return _factory.CreateConnection();
         }
-        /// <summary>
-        /// Create an instance of <see cref="DbParameter"/> object based off of the provider passed into factory
-        /// </summary>
-        /// <returns>Returns an instantiated <see cref="DbParameter"/> object</returns>
+        /// <inheritdoc cref="IDbObjectFactory.GetDbParameter"/>
         public virtual DbParameter GetDbParameter()
         {
             //Return this back to the caller
@@ -316,7 +249,8 @@ namespace ADO.Net.Client.Core
         /// <exception cref="ArgumentException">Thrown when the passed in <paramref name="assembly"/> does not have a <see cref="DbProviderFactory"/> type</exception>
         public static DbProviderFactory GetProviderFactory(Assembly assembly)
         {
-            Type providerFactory = assembly.GetTypes().Where(x => x.BaseType == typeof(DbProviderFactory)).FirstOrDefault();
+            Type providerFactory = assembly.GetTypes().Where(x => x.BaseType == typeof(DbProviderFactory))
+                .FirstOrDefault();
 
             //There's no instance of client factory in this assembly
             if (providerFactory == null)

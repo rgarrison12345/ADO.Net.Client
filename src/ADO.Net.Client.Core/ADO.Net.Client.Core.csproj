@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;net5.0;netstandard2.1;netstandard2.0;net461;</TargetFrameworks>
+		<TargetFrameworks>net7.0;net6.0;net5.0;netstandard2.1;netstandard2.0;net462;</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
 		<RepositoryType>git</RepositoryType>
-		<Version>1.4.4</Version>
+		<Version>1.4.5</Version>
 		<PackageTags>micro-orm orm sql ado.net ado.net.client</PackageTags>
 		<Authors>Robert Garrison</Authors>
 		<Company>Robert Garrison</Company>
@@ -51,13 +51,13 @@
 		<OutputPath>.\bin\Release</OutputPath>
 		<DefineConstants>RELEASE;</DefineConstants>
 	</PropertyGroup>
-	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net461'">
-		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
+	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net462'">
+		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="7.0.0" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461'">
+	<ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net462'">
 		<Compile Remove="ISqlExecutorAsync.cs" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net461'">
+	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net462'">
 		<Compile Remove="ISqlExecutorAdvanceAsync.cs" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)'=='Debug'">
