@@ -69,7 +69,7 @@ namespace ADO.Net.Client
         {
             token.ThrowIfCancellationRequested();
 
-#if !NET461 && !NETSTANDARD2_0
+#if !NET462 && !NETSTANDARD2_0
             //Return this back to the caller
             return await _executor.GetDataObjectAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false);
 #else
@@ -89,7 +89,7 @@ namespace ADO.Net.Client
         {
             token.ThrowIfCancellationRequested();
 
-#if !NET461 && !NETSTANDARD2_0
+#if !NET462 && !NETSTANDARD2_0
             //Return this back to the caller
             return await _executor.GetDataObjectsAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false);
 #else
@@ -109,7 +109,7 @@ namespace ADO.Net.Client
         {
             token.ThrowIfCancellationRequested();
 
-#if !NET461 && !NETSTANDARD2_0
+#if !NET462 && !NETSTANDARD2_0
             //Return this back to the caller
             return await _executor.GetDbDataReaderAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, behavior, token).ConfigureAwait(false);
 #else
@@ -129,7 +129,7 @@ namespace ADO.Net.Client
         {
             token.ThrowIfCancellationRequested();
 
-#if !NET461 && !NETSTANDARD2_0
+#if !NET462 && !NETSTANDARD2_0
             //Return this back to the caller
             return await _executor.GetScalarValueAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false);
 #else
@@ -150,7 +150,7 @@ namespace ADO.Net.Client
         {
             token.ThrowIfCancellationRequested();
 
-#if !NET461 && !NETSTANDARD2_0
+#if !NET462 && !NETSTANDARD2_0
             return await _executor.GetMultiResultReaderAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false);
 #else
             return await _executor.GetMultiResultReaderAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false);
@@ -168,7 +168,7 @@ namespace ADO.Net.Client
         {
             token.ThrowIfCancellationRequested();
 
-#if !NET461 && !NETSTANDARD2_0
+#if !NET462 && !NETSTANDARD2_0
             return await _executor.GetScalarValuesAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false);
 #else
             return await _executor.GetScalarValuesAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false);
@@ -186,7 +186,7 @@ namespace ADO.Net.Client
         {
             token.ThrowIfCancellationRequested();
 
-#if !NET461 && !NETSTANDARD2_0
+#if !NET462 && !NETSTANDARD2_0
             //Return this back to the caller
             await foreach (T type in _executor.GetDataObjectsStreamAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false))
             {
@@ -212,7 +212,7 @@ namespace ADO.Net.Client
         {
             token.ThrowIfCancellationRequested();
 
-#if !NET461 && !NETSTANDARD2_0
+#if !NET462 && !NETSTANDARD2_0
             //Return this back to the caller
             await foreach (T type in _executor.GetScalarValuesStreamAsync<T>(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false))
             {
@@ -239,7 +239,7 @@ namespace ADO.Net.Client
         {
             token.ThrowIfCancellationRequested();
 
-#if !NET461 && !NETSTANDARD2_0
+#if !NET462 && !NETSTANDARD2_0
             return await _executor.ExecuteNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, query.ShouldBePrepared, token).ConfigureAwait(false);
 #else
             return await _executor.ExecuteNonQueryAsync(query.QueryText, query.QueryType, query.Parameters, query.CommandTimeout, token).ConfigureAwait(false);

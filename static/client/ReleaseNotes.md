@@ -1,6 +1,12 @@
 Version History
 ===============
 
+### 1.4.4
+
+* Removing support for .NET 4.6.1, bumping to .NET 4.6.2
+* Adding .NET 7.0 build
+* Updating to ADO.Net.Client.Implementation 1.4.4
+
 ### 1.4.3
 
 * Updating to ADO.Net.Client.Implementation 1.4.3
