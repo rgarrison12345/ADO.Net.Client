@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net5.0;netcoreapp3.1;netcoreapp2.1;net461;</TargetFrameworks>
+    <TargetFrameworks>net7.0;net6.0;net5.0;netcoreapp3.1;netcoreapp2.1;net461;</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <LangVersion>latest</LangVersion>
     <AssemblyName>ADO.Net.Client.Implementation.Tests</AssemblyName>
@@ -8,13 +8,7 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MySqlConnector" Version="2.1.4" />
-    <PackageReference Include="nunit" Version="3.13.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.2.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+     <PackageReference Include="MySqlConnector" Version="2.1.4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\ADO.Net.Client.Implementation\ADO.Net.Client.Implementation.csproj" />

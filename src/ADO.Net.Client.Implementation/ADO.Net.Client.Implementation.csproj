@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;net5.0;netstandard2.1;netstandard2.0;net461;</TargetFrameworks>
+		<TargetFrameworks>net7.0;net6.0;net5.0;netstandard2.1;netstandard2.0;net462;</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/rgarrison12345/ADO.Net.Client.git</RepositoryUrl>
-		<Version>1.4.3</Version>
+		<Version>1.4.4</Version>
 		<PackageTags>micro-orm orm sql ado.net ado.net.client</PackageTags>
 		<Authors>Robert Garrison</Authors>
 		<Company>Robert Garrison</Company>
@@ -26,7 +26,7 @@
 		<NeutralLanguage>en-us</NeutralLanguage>
 		<DefineConstants>TRACE;</DefineConstants>
 		<Prefer32Bit>false</Prefer32Bit>
-		<Copyright>Copyright © Robert Garrison 2021</Copyright>
+		<Copyright>Copyright © Robert Garrison 2022</Copyright>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 		<IncludeSymbols>true</IncludeSymbols>
@@ -54,17 +54,17 @@
 		<None Include="..\..\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
 		<None Include="..\..\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net461'">
+	<ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net462'">
 		<Compile Remove="SqlExecutorAsync.cs" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net461'">
+	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0' or '$(TargetFramework)'=='net462'">
 		<Compile Remove="SqlExecutorAdvanceAsync.cs" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)'=='Debug'">
 		<ProjectReference Include="..\ADO.Net.Client.Core\ADO.Net.Client.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)'=='Release'">
-		<PackageReference Include="ADO.Net.Client.Core" Version="1.4.4" />
+		<PackageReference Include="ADO.Net.Client.Core" Version="1.4.5" />
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
 	</ItemGroup>
 </Project>

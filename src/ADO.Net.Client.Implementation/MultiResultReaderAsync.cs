@@ -103,7 +103,7 @@ namespace ADO.Net.Client.Implementation
             }
         }
         #endregion
-#if !NET461 && !NETSTANDARD2_0
+#if !NET462 && !NETSTANDARD2_0
         #region IDisposableAsync Support 
         /// <summary>
         /// Closes the underlying reader object that reads records from the database asynchronously

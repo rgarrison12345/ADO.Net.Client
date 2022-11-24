@@ -26,10 +26,8 @@ using ADO.Net.Client.Core;
 using System;
 using System.Data;
 using System.Data.Common;
-#if !NET461 && !NETSTANDARD2_0
 using System.Threading;
 using System.Threading.Tasks;
-#endif
 #endregion
 
 namespace ADO.Net.Client.Implementation
@@ -124,7 +122,7 @@ namespace ADO.Net.Client.Implementation
         {
             Transaction = null;
         }
-#if !NET461 && !NETSTANDARD2_0
+#if !NET462 && !NETSTANDARD2_0
         /// <summary>
         /// Starts a database transaction asynchronously with the specified <paramref name="level"/>
         /// </summary>

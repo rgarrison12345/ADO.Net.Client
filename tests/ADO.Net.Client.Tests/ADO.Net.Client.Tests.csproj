@@ -1,17 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net5.0;netcoreapp3.1;netcoreapp2.1;net461;</TargetFrameworks>
+    <TargetFrameworks>net7.0;net6.0;net5.0;netcoreapp3.1;netcoreapp2.1;net461;</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <LangVersion>latest</LangVersion>
     <AssemblyName>ADO.Net.Client.Tests</AssemblyName>
     <RootNamespace>ADO.Net.Client.Tests</RootNamespace>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="nunit" Version="3.13.2" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.1.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\ADO.Net.Client\ADO.Net.Client.csproj" />
     <ProjectReference Include="..\ADO.Net.Client.Tests.Common\ADO.Net.Client.Tests.Common.csproj" />
