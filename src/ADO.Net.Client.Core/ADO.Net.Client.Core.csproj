@@ -35,7 +35,7 @@
 		<None Include="..\..\static\icon.png" Pack="true" PackagePath="icon.png" />
 		<None Include="..\..\static\core\ReleaseNotes.md" Pack="true" PackagePath="README.md" />
 		<None Include="..\..\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
-		<None Include="..\..\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
+		<None Include="..\..\static\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
 	</ItemGroup>
 	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
 		<DebugSymbols>true</DebugSymbols>

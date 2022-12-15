@@ -52,7 +52,7 @@
 		<None Include="..\..\static\icon.png" Pack="true" PackagePath="icon.png" />
 		<None Include="..\..\static\implementation\ReleaseNotes.md" Pack="true" PackagePath="README.md" />
 		<None Include="..\..\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
-		<None Include="..\..\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
+		<None Include="..\..\static\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0' and '$(TargetFramework)'!='net462'">
 		<Compile Remove="SqlExecutorAsync.cs" />

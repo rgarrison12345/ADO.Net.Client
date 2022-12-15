@@ -51,7 +51,7 @@
 		<None Include="..\..\static\icon.png" Pack="true" PackagePath="icon.png" />
 		<None Include="..\..\static\client\ReleaseNotes.md" Pack="true" PackagePath="README.md" />
 		<None Include="..\..\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
-		<None Include="..\..\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
+		<None Include="..\..\static\CONTRIBUTING.md" Pack="true" PackagePath="CONTRIBUTING.md" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)'=='Debug'">
 		<ProjectReference Include="..\ADO.Net.Client.Implementation\ADO.Net.Client.Implementation.csproj" />
