@@ -51,7 +51,7 @@ namespace ADO.Net.Client.Core
                 throw new ArgumentException($"{nameof(value)} is not an enumeration type");
             }
 
-            return (GetEnumTypeCode((Enum)value)) switch
+            return GetEnumTypeCode((Enum)value) switch
             {
                 TypeCode.Byte => (byte)value,
                 TypeCode.SByte => (sbyte)value,
