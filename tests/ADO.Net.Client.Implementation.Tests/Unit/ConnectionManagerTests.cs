@@ -27,7 +27,6 @@ using Bogus;
 using NUnit.Framework;
 using System;
 using System.Data;
-using System.Data.Common;
 using System.Threading.Tasks;
 #endregion
 
@@ -129,7 +128,7 @@ namespace ADO.Net.Client.Implementation.Tests
 
             Assert.Throws<InvalidOperationException>(() => manager.StartTransaction(level));
         }
-#if !NET461 && !NETCOREAPP2_1
+#if !NET462
         /// <summary>
         /// Throwses the invalid operation transaction start asynx.
         /// </summary>

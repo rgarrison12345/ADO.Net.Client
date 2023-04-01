@@ -42,7 +42,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         {
             CommandBehavior behavior = _faker.PickRandom<CommandBehavior>();
 
-#if !NET461 && !NETCOREAPP2_1
+#if !NET462
             DbDataReader returned = await _executor.GetDbDataReaderAsync(realQuery.QueryText, 
                 realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, default);
 #else
@@ -50,7 +50,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
                 realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, default);
 #endif
 
-#if !NET461 && !NETCOREAPP2_1
+#if !NET462
             if (realQuery.ShouldBePrepared == true)
             {
                 _command.Verify(x => x.PrepareAsync(default), Times.Exactly(1));
@@ -78,7 +78,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
 
             _command.Setup(x => x.ExecuteScalarAsync(default)).ReturnsAsync(expected);
 
-#if !NET461 && !NETCOREAPP2_1
+#if !NET462
             string returned = await _executor.GetScalarValueAsync<string>(realQuery.QueryText, 
                 realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, default);
 #else
@@ -86,7 +86,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
                 realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, default);
 #endif
 
-#if !NET461 && !NETCOREAPP2_1
+#if !NET462
             if (realQuery.ShouldBePrepared == true)
             {
                 _command.Verify(x => x.PrepareAsync(default), Times.Exactly(1));
@@ -119,7 +119,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
 
             _command.Setup(x => x.ExecuteNonQueryAsync(default)).ReturnsAsync(expected);
 
-#if !NET461 && !NETCOREAPP2_1
+#if !NET462
             int returned = await _executor.ExecuteNonQueryAsync(realQuery.QueryText, 
                 realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, default);
 #else
@@ -127,7 +127,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
                 realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, default);
 #endif
 
-#if !NET461 && !NETCOREAPP2_1
+#if !NET462
             if (realQuery.ShouldBePrepared == true)
             {
                 _command.Verify(x => x.PrepareAsync(default), Times.Exactly(1));
