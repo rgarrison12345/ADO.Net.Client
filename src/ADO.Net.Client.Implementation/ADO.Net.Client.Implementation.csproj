@@ -13,7 +13,7 @@
 		<Product>ADO.Net.Client.Implementation</Product>
 		<Title>ADO.Net.Client.Implementation</Title>
 		<PackageId>ADO.Net.Client.Implementation</PackageId>
-		<Description>Implementation functionality API objects for ADO.Net.Client based libraries</Description>
+		<Description>Implementation functionality API objects for ADO.Net.Client.Core based libraries</Description>
 		<PackageReleaseNotes>
 			Release Notes https://github.com/rgarrison12345/ADO.Net.Client/blob/master/static/implementation/ReleaseNotes.md
 		</PackageReleaseNotes>
