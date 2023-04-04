@@ -65,7 +65,7 @@ namespace ADO.Net.Client.Tests
             List<Employee> returnList = new List<Employee>();
             MultiResultReader reader = new MultiResultReader(new CustomDbReader());
 
-#if !NET462 && !NETCOREAPP2_1
+#if !NET462
             _executor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None)).ReturnsAsync(reader).Verifiable();
 #else
             _executor.Setup(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None)).ReturnsAsync(reader).Verifiable();
@@ -76,7 +76,7 @@ namespace ADO.Net.Client.Tests
 
             Assert.IsNotNull(returnedValue);
 
-#if !NET462 && !NETCOREAPP2_1
+#if !NET462
             //Verify the executor was called
             _executor.Verify(x => x.GetMultiResultReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
 #else 
@@ -109,7 +109,7 @@ namespace ADO.Net.Client.Tests
         {
             List<Employee> returnList = new List<Employee>();
 
-#if !NET462 && !NETCOREAPP2_1
+#if !NET462
             _executor.Setup(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None)).ReturnsAsync(returnList).Verifiable();
 #else
             _executor.Setup(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None)).ReturnsAsync(returnList).Verifiable();
@@ -121,7 +121,7 @@ namespace ADO.Net.Client.Tests
             Assert.IsNotNull(returnedValue);
             Assert.IsInstanceOf(typeof(List<Employee>), returnedValue);
 
-#if !NET462 && !NETCOREAPP2_1
+#if !NET462
             //Verify the executor was called
             _executor.Verify(x => x.GetDataObjectsAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
 #else 
@@ -152,7 +152,7 @@ namespace ADO.Net.Client.Tests
         [Category("Asynchronous Read Tests")]
         public async Task WhenGetDataObjectAsync_IsCalled__ItShouldCallSqlExecutorGetDataObjectAsync()
         {
-#if !NET462 && !NETCOREAPP2_1
+#if !NET462
             _executor.Setup(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None)).ReturnsAsync(new Employee()).Verifiable();
 #else
             _executor.Setup(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None)).ReturnsAsync(new Employee()).Verifiable();
@@ -163,7 +163,7 @@ namespace ADO.Net.Client.Tests
 
             Assert.IsNotNull(returnedValue);
 
-#if !NET462 && !NETCOREAPP2_1
+#if !NET462
             //Verify the executor was called
             _executor.Verify(x => x.GetDataObjectAsync<Employee>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
 #else
@@ -195,7 +195,7 @@ namespace ADO.Net.Client.Tests
         {
             List<string> expectedValue = new List<string> { _faker.Random.AlphaNumeric(10), _faker.Random.AlphaNumeric(30), _faker.Random.AlphaNumeric(20) };
 
-#if !NET462 && !NETCOREAPP2_1
+#if !NET462
             _executor.Setup(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None)).ReturnsAsync(expectedValue).Verifiable();
 #else
             _executor.Setup(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None)).ReturnsAsync(expectedValue).Verifiable();
@@ -206,7 +206,7 @@ namespace ADO.Net.Client.Tests
             Assert.AreEqual(expectedValue, returnedValue);
             Assert.IsInstanceOf(typeof(List<string>), returnedValue);
 
-#if !NET462 && !NETCOREAPP2_1
+#if !NET462
             //Verify the executor was called
             _executor.Verify(x => x.GetScalarValuesAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
 #else 
@@ -239,7 +239,7 @@ namespace ADO.Net.Client.Tests
         {
             string expectedValue = _faker.Random.AlphaNumeric(30);
 
-#if !NET462 && !NETCOREAPP2_1
+#if !NET462
             _executor.Setup(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None)).ReturnsAsync(expectedValue).Verifiable();
 #else
             _executor.Setup(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None)).ReturnsAsync(expectedValue).Verifiable();
@@ -251,7 +251,7 @@ namespace ADO.Net.Client.Tests
             Assert.IsFalse(string.IsNullOrWhiteSpace(returnedValue));
             Assert.AreEqual(returnedValue, expectedValue);
 
-#if !NET462 && !NETCOREAPP2_1
+#if !NET462
             //Verify the executor was called
             _executor.Verify(x => x.GetScalarValueAsync<string>(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
 #else 
@@ -286,7 +286,7 @@ namespace ADO.Net.Client.Tests
         {
             CommandBehavior behavior = _faker.PickRandom<CommandBehavior>();
 
-#if !NET462 && !NETCOREAPP2_1
+#if !NET462
             _executor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, CancellationToken.None)).ReturnsAsync(new CustomDbReader()).Verifiable();
 #else
             _executor.Setup(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, behavior, CancellationToken.None)).ReturnsAsync(new CustomDbReader()).Verifiable();
@@ -298,7 +298,7 @@ namespace ADO.Net.Client.Tests
             Assert.IsNotNull(reader);
             Assert.IsInstanceOf(typeof(CustomDbReader), reader);
 
-#if !NET462 && !NETCOREAPP2_1
+#if !NET462
             //Verify the executor was called
             _executor.Verify(x => x.GetDbDataReaderAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, behavior, CancellationToken.None), Times.Once);
 #else 
@@ -333,7 +333,7 @@ namespace ADO.Net.Client.Tests
         {
             int returnNumber = _faker.Random.Int(1, 30);
 
-#if !NET462 && !NETCOREAPP2_1
+#if !NET462
             _executor.Setup(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None)).ReturnsAsync(returnNumber).Verifiable();
 #else
             _executor.Setup(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, CancellationToken.None)).ReturnsAsync(returnNumber).Verifiable();
@@ -344,7 +344,7 @@ namespace ADO.Net.Client.Tests
 
             Assert.AreEqual(records, returnNumber);
 
-#if !NET462 && !NETCOREAPP2_1
+#if !NET462
             //Verify the executor was called
             _executor.Verify(x => x.ExecuteNonQueryAsync(realQuery.QueryText, realQuery.QueryType, realQuery.Parameters, realQuery.CommandTimeout, realQuery.ShouldBePrepared, CancellationToken.None), Times.Once);
 #else 
