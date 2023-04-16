@@ -1,33 +1,8 @@
-﻿#region Licenses
-/*MIT License
-Copyright(c) 2020
-Robert Garrison
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
-#endregion
-#region Using Statements
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
-#endregion
 
 namespace ADO.Net.Client.Core
 {
@@ -35,8 +10,7 @@ namespace ADO.Net.Client.Core
     /// Contract that defines asynchronous operations to be performed against a data store
     /// </summary>
     public interface IAsynchronousClient
-    {
-        #region Data Retrieval
+    { 
         /// <summary>
         /// Gets an <see cref="IEnumerable{T}"/> of the type parameter object that creates an object based on the query passed into the routine streame from the server
         /// </summary>
@@ -109,8 +83,6 @@ namespace ADO.Net.Client.Core
         /// <param name="token">Structure that propogates a notification that an operation should be cancelled</param>
         /// <returns>Returns an instance of <see cref="IMultiResultReader"/></returns>
         Task<IMultiResultReader> GetMultiResultReaderAsync(ISqlQuery query, CancellationToken token = default);
-        #endregion
-        #region Data Modification
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure
         /// </summary>
@@ -118,6 +90,5 @@ namespace ADO.Net.Client.Core
         /// <param name="query">An instance of <see cref="ISqlQuery"/> used to query a data store</param>
         /// <returns>Returns the number of rows affected by the passed in <paramref name="query"/></returns>
         Task<int> ExecuteNonQueryAsync(ISqlQuery query, CancellationToken token = default);
-        #endregion
     }
 }

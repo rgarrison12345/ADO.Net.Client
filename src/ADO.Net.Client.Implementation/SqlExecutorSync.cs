@@ -1,38 +1,12 @@
-﻿#region Licenses
-/*MIT License
-Copyright(c) 2020
-Robert Garrison
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
-#endregion
-#region Using Declarations
-using ADO.Net.Client.Core;
+﻿using ADO.Net.Client.Core;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-#endregion
 
 namespace ADO.Net.Client.Implementation
 {
     public partial class SqlExecutor
     {
-        #region Data Retrieval
         /// <summary>
         /// Gets an instance of <see cref="DataSet"/>
         /// </summary>
@@ -289,13 +263,11 @@ namespace ADO.Net.Client.Implementation
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <returns>An instance of <see cref="IMultiResultReader"/> object</returns>
-        public virtual IMultiResultReader GetMultiResultReader(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, 
+        public virtual IMultiResultReader GetMultiResultReader(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null,
             int commandTimeout = 30, bool shouldBePrepared = false)
         {
             return new MultiResultReader(GetDbDataReader(query, queryCommandType, parameters, commandTimeout, shouldBePrepared), _mapper);
         }
-        #endregion
-        #region Data Modification
         /// <summary>
         /// Utility method for executing an Ad-Hoc query or stored procedure
         /// </summary>
@@ -305,7 +277,7 @@ namespace ADO.Net.Client.Implementation
         /// <param name="query">The query command text or name of stored procedure to execute against the data store</param>
         /// <param name="queryCommandType">Represents how a command should be interpreted by the data provider</param>
         /// <returns>Returns the number of rows affected by this query</returns>
-        public virtual int ExecuteNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null, 
+        public virtual int ExecuteNonQuery(string query, CommandType queryCommandType, IEnumerable<DbParameter> parameters = null,
             int commandTimeout = 30, bool shouldBePrepared = false)
         {
             //Wrap this in a using statement to automatically handle disposing of resources
@@ -321,8 +293,5 @@ namespace ADO.Net.Client.Implementation
                 return command.ExecuteNonQuery();
             }
         }
-        #endregion
-        #region Helper Methods
-        #endregion
     }
 }
