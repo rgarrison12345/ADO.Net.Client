@@ -1,28 +1,4 @@
-﻿#region Licenses
-/*MIT License
-Copyright(c) 2020
-Robert Garrison
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
-#endregion
-#region Using Statements
-using ADO.Net.Client.Core;
+﻿using ADO.Net.Client.Core;
 using ADO.Net.Client.Tests.Common;
 using Bogus;
 using Moq;
@@ -30,7 +6,6 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-#endregion
 
 namespace ADO.Net.Client.Implementation.Tests.Unit
 {
@@ -40,7 +15,6 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
     [TestFixture]
     public partial class SqlExecutorTests
     {
-        #region Fields/Properties
         private ISqlQuery realQuery;
         private Mock<IConnectionManager> _manager;
         private Mock<IDataMapper> _mapper;
@@ -48,16 +22,14 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
         private Mock<CustomDbCommand> _command;
         private SqlExecutor _executor;
         private readonly Faker _faker = new Faker();
-        #endregion
-        #region Constructors        
+            
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlExecutorTests"/> class.
         /// </summary>
         public SqlExecutorTests()
         {
         }
-        #endregion
-        #region Setup/Teardown        
+         
         /// <summary>
         /// Called when [time setup].
         /// </summary>
@@ -92,8 +64,7 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
             
             _executor = new SqlExecutor(_factory.Object, _manager.Object, _mapper.Object);
         }
-        #endregion
-        #region Helper Methods        
+           
         /// <summary>
         /// Setups the factory.
         /// </summary>
@@ -135,6 +106,5 @@ namespace ADO.Net.Client.Implementation.Tests.Unit
                 return null;
             }
         }
-        #endregion
     }
 }
