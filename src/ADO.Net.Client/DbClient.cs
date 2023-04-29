@@ -14,15 +14,13 @@ namespace ADO.Net.Client
     /// </remarks>
     public partial class DbClient : DbProvider
     {
-        #region Fields/Properties
         private readonly ISqlExecutor _executor;
 
         /// <summary>
         /// An instance of <see cref="IConnectionManager"/>
         /// </summary>
         public override IConnectionManager ConnectionManager => _executor.ConnectionManager;
-        #endregion
-        #region Constructors    
+        
         /// <summary>
         /// Instantiates a new instance of <see cref="DbClient"/> with an instance of <see cref="ISqlExecutor"/>
         /// </summary>
@@ -50,6 +48,5 @@ namespace ADO.Net.Client
         {
 
         }
-        #endregion
     }
 }
