@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29926.136
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35828.75 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADO.Net.Client", "src\ADO.Net.Client\ADO.Net.Client.csproj", "{618DCE91-B7BC-4534-BB6C-2C1D92F0F54B}"
 EndProject
@@ -18,6 +18,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADO.Net.Client.Annotations", "src\ADO.Net.Client.Annotations\ADO.Net.Client.Annotations.csproj", "{4782F643-90B4-4B42-908B-6A54E32D880A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADO.Net.Client.Tests.Common", "tests\ADO.Net.Client.Tests.Common\ADO.Net.Client.Tests.Common.csproj", "{8E2075B0-C75F-408C-AD47-93900B75153C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		NuGet.config = NuGet.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
